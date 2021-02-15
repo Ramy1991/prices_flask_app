@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template
-from py_get_data import check_url
+from scripts_py import py_get_data
+
 
 app = Flask(__name__)
 
@@ -19,7 +20,7 @@ def user(name):
 def get_item_data():
     if request.method == 'POST':
         item_data = request.form.get("name")
-        responses = check_url(item_data)
+        responses = py_get_data.check_url(item_data)
         return responses
     else:
         return render_template('user.html')
