@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>dashboard</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='fonts/typicons.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/Article-List2.1.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/Navigation-with-Button.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/popbox.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+    <style>
+        .lds-dual-ring {
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            margin: auto;
+            padding-top: 120px;
+        }
+        .lds-dual-ring:after {
+            content: " ";
+            display: block;
+            width: 64px;
+            height: 64px;
+            margin: 8px;
+            border-radius: 50%;
+            border: 6px solid #7d8285;
+            border-color: #7d8285 transparent #7d8285 transparent;
+            animation: lds-dual-ring 1.2s linear infinite;
+        }
+        .err_load_data{
+            color: red; 
+            font-size: 15px; 
+            display: none;
+        }
+        @keyframes lds-dual-ring {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        /* loading TEXT */
+        #loading_add_item{
+            display: none;
+        }
+        .loading {
+            font-size: 40px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            text-align: center;
+            padding: 30px;
+            color: #7d8285; 
+        }
+        .loading span {
+            display: inline-block;
+            margin: 0 -.05em;
+        }
+    
+        /* code #1 */
+        .loading01 span {
+            animation: loading01 1.4s infinite alternate;
+        }
+        .loading01 span:nth-child(1) {
+            animation-delay: 0s;
+        }
+        .loading01 span:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+        .loading01 span:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+        .loading01 span:nth-child(4) {
+            animation-delay: 0.3s;
+        }
+        .loading01 span:nth-child(5) {
+            animation-delay: 0.4s;
+        }
+        .loading01 span:nth-child(6) {
+            animation-delay: 0.5s;
+        }
+        .loading01 span:nth-child(7) {
+            animation-delay: 0.6s;
+        }
+    
+        @keyframes loading01 {
+            0% {
+            opacity: 1;
+            }
+            100% {
+                opacity: 0.01;
+            }
+        }
+        .image_box{
+            height: auto;
+            max-height: 225px;
+            padding: 28px;
+        }
+        .a_del_item{
+            float: left;
+            color: red;
+        }
+        .trash_icon{
+            width: 18px;
+        }
+        .tooltap {
+            position: relative;
+            display: inline-block;
+            /* border-bottom: 1px dotted #7d8285; */
+        }
+
+        .tooltap .tooltaptext {
+            visibility: hidden;
+            width: 110px;
+            background-color:#C0C0C0;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            position: absolute;
+            z-index: 1;
+            bottom: 150%;
+            left: 50%;
+            margin-left: -60px;
+        }
+
+        .tooltap .tooltaptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: 	#C0C0C0 transparent transparent transparent;
+        }
+
+        .tooltap:hover .tooltaptext {
+            visibility: visible;
+        }
+        .img-fluid{
+            height: auto;
+            max-height: 220px;
+            min-height: 170px;
+        }
+
+        #item_data_box{
+            display: flex;
+            justify-content: space-around;
+        }
+        #select_dialog{
+            display: none;
+        }
+        #select_data, #price_range_h{
+            padding-top: 25px;
+        }
+        #price_range{
+            font-size: 20px;
+            color: red;
+        }
+        #size-list{
+            height: 35px;
+            border-radius: 7px;
+            padding-left: 10px;
+        }
+        .modal-dialog{
+            max-width: 630px;
+        }
+        #item-img{
+            max-width: 250px;
+            max-height: 250px;
+        }
+        @media all and (max-width: 600px){
+            img#item-img {order: 1;}
+            div#data_item {order: 2;}
+            #item_data_box{
+                display: grid;
+            }
+            #item-img{
+                margin: auto;
+                padding-bottom: 30px;
+                max-width: 300px;
+                max-height: 300px;
+            }
+            #myModal, .modal-open{
+                padding-right: 0px !important;
+            }
+
+        }
+
+/* code #1 */
+       
+    </style>
+    <style >
+        /* common */
+    
+    
+      </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-light navbar-expand-md navigation-clean-button">
+        <div class="container"><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button><a class="navbar-brand" href="#" style="color: rgb(255,255,255);">Price Tracking</a>
+            <div
+                class="collapse navbar-collapse" id="navcol-1" style="color: rgb(255,252,252);">
+                <ul class="nav navbar-nav mr-auto">
+                    <!-- <li class="nav-item" role="presentation"><a class="nav-link active" href="#">First Item</a></li> -->
+                    <!-- <li class="nav-item" role="presentation"><a class="nav-link" href="#">Second Item</a></li> -->
+                    <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">Account Settings</a>
+                        <div class="dropdown-menu" role="menu">
+                            <!-- <a class="dropdown-item" role="presentation" href="#">First Item</a> -->
+                            <a class="dropdown-item" role="presentation" href="#">Change Password</a>
+                            <a class="dropdown-item" role="presentation" href="#">Delete Acccount</a>
+                        </div>
+                    </li>
+                </ul>
+                
+                <span class="navbar-text actions"> <span style="color: rgb(255,252,252); padding-right: 25px;padding-top: 3px;" id="user"></span>
+                    <a class="btn btn-light action-button signOut" role="button" href="#" style="background-color: #f0c14b;color: #232f3e;">Sign Out</a>
+                </span>
+            </div>
+        </div>
+    </nav>
+    <div class="article-list">
+        <div class="container">
+            <div class="intro">
+                <h2 class="text-center" id="status"></h2>
+            </div>
+            <div class="row articles" id="products-articles" style="display: none;">
+                <div class="lds-dual-ring" id="loading_main_page"></div>
+                <!-- <div class="col-sm-6 col-md-4 item">
+                    <a href="#" class="a_del_item tooltap" id="ramy" >
+                        <img class="trash_icon" src="assets/img/stop.svg" >
+                        <span class="tooltaptext">Delete Item</span>
+                        </a>\
+                    <a href="#" >
+
+                    <a href="#">
+                        <img class="img-fluid" src="assets/img/item_XL_46378281_375beced17c1d.jpg">
+                    </a>
+                    <h3 class="name name2">
+                        <strong>Lenovo V145 Laptop - AMD APU A4-9125, 15.6 Inch HD, 4GB RAM, Integrated Graphics 2 GB, 1 TB - Black, Dos</strong>
+                    </h3>
+                    <p class="description">16,500 EGP</p>
+                    <div class="botton_group" style="padding-top: 16px;">
+                        <button class="btn btn_buy" type="button">
+                            <i class="typcn typcn-shopping-cart icon"></i>Buy Now 
+                        </button>
+                    </div> -->
+                <!-- </div> -->
+                <!-- <div class="col-sm-6 col-md-4 item">
+                    <a href="#">
+                        <img class="img-fluid" src="assets/img/item_XL_46378281_375beced17c1d.jpg">
+                    </a>
+                    <h3 class="name name2" >
+                        <strong >Lenovo V145 Laptop - AMD APU A4-9125, 15.6 Inch HD, 4GB RAM, Integrated Graphics 2 GB, 1 TB - Black, Dos</strong>
+                    </h3>
+                    <p class="description" >16,500 EGP</p>
+                    <div class="botton_group" style="padding-top: 16px;">
+                        <button class="btn btn_buy" type="button">
+                            <i class="typcn typcn-shopping-cart icon"></i>Buy Now 
+                        </button>
+                        <div class="btn_change_link">
+                            <a class="link" role="button" data-toggle="modal" href="#myModal">Change Item</a>   
+                        </div>
+                    </div>
+                </div> -->
+                <!-- <div class="col-sm-6 col-md-4 item">
+                    <a href="#myModal" data-toggle="modal" class="botton-d " >
+                        <img class="img-fluid link-model" src="assets/img/add-link.png">
+                        <img style="display: none; width: 92%;" class="img-fluid loading_data" src="assets\img\Spin-1s-200px.svg">
+                        <h3 class=""></h3>
+                        <h3 class="name btn btn-d"style="border: 1px solid #7d8285;border-radius: 3px;position: absolute; bottom: -19px; margin: auto; min-width: 212px; left:50%; transform: translate(-50%, -50%);">Click to Add Product Link</h3>
+                    </a>
+                   
+                </div>
+                <div class="col-sm-6 col-md-4 item">
+                    <a href="#myModal" data-toggle="modal"><img class="img-fluid" src="assets/img/add-link.png">
+                        <h3 class=""></h3>
+                        <h3 class="name btn" style="border: 1px solid #7d8285;border-radius: 3px;position: absolute; bottom: -19px; margin: auto; min-width: 212px; left:50%; transform: translate(-50%, -50%);">Click to Add Product Link</h3>
+                    </a>
+                    
+                </div>
+                <div class="col-sm-6 col-md-4 item">
+                    <a href="#myModal" data-toggle="modal"><img class="img-fluid" src="assets/img/add-link.png">
+                        <h3 class=""></h3>
+                        <h3 class="name btn" style="border: 1px solid #7d8285;border-radius: 3px;position: absolute; bottom: -19px; margin: auto; min-width: 212px; left:50%; transform: translate(-50%, -50%);">Click to Add Product Link</h3>
+                    </a>
+                    <p class="description"></p>
+                </div> -->
+               
+            </div>
+            
+
+            </div>
+        </div>
+        
+    </div>
+    
+    <!-- POP UP -->
+    <div class="modal fade" role="dialog" tabindex="-1" id="myModal">
+        <div class="modal-dialog" role="document">
+            <form method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Change Item Link</h4>
+                    <button type="button" class="close close_rep" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <section id="loading_add_item">
+                        <div class="loading loading01">
+                          <span>L</span>
+                          <span>O</span>
+                          <span>A</span>
+                          <span>D</span>
+                          <span>I</span>
+                          <span>N</span>
+                          <span>G</span>
+                        </div>
+                    </section>
+                    <p  class="err_load_data">*Something Went Wrong! Please try again later</p>
+                    <span id="add_item_panel">
+                        <input type="url" class="url_style" placeholder="Paste Product Link Here" id="item-link">
+                        <div class="price_select">
+                            <p style="color: rgb(66,71,74);">Send E-mail When Price is lower than<br>
+                                <span style="padding-left: 6px;" >*Note: you can leave it blank to notify you once it&#39;s drop</span>
+                            </p>
+                            <input type="text" class="price_set" id="price_note" placeholder="Ex. 9999 $">
+                        </div>
+                    </span>
+                    <span id="select_dialog">
+                       <div id="item_data_box">
+                            <div id="data_item"> 
+                                <h4 id="title"></h4>
+                                <h6 id="price_range_h">Price: 
+                                    <span id="price_range"></span>
+                                    <img class="loading_price" style="display: none; width: 34px; padding-bottom: 7px;" src="{{url_for('static', filename='img/loading_price.svg')}}" alt="">
+                                </h6>
+                                <div id="select_data">
+                                    <label style="font-weight: 600;" >Please Select Size:  </label>
+                                    <!-- <label for="cars">Choose a car:</label> -->
+                                    <select id="size-list">
+                                      <!-- <option value=""> Select </option>
+                                      <option value="saab">Medium</option>
+                                      <option value="opel">Opel</option>
+                                      <option value="audi">Audi</option> -->
+                                    </select>
+                                </div>
+                            </div>
+                            <img id="item-img" src="" alt="" style="padding-left: 10px;" >
+                       </div>  
+                    
+                       
+                    </span>
+                </div>    
+                <div class="modal-footer" >
+                    <button class="btn btn-light close_modal close_rep" data-dismiss="modal" type="button">Close</button>
+                    <button class="btn btn-primary add-item" type="button" id="">Save</button>
+                </div>
+
+            </div>
+            </form>
+        </div>
+    </div>
+    <script src="{{url_for('static', filename='js/jquery.min.js')}}"></script>
+    <script src="{{url_for('static', filename='bootstrap/js/bootstrap.min.js')}}"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-firestore.js"></script>
+    <script src="{{url_for('static', filename='js/user_main.js')}}"></script>
+</body>
+
+</html>

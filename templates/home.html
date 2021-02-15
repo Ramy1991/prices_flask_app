@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>test3</title>
+    <link rel="stylesheet" href=" {{url_for('static', filename='bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='fonts/font-awesome.min.css')}} ">
+    <link rel="stylesheet" href=" {{url_for('static', filename='css/Article-List.css')}} ">
+    <!-- <link rel="stylesheet" href="assets/css/Contact-Form-Clean.css"> -->
+    <!-- <link rel="stylesheet" href="assets/css/Highlight-Phone.css"> -->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/Login-Box-En.css')}}">
+    <!-- <link rel="stylesheet" href="assets/css/Login-Form-Dark.css"> -->
+    <link rel="stylesheet" href=" {{url_for('static', filename='css/Navigation-with-Button.css')}} ">
+    <link rel="stylesheet" href=" {{url_for('static', filename='css/styles.css')}} ">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-light navbar-expand-md navigation-clean-button">
+        <div class="container"><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button><a class="navbar-brand" href="#" style="color: rgb(255,255,255);">Price Tracking</a>
+            <div class="collapse navbar-collapse" id="navcol-1" style="color: rgb(255,252,252);">
+                <ul class="nav navbar-nav mr-auto">
+                    <li class="nav-item" role="presentation"><a class="nav-link active" href="#">First Item</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="#">Second Item</a></li>
+                    <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">DropDown </a>
+                        <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation" href="#">First Item</a><a class="dropdown-item" role="presentation" href="#">Second Item</a><a class="dropdown-item" role="presentation" href="#">Third Item</a></div>
+                    </li>
+                </ul>
+                <span class="navbar-text actions"> 
+                    <a class="login btn-header" href="#" style="color: rgb(227,232,237);" name="sign_in">Log In</a>
+                    <a class="btn btn-light action-button btn-header" role="button" href="#" style="background-color: #f0c14b;color: #232f3e;" name="sign_up">Sign Up</a>
+                </span>
+            </div>
+        </div>
+    </nav>
+    <div class="block">
+        <div class="container container1">
+            <div class="row row-custom">
+                <div class="col-md-6">
+                    <div class="text-col6">
+                        <h1>Price Tracking !</h1>
+                        <p class="p_text">Is a Free price Tracker Service Helps to&nbsp;you save money by tracking and&nbsp;monitoring&nbsp;the prices of your desired Products With provide Price History Charts and daily Price Drop alerts.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div id="image_col6"><img class="img-fluid" src="{{url_for('static', filename='img/Untitled-1.png')}} "></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="article-list">
+        <div class="container">
+            <div class="intro">
+                <h2 class="text-center">How It Works</h2>
+            </div>
+            <div class="row articles">
+                <div class="col-sm-6 col-md-4 item"><a href="#"><img class="img-fluid" src=" {{url_for('static', filename='img/Untitled.png') }} "></a>
+                    <h3 class="name"></h3>
+                    <p class="description">Copy the product links from E-commerce stores like Souq, Jumia, Noon,etc. and paste it in the product fields<br></p><a class="action" href="#"></a></div>
+                <div class="col-sm-6 col-md-4 item"><a href="#"><img class="img-fluid" src=" {{url_for('static', filename='img/Untitled-1 (1).png' )}}"></a>
+                    <h3 class="name"></h3>
+                    <p class="description" style="font-size: 19px;">Our algorithm monitoring the billions of products prices continuously 24/7&nbsp;<br></p><a class="action" href="#"></a></div>
+                <div class="col-sm-6 col-md-4 item"><a href="#"><img class="img-fluid" src=" {{url_for('static', filename='img/Untitled-2.png' )}}"></a>
+                    <h3 class="name"></h3>
+                    <p class="description">Once the price drops our&nbsp;algorithm&nbsp;will notify you by E-mail with the new prices of your submited products<br></p><a class="action" href="#"></a></div>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex flex-column justify-content-center main-login-box" id="sign_up_box">
+        <div class="login-box-header">
+            <h4 style="color:rgb(139,139,139);margin-bottom:0px;font-weight:400;font-size:27px;">Sign Up Now</h4>
+        </div>
+        <div class="login-box-content">
+            <div class="fb-login box-shadow"><a class="d-flex flex-row align-items-center social-login-link social-auth" name="Facebook" href="#">
+                <i class="fa fa-facebook" style="margin-left:0px;padding-right:20px;padding-left:22px;width:56px;"></i>Sign up with Facebook</a>
+            </div>
+            <div class="gp-login box-shadow">
+                <a class="d-flex flex-row align-items-center social-login-link social-auth" name="Google" style="margin-bottom:10px;" href="#">
+                    <i class="fa fa-google" style="color:rgb(255,255,255);width:56px;"></i>Sign Up with Google+
+                </a>
+            </div>
+        </div>
+        <div class="d-flex flex-row align-items-center login-box-seperator-container">
+            <div class="login-box-seperator"></div>
+            <div class="login-box-seperator-text">
+                <p style="margin-bottom:0px;padding-left:10px;padding-right:10px;font-weight:400;color:rgb(201,201,201);">or</p>
+            </div>
+            <div class="login-box-seperator"></div>
+        </div>
+        <form action="" id="sign_up_form">
+            <div class="email-login" style="background-color:#ffffff;">
+                <input type="email" class="email-imput form-control validation" style="margin-top:10px;" required="" name="email" placeholder="Email" minlength="6" required id="s_email">
+                <small class="form-text text-danger" id="email_e">E-mail Address Is Already Registered.</small>
+                <input  class="email-imput form-control" style="margin-top:10px;" required="" name="username" placeholder="Username" minlength="6" required id="s_username">
+                <small class="form-text text-danger" id="username_e">Username Is Already In Use.</small>
+                <input type="password" class="password-input form-control pw_v" style="margin-top:10px;" required="" name="password" placeholder="Password" minlength="6" required id="s_pw">
+                <input type="password" class="password-input form-control pw_v" style="margin-top:10px;" required="" placeholder="Confirm Password" minlength="6" required id="confirm_pw">
+                <small class="form-text text-danger" id="pwc_e" >Password Doesn't Match</small>
+            </div>
+        <div class="submit-row" style="margin-bottom:8px;padding-top:0px;"><button class="btn btn-primary btn-block box-shadow submit-id-submit" type="submit">Sign Up</button>
+        </form>    
+            <div class="d-flex justify-content-between">
+                <!-- <div class="form-check form-check-inline" id="form-check-rememberMe">
+                    <input class="form-check-input" type="checkbox" id="formCheck-1" for="remember" style="cursor:pointer;" name="check">
+                    <label class="form-check-label" for="formCheck-1">
+                        <span class="label-text">Remember Me</span>
+                    </label>
+                </div> -->
+                <!-- <a id="forgot-password-link" href="#">Forgot Password?</a> -->
+            </div>
+        </div>
+        <div id="login-box-footer" style="padding:10px 20px;padding-bottom:23px;padding-top:18px;">
+            <p style="margin-bottom:0px;">Do you have an account?<a class="link_button" id="login_link" href="#">Login</a></p>
+        </div>
+        <div></div>
+    </div>
+    <div class="d-flex flex-column justify-content-center main-login-box target" id="sign_in_box">
+        <div class="login-box-header">
+            <h4 style="color:rgb(139,139,139);margin-bottom:0px;font-weight:400;font-size:27px;">Sign In</h4>
+        </div>
+        <div class="login-box-content">
+            <div class="fb-login box-shadow">
+                <a class="d-flex flex-row align-items-center social-login-link social-auth" name="Facebook" href="#">
+                    <i class="fa fa-facebook" style="margin-left:0px;padding-right:20px;padding-left:22px;width:56px;"></i>Sign In with Facebook</a>
+                </div>
+            <div class="gp-login box-shadow">
+                <a class="d-flex flex-row align-items-center social-login-link social-auth" name="Google" style="margin-bottom:10px;" href="#">
+                    <i class="fa fa-google" style="color:rgb(255,255,255);width:56px;"></i>Sign In with Google+
+                </a>
+            </div>
+        </div>
+        <div class="d-flex flex-row align-items-center login-box-seperator-container">
+            <div class="login-box-seperator"></div>
+            <div class="login-box-seperator-text">
+                <p style="margin-bottom:0px;padding-left:10px;padding-right:10px;font-weight:400;color:rgb(201,201,201);">or</p>
+            </div>
+            <div class="login-box-seperator"></div>
+        </div>
+        <form id="login_form">
+            <div class="email-login" style="background-color:#ffffff;">
+                <input type="email" class="email-imput form-control" style="margin-top:10px;" required="" placeholder="Email" minlength="6" type="email" id="email" required>
+                <input type="password" class="password-input form-control" style="margin-top:10px;" required="" placeholder="Password" minlength="6" required id="password">
+            </div>
+            <div class="submit-row" style="margin-bottom:8px;padding-top:0px;"><button class="btn btn-primary btn-block box-shadow submit-id-submit" type="submit" >Sign In</button>
+        </form>    
+            <div class="d-flex justify-content-between">
+                <div class="form-check form-check-inline" id="form-check-rememberMe">
+                    <input class="form-check-input" type="checkbox" id="formCheck-1" for="remember" style="cursor:pointer;" name="check">
+                    <label class="form-check-label" for="formCheck-1">
+                        <span class="label-text">Remember Me</span>
+                    </label>
+                </div>
+                <a id="forgot-password-link"  role="button" data-toggle="modal" href="#myModal">Forgot Password?</a></div>
+                <div class="modal fade" role="dialog" tabindex="-1" id="myModal">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div style="text-align: left;">
+                                    <h4>Forgot your password?</h4>
+                                    <p style="font-size: 15px; margin-bottom: 0px;">Submit your email address and we will send you a link to reset your password.</p>
+                                </div>
+                                <button type="button" class="close close-pop" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <form id="reset-password">    
+                                <div class="modal-body">
+                                    <input class="form-control" placeholder="Email" type="email" required="" id="email-address" />
+                                    <h4 id="email-sent" style="display: none; font-weight: 400; font-size: 18px; padding-top: 12px;" ></h4>
+                                    
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-light close-pop" data-dismiss="modal" type="button">Close</button>
+                                    <button class="btn btn-primary" type="submit">Send</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div id="login-box-footer" style="padding:10px 20px;padding-bottom:23px;padding-top:18px;">
+            <p style="margin-bottom:0px;">Don't you have an account?<a class="link_button" id="sign_up_link" href="#">Sign Up!</a></p>
+        </div>
+        <div></div>
+    </div>
+    <script src=" {{url_for('static', filename='js/jquery.min.js')}} "></script>
+    <script src=" {{url_for('static', filename='bootstrap/js/bootstrap.min.js')}} "></script>
+
+
+    <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-firestore.js"></script>
+
+    <script src=" {{url_for('static', filename='js/main.js')}} "></script>
+
+
+    </body>
+
+</html>

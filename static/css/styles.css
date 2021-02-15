@@ -1,0 +1,30 @@
+.text-danger{
+    display: none;
+    padding-left: 3px;
+}
+.navigation-clean-button {
+  background-color: rgb(35,47,62);
+}
+.name2{
+  height: 45px;
+  
+}
+
+@media all and (max-width: 1199px){
+  .name2{
+    height: 74px;
+  }
+}
+
+@media all and (max-width: 991px){
+  .name2{
+    height: 95px;
+  }
+}
+
+@media all and (max-width: 575px){
+  .name2{
+    height: 68px;
+  }
+}
+
