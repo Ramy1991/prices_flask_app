@@ -1,7 +1,6 @@
 from flask import Flask, request, render_template
 from scripts_py import py_get_data
 
-
 app = Flask(__name__)
 
 
@@ -24,3 +23,8 @@ def get_item_data():
         return responses
     else:
         return render_template('user.html')
+
+
+@app.route('/search')
+def search():
+    return render_template('search.html')

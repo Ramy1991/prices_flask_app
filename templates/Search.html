@@ -1,0 +1,744 @@
+<html>
+
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+        <title>dashboard</title>
+        <link rel="stylesheet" href="{{url_for('static', filename='bootstrap/css/bootstrap.min.css')}}" />
+        <link rel="stylesheet" href="{{url_for('static', filename='fonts/typicons.min.css')}}" />
+        <link rel="stylesheet" href="{{url_for('static', filename='css/Article-List2.1.css')}}" />
+        <link rel="stylesheet" href="{{url_for('static', filename='css/Navigation-with-Button.css')}}" />
+        <link rel="stylesheet" href="{{url_for('static', filename='css/popbox.css')}}" />
+        <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}" />
+        <link rel="stylesheet" href="{{url_for('static', filename='fonts/font-awesome.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/flag-icon.css')}}">
+        <style>
+            .lds-dual-ring {
+                display: inline-block;
+                width: 80px;
+                height: 80px;
+                margin: auto;
+                padding-top: 120px;
+            }
+            .lds-dual-ring:after {
+                content: " ";
+                display: block;
+                width: 64px;
+                height: 64px;
+                margin: 8px;
+                border-radius: 50%;
+                border: 6px solid #7d8285;
+                border-color: #7d8285 transparent #7d8285 transparent;
+                animation: lds-dual-ring 1.2s linear infinite;
+            }
+            .err_load_data {
+                color: red;
+                font-size: 15px;
+                display: none;
+            }
+
+            @keyframes lds-dual-ring {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+            /* loading TEXT */
+            #loading_add_item {
+                display: none;
+            }
+            .loading {
+                font-size: 40px;
+                font-family: "Montserrat", sans-serif;
+                font-weight: 800;
+                text-align: center;
+                padding: 30px;
+                color: #7d8285;
+            }
+            .loading span {
+                display: inline-block;
+                margin: 0 -0.05em;
+            }
+
+            /* code #1 */
+            .loading01 span {
+                animation: loading01 1.4s infinite alternate;
+            }
+            .loading01 span:nth-child(1) {
+                animation-delay: 0s;
+            }
+            .loading01 span:nth-child(2) {
+                animation-delay: 0.1s;
+            }
+            .loading01 span:nth-child(3) {
+                animation-delay: 0.2s;
+            }
+            .loading01 span:nth-child(4) {
+                animation-delay: 0.3s;
+            }
+            .loading01 span:nth-child(5) {
+                animation-delay: 0.4s;
+            }
+            .loading01 span:nth-child(6) {
+                animation-delay: 0.5s;
+            }
+            .loading01 span:nth-child(7) {
+                animation-delay: 0.6s;
+            }
+
+            @keyframes loading01 {
+                0% {
+                    opacity: 1;
+                }
+                100% {
+                    opacity: 0.01;
+                }
+            }
+            .image_box {
+                height: auto;
+                max-height: 225px;
+                /* padding: 28px; */
+                min-height: 235px;
+            }
+            .a_del_item {
+                float: left;
+                color: red;
+            }
+            .trash_icon {
+                width: 18px;
+            }
+            .tooltap {
+                position: relative;
+                display: inline-block;
+                /* border-bottom: 1px dotted #7d8285; */
+            }
+
+            .tooltap .tooltaptext {
+                visibility: hidden;
+                width: 110px;
+                background-color: #c0c0c0;
+                color: #fff;
+                text-align: center;
+                border-radius: 6px;
+                padding: 5px 0;
+                position: absolute;
+                z-index: 1;
+                bottom: 150%;
+                left: 50%;
+                margin-left: -60px;
+            }
+
+            .tooltap .tooltaptext::after {
+                content: "";
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                margin-left: -5px;
+                border-width: 5px;
+                border-style: solid;
+                border-color: #c0c0c0 transparent transparent transparent;
+            }
+
+            .tooltap:hover .tooltaptext {
+                visibility: visible;
+            }
+            .img-fluid {
+                height: auto;
+                max-height: 220px;
+
+            }
+
+            #item_data_box {
+                display: flex;
+                justify-content: space-around;
+            }
+            #select_dialog {
+                display: none;
+            }
+            #select_data,
+            #price_range_h {
+                padding-top: 25px;
+            }
+            #price_range {
+                font-size: 20px;
+                color: red;
+            }
+            #size-list {
+                height: 35px;
+                border-radius: 7px;
+                padding-left: 10px;
+            }
+            .modal-dialog {
+                max-width: 630px;
+            }
+            #item-img {
+                max-width: 250px;
+                max-height: 250px;
+            }
+            /* .col-md-2 {
+
+                height: 43px;
+                margin: 1%;
+                border-radius: 15px;
+                border-color: #7d8285;
+                color: #7d8285;
+                text-align: center;
+                padding: 9px;
+                font-weight: 500;
+
+            }*/
+            .btn_1:hover, .btn_2:hover{
+                background-color: #7d8285 !important;
+                border-color: #7d8285 !important;
+                color: white !important;
+            }
+            .btn_1:focus, .btn_2:focus, .btn_1:active, .btn_2:active{
+                outline: none;
+                box-shadow: 0 0 20px #7d8285 !important;
+                color: #7d8285;
+            }
+            .btn_group_style{
+                display: flex;
+                justify-content: space-around;
+                margin: 1%;
+
+            }
+            .btn_1{
+                margin-right: 27px;
+            }
+            .btn_1, .btn_2{
+                border-radius: 20px !important;
+                background-color: transparent;
+                border-color: #7d8285;
+                color: #7d8285;
+                font-weight: 500;
+                height: 46px;
+            }
+            /* nav bar */
+            .sidenav {
+              height: 100%;
+              position: fixed;
+              z-index: 1;
+              top: 0;
+              left: -250;
+              width: 250px;
+              background-color: #111;
+              overflow-x: hidden;
+              transition: 0.5s;
+              padding-top: 60px;
+            }
+
+            .sidenav a {
+              padding: 8px 8px 8px 32px;
+              text-decoration: none;
+              font-size: 15px;
+              color: #818181;
+              display: block;
+              transition: 0.3s;
+            }
+
+            .sidenav a:hover {
+              color: #f1f1f1;
+            }
+
+            .sidenav .closebtn {
+              position: absolute;
+              top: 0;
+              /* right: 25px; */
+              font-size: 36px;
+              margin-left: 170px;
+              flex-direction: column-reverse;
+            }
+            .navbar-nav {
+                flex-direction: column !important;
+            }
+            .active_bar{
+                left: 0;
+            }
+            .input_search{
+                border-color: #7d8285 !important;
+                height: 46px;
+                border-radius: 23px 0 0 23px;
+                border-right: 0px;
+                padding-left: 21px;
+            }
+            .input-group:hover, .input-group:focus, .input_search:focus{
+                outline: none;
+                box-shadow: 0 0 20px #7d8285;
+                border-radius: 23px;
+
+            }
+            .input_search:focus, .search_btn:focus{
+                box-shadow: 0 0 0px #7d8285 !important;
+            }
+            .search_btn{
+                border-radius: 0 23px 23px 0;
+                border-left: 0px;
+                width: 45px;
+                z-index: 0 !important;
+            }
+            .input-group{
+                width: 60%;
+                margin: auto;
+                /* margin-bottom: 65px !important; */
+            }
+            .cat_section{
+                /* margin: auto; */
+                padding-left: 23px;
+                padding-bottom: 7px;
+                color: #818181;
+            }
+            .nav-1{
+                /* flex-direction: row-reverse;  */
+                height: 30px;
+                padding-top: 0px;
+                padding-bottom: 3px;
+                background-color: black;
+
+            }
+            #navbar2SupportedContent{
+               margin-top: auto;
+               margin-bottom: auto;
+            }
+            .country{
+                color: white !important;
+            }
+            .country-list{
+                min-width: 140px;
+                right: 0 ;
+                left: auto;
+
+            }
+            .country-list li{
+                padding: 5px 4px 5px 5px;
+                font-size: 15px;
+                margin-right: -1px;
+            }
+            .country-list li:hover{
+                background-color: #7d8285;
+
+            }
+            .country-list li a{
+                color: black !important;
+            }
+            .country-list li a:hover{
+                text-decoration: none;
+
+            }
+            .country-container{
+                list-style: none;
+            }
+
+            @media screen and (max-width: 1200px) {
+                .btn_1, .btn_2{
+                    font-size: 13px;
+                    padding: 0px;
+                }
+                .input-group{
+                    width: 70%;
+                }
+
+            }
+            @media screen and (max-width: 995px) {
+                .btn_1, .btn_2{
+                    font-size: 12px;
+                    height: 46px;
+                }
+                .image_box{
+                    min-height: 224px;
+                }
+                .input-group{
+                    width: 80%;
+                }
+
+            }
+
+            @media screen and (max-width: 774px) {
+                .user_display{
+                   display: none;
+               }
+               .input-group{
+                    width: 100%;
+                }
+            }
+            @media screen and (max-height: 600px) {
+              .sidenav {padding-top: 15px;}
+              .sidenav a {font-size: 18px;}
+            }
+
+            @media all and (max-width: 600px) {
+                img#item-img {
+                    order: 1;
+                }
+                div#data_item {
+                    order: 2;
+                }
+                #item_data_box {
+                    display: grid;
+                }
+                #item-img {
+                    margin: auto;
+                    padding-bottom: 30px;
+                    max-width: 300px;
+                    max-height: 300px;
+                }
+                .btn_group_style{
+                    margin: 2% !important;
+                }
+                #myModal,
+                .modal-open {
+                    padding-right: 0px !important;
+                }
+            }
+            @media all and (max-width: 500px) {
+                .btn_1{
+                    margin-right: 18px;
+                }
+                .btn_1, .btn_2{
+                    font-size: 13px;
+                }
+            }
+
+
+
+            /* code #1 */
+        </style>
+        <style>
+            /* common */
+        </style>
+    </head>
+    <body class="" >
+        <div class="navbar navbar-light navbar-expand-md nav-1 navbar-expand" >
+            <div class="container" style="justify-content: flex-end; padding-right: 0px;">
+                <!-- <div id="options" data-input-name="country2" data-selected-country="AE" class=" nav-select navbar-brand"></div>
+                <input type="text" value="" id="selected_country"> -->
+                <ul class="" id="navbar2SupportedContent">
+                    <li class="dropdown country-container">
+                        <a class="btn btn-default dropdown-toggle country" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <span id="c_flag" class="flag-icon flag-icon-ae"></span>
+                        </a>
+                        <ul class="dropdown-menu text-left country-list" aria-labelledby="dropdownMenu1">
+                            <li><a href="#" class="selected_country" name="eg" data-value="flag-icon flag-icon-eg"><span class="ml-2 flag-icon flag-icon-eg"></span><span class="ml-1 mx-1">Egypt</span></a></li>
+                            <li><a href="#" class="selected_country" name="ae" data-value="flag-icon flag-icon-ae"><span class="ml-2 flag-icon flag-icon-ae"></span><span class="ml-1 mx-1">Dubai</span></a></li>
+                            <li><a href="#" class="selected_country" name="sa" data-value="flag-icon flag-icon-sa"><span class="ml-2 flag-icon flag-icon-sa"></span><span class="ml-1 mx-1">Saudi Arabia</span></a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <nav class="navbar navbar-light navbar-expand-md navigation-clean-button">
+            <div class="container">
+
+                <span style="font-size:30px;cursor:pointer" class="side_bar" onclick="openNav()">&#9776</span>
+                <a class="navbar-brand" href="#" style="color: rgb(255,255,255); padding-left: 10px;">Price Tracking</a>
+                <div class="navbar-collapse " id="navcol-1" style="color: rgb(255, 252, 252);">
+                    <ul class="nav navbar-nav mr-auto sidenav" id="mySidenav" >
+                        <a href="javascript:void(0)" class="closebtn side_bar" onclick="closeNav()">&times;</a>
+                        <a class="nav-link active menu_item" href="#"  style="padding-top: 40px;">First Item</a>
+                        <a class="nav-link " href="#">Second Item</a>
+                        <a class="nav-link " href="#">Second Item</a>
+                        <a class="nav-link " href="#">Second Item</a>
+                    </ul>
+                </div>
+                <span class="navbar-text actions user_display">
+                    <span style="color: rgb(255,252,252); padding-right: 25px;padding-top: 3px;" id="user">Hello, Ramy Gharib</span>
+                    <a class="btn btn-light action-button signOut" role="button" href="#" style="background-color: #f0c14b;color: #232f3e;" data-ol-has-click-handler="">Sign Out</a>
+                </span>
+            <!-- </div> -->
+            </div>
+
+        </nav>
+
+        <div class="container">
+            <div class="row" style="padding-top: 3.5%; padding-bottom: 8%;">
+                <div class="col-md-2 cat_section">
+                    <h5>Categories</h5>
+                </div>
+                <div class="w-100"></div>
+
+                <div class="col-md-4">
+                    <div role="group" class="btn-group btn_group_style">
+                        <button class="btn btn-primary btn_1" type="button">Mobiles & Tablets</button>
+                        <button class="btn btn-primary btn_2" type="button">Home & Kitchen</button>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div role="group" class="btn-group btn_group_style">
+                        <button class="btn btn-primary btn_1" type="button">Appliances</button>
+                        <button class="btn btn-primary btn_2" type="button">Fashion</button>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div role="group" class="btn-group btn_group_style">
+                        <button class="btn btn-primary btn_1" type="button">Health & Beauty</button>
+                        <button class="btn btn-primary btn_2" type="button">Supermarket</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="article-list">
+            <div class="container">
+                <form>
+                <div class="input-group mb-3">
+
+                    <input type="text" class="form-control input_search" value="" name="search_val" id="search_val" placeholder="What are you looking for?" aria-label="Search" aria-describedby="basic-addon2" required>
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary search_btn" type="Submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                </form>
+                <div class="intro">
+                    <h2 class="text-center" id="status"></h2>
+                </div>
+                <div class="row articles" id="products-articles" style="">
+                    <div class="lds-dual-ring" id="loading_main_page"></div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- POP UP -->
+        <div class="modal fade" role="dialog" tabindex="-1" id="myModal" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Change Item Link</h4>
+                        <button type="button" class="close close_rep" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <section id="loading_add_item" style="display: none;">
+                            <div class="loading loading01">
+                                <span>L</span>
+                                <span>O</span>
+                                <span>A</span>
+                                <span>D</span>
+                                <span>I</span>
+                                <span>N</span>
+                                <span>G</span>
+                            </div>
+                        </section>
+                        <p class="err_load_data" style="display: none;">*Something Went Wrong! Please try again later</p>
+                        <span id="add_item_panel" style="">
+                            <input type="url" class="url_style" placeholder="Paste Product Link Here" id="item-link" />
+                            <div class="price_select">
+                                <p style="color: rgb(66, 71, 74);">
+                                    Send E-mail When Price is lower than<br />
+                                    <span style="padding-left: 6px;">*Note: you can leave it blank to notify you once it's drop</span>
+                                </p>
+                                <input type="text" class="price_set" id="price_note" placeholder="Ex. 9999 $" />
+                            </div>
+                        </span>
+                        <span id="select_dialog" style="display: none;">
+                            <div id="item_data_box">
+                                <div id="data_item">
+                                    <h4 id="title">Wrangler Authentics Men's Classic 5-Pocket Regular Fit Flex Jean size, Select</h4>
+                                    <h6 id="price_range_h">
+                                        Price:
+                                        <span id="price_range" style="opacity: 1;">24.22 USD</span>
+                                        <img class="loading_price" style="width: 34px; padding-bottom: 7px; display: none;" src="{{url_for('static', filename='img/loading_price.svg')}}" alt="" />
+                                    </h6>
+                                    <div id="select_data">
+                                        <label style="font-weight: 600;">Please Select Size: </label>
+                                        <!-- <label for="cars">Choose a car:</label> -->
+                                        <select id="size-list"></select>
+                                    </div>
+                                </div>
+
+                        </span>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-light close_modal close_rep" data-dismiss="modal" type="button">Close</button>
+                        <button class="btn btn-primary add-item" type="button" id="">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <script src="{{url_for('static', filename='js/jquery.min.js')}} "></script>
+        <script src="{{url_for('static', filename='bootstrap/js/bootstrap.min.js')}}"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-database.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-firestore.js"></script>
+        <script>
+            var firebaseConfig = {
+                apiKey: "AIzaSyCQYdl0vf8gKnayNRM18dbfMpYIQxzi0LI",
+                authDomain: "bright-lattice-260000.firebaseapp.com",
+                databaseURL: "https://bright-lattice-260000.firebaseio.com",
+                projectId: "bright-lattice-260000",
+                // storageBucket: "bright-lattice-260000.appspot.com",
+                // messagingSenderId: "1014243229877",
+                // appId: "1:1014243229877:web:71f55e2379e3c05a8bfefc",
+                // measurementId: "G-275CEDTFV7"
+            };
+            firebase.initializeApp(firebaseConfig);
+            var db = firebase.firestore();
+
+            // firebase.auth().onAuthStateChanged(function (user) {
+            //     // to be change to firebase
+            //     if (user) {
+            //         var displayName = user.displayName;
+            //         $("#user").text("Hello, " + displayName);
+            //         $("#products-articles").css("display", "");
+            //         $("#status").html("Dashboard");
+            //         // load_content(user.uid,db);
+            //         // var email = user.email;
+            //         // var emailVerified = user.emailVerified;
+            //         // var photoURL = user.photoURL;
+            //         // var isAnonymous = user.isAnonymous;
+            //         // var uid = user.uid;
+            //         // var providerData = user.providerData;
+
+
+
+
+            //     } else {
+            //         setTimeout(() => {
+            //             $("#status").html("404 Error");
+            //         }, 100);
+            //     }
+            //     $('.signOut').click(function(e){
+            //         e.preventDefault();
+            //         firebase.auth().signOut().then(function() {
+            //             // Sign-out successful.
+            //             window.location = 'http://localhost/main2/';
+            //         }).catch(function(error) {
+            //             // An error happened.
+            //         alert(error.message);
+            //         });
+            //     });
+            // });
+            // $('.side_bar').click(function(){
+            //     $('#mySidenav').toggleClass('active_bar');
+            // });
+            $('.selected_country').on('click',function(){
+                var name = $(this).attr('name');
+                console.log(name);
+            });
+
+
+            function default_query(){
+                var ref = firebase.database().ref("p_p_data");
+                var n = []
+                var items_html = []
+                ref.orderByChild("created_date").limitToLast(4).on("child_added", function(productsnap) {
+                    if(productsnap){
+                        $("#loading_main_page").css('display','');
+                        var product_count = productsnap.length
+                        $.each(productsnap.val().item_price, function(currsnap, item_p_date) {
+                            item_p_last = Object.values(item_p_date).sort().reverse()[0].price
+                            items_html.push(html_item(productsnap.val(), item_p_last, "item_curr"));
+                            n.push("1");
+                            if (n.length === 4){
+                                $("#products-articles" ).html(items_html.reverse().join(''));
+                            }
+                        });
+                    }else{
+                        $("#loading_main_page").css('display','none');
+                    }
+                });
+            }
+            default_query();
+            function html_item(item_data, item_price, item_curr){
+                if (item_price == "Out of Stock"){
+                    item_price = item_price
+                }else{
+                    item_price = item_price + ' ' + item_curr
+                }
+                var  product_template = '<div class="col-sm-6 col-md-3 item" id="' + item_data.item_uid + '">\
+                                    <a href="#" >\
+                                        <div class="image_box" >\
+                                            <img class="img-fluid" src="' + item_data.item_image + '">\
+                                        </div>\
+                                    </a><div>\
+                                    <h3 class="name name2" >\
+                                        <br>\
+                                        <p style= "font-size: 15px;font-weight: 600;color: #333;">' + item_data.item_title + '</p>\
+                                    </h3></div>\
+                                    <p class="description" >' + item_price + '</p>\
+                                    <div class="botton_group" style="padding-top: 16px;">\
+                                        \<a href="' + item_data.item_url + '" target="_blank">\
+                                            <button class="btn btn_buy" type="button">\
+                                                <i class="typcn typcn-shopping-cart icon"></i>Buy Now\
+                                            </button>\
+                                        \</a>\
+                                        <div class="btn_change_link">\
+                                            <a class="link rep_item" role="button" data-toggle="modal" href="#myModal">Change Item</a>\
+                                        </div>\
+                                    </div>\
+                                </div>';
+                    return  product_template;
+            }
+
+            $(".search_btn").on("click", function(e){
+                e.preventDefault();
+                var search_val = $('#search_val').val();
+                if(search_val){
+                    $("#products-articles" ).html('<div class="lds-dual-ring" id="loading_main_page"></div>');
+                    $("#loading_main_page").css('display','');
+                    $.ajax({
+                        type: "POST",
+                        url: 'run_search.php',
+                        data: {search_value: search_val}
+                    }).done(function(data){
+                        var items_html_search = []
+                        var i = [];
+                        var item_num = 0;
+                        item_data = JSON.parse(data);
+                        $.each(item_data, function(key, values){ // website num
+                            $.each(values, function(source, items) {//items
+                                $.each(items, function(source, item) { //item
+                                    items_html_search.push(html_item(item, item.item_price, "item_curr"));
+                                    i.push("1");
+                                    item_num  = item_num + 1;
+                                    if (i.length === item_num){
+                                        console.log(item_num)
+                                        $("#loading_main_page").css('display','none');
+                                        $("#products-articles" ).html(items_html_search.join(''));
+                                    }
+                                });
+                            });
+                        });
+                    });
+                }else{
+                    console.log(search_val);
+                }
+            });
+
+
+            // function get_ip(){
+            //     var get_county = $.getJSON('http://ip-api.com/json?callback=?', function(data1) {
+            //     }).done(function(){
+            //         if(get_county.responseJSON.country){
+            //             console.log(get_county.responseJSON.country);
+            //             // save as cookies
+            //         }else{
+
+            //         }
+            //     });
+            // }
+            // console.log(window.location.href);
+            $(".dropdown-menu li a").click(function(){
+                // $(this).parents(".dropdown").find('.btn').html($(this).text() );
+                // $(this).parents(".dropdown").find('.btn').val($(this).data('value'));
+                $('#c_flag').removeClass().addClass($(this).data('value'))
+            });
+
+            function openNav(){
+                document.getElementById("mySidenav").style.left = "0";
+            }
+            function closeNav(){
+                document.getElementById("mySidenav").style.left = "-250px";
+            }
+
+        </script>
+    </body>
+</html>
