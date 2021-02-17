@@ -1,5 +1,7 @@
 from flask import Flask, request, render_template
 from scripts_py import py_get_data
+from scripts_py import search_online
+import os
 
 app = Flask(__name__)
 
@@ -28,3 +30,18 @@ def get_item_data():
 @app.route('/search')
 def search():
     return render_template('search.html')
+
+
+@app.route('/search_data', methods=['GET', 'POST'])
+def search_data():
+    if request.method == 'POST':
+        search_value = request.form.get("search_value")
+        data = search_online.main(search_online.create_url(search_value, 'Egypt'))
+        return data
+    else:
+        return render_template('search.html')
+
+
+app.run(
+    host='localhost', port=5000,
+)

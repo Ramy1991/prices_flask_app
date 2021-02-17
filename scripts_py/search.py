@@ -133,8 +133,8 @@ async def fetch_all(session, urls):
 
 
 async def main():
-    search_value = sys.argv[1]
-    urls = create_url(search_value, "Egypt")
+    # search_value = sys.argv[1]
+    urls = create_url('ramy', "Egypt")
     async with aiohttp.ClientSession() as session:
         html_page = await fetch_all(session, urls)
 
@@ -143,5 +143,5 @@ async def main():
 
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
-    
+
     loop.run_until_complete(main())

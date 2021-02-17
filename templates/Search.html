@@ -686,27 +686,38 @@
                     $("#loading_main_page").css('display','');
                     $.ajax({
                         type: "POST",
-                        url: 'run_search.php',
+                        url: '/search_data',
                         data: {search_value: search_val}
                     }).done(function(data){
                         var items_html_search = []
                         var i = [];
                         var item_num = 0;
-                        item_data = JSON.parse(data);
-                        $.each(item_data, function(key, values){ // website num
-                            $.each(values, function(source, items) {//items
-                                $.each(items, function(source, item) { //item
-                                    items_html_search.push(html_item(item, item.item_price, "item_curr"));
-                                    i.push("1");
-                                    item_num  = item_num + 1;
-                                    if (i.length === item_num){
-                                        console.log(item_num)
-                                        $("#loading_main_page").css('display','none');
-                                        $("#products-articles" ).html(items_html_search.join(''));
-                                    }
+
+                        if (data == 'missing_data'){
+                            console.log('no results')
+                             $("#loading_main_page").css('display','none');
+                             default_query();
+                        }else{
+                            try{
+                                item_data = JSON.parse(data);
+                                $.each(item_data, function(key, values){ // website num
+                                    $.each(values, function(source, items) {//items
+                                        $.each(items, function(source, item) { //item
+                                            items_html_search.push(html_item(item, item.item_price, "item_curr"));
+                                            i.push("1");
+                                            item_num  = item_num + 1;
+                                            if (i.length === item_num){
+                                                console.log(item_num)
+                                                $("#loading_main_page").css('display','none');
+                                                $("#products-articles" ).html(items_html_search.join(''));
+                                            }
+                                        });
+                                    });
                                 });
-                            });
-                        });
+                            }catch(err) {
+                                console.log(err)
+                            }
+                        }
                     });
                 }else{
                     console.log(search_val);
