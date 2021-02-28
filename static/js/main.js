@@ -186,7 +186,7 @@ var firebaseConfig = {
         function onAuthStateChanged(){
             firebase.auth().onAuthStateChanged(function(user) {
                 if (user) {
-                    window.location = window.location.href + 'user/' + user.displayName.replace(/\s+/g, '-');
+                    window.location = window.location.href + 'user/' + user.displayName.replace(/\s+/g, '-').toLowerCase();
                 } 
             });
         }

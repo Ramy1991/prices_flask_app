@@ -1,7 +1,6 @@
 from flask import Flask, request, render_template
 from scripts_py import py_get_data
 from scripts_py import search_online
-import os
 
 app = Flask(__name__)
 
@@ -14,6 +13,7 @@ def index():
 
 @app.route('/user/<string:name>')
 def user(name):
+
     return render_template('user.html', username=name)
 
 
@@ -42,6 +42,4 @@ def search_data():
         return render_template('search.html')
 
 
-app.run(
-    host='localhost', port=5000,
-)
+app.run(debug=True, port=5000)

@@ -9,12 +9,14 @@
         var db = firebase.firestore();
 
         firebase.auth().onAuthStateChanged(function(user) { // to be change to firebase
-            if (user) {
-
+            c_url = window.location.href.toLowerCase()
+            u_url = window.location.origin + '/user/' + user.displayName.replace(" ", "-").toLowerCase();
+            if (user && (c_url === u_url)) {
                 var displayName = user.displayName;
                 $("#user").text("Hello, " + displayName);
                 $('#products-articles').css('display','');
                 $("#status").html("Dashboard");
+
 
                 firebase.database().ref("users").child(user.uid).on("value", function(usersnap) { // to be change to firebase
                     var n = [];
