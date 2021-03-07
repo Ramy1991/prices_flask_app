@@ -29,19 +29,18 @@ def get_item_data():
 
 @app.route('/search')
 def search():
-    return render_template('search.html')
+    return render_template('search.html', data='')
 
 
-@app.route('/search_data', methods=['GET', 'POST'])
-def search_data():
-    if request.method == 'POST':
-        search_value = request.form.get("search_value")
+@app.route('/search/<search_value>', methods=['GET', 'POST'])
+def search_data(search_value):
+    if request.method == 'GET':
+        # search_value = request.form.get("search_value")
         data = db_search.db_connection(search_value)
         # data = search_online.main(search_online.create_url(search_value, 'Egypt'))
-        return data
+        return render_template('search.html', data=data)
     else:
         return render_template('search.html')
-    data = search_online.main(search_online.create_url(search_value, 'Egypt'))
 
 
 app.run(debug=True, port=5000)
