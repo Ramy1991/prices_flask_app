@@ -10,6 +10,7 @@
   display: -webkit-box;
   -webkit-line-clamp: 4; /* number of lines to show */
   -webkit-box-orient: vertical;
+  text-align: left;
 }
 
 .article-list h2 {

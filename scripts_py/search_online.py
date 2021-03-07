@@ -146,7 +146,7 @@ def create_url(search_value, country):
 
 # links = create_url('ramy', 'Egypt')
 
-# print(main(create_url('sdfghjhgfdsd', 'Egypt')))
+# print(main(create_url('iphone', 'Egypt')))
 
 # search_value22 = sys.argv[1]
 # print(search_value22)
