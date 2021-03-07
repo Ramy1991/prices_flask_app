@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template
 from scripts_py import py_get_data
 from scripts_py import search_online
-from scripts_py import db_search
+# from scripts_py import db_search
 
 app = Flask(__name__)
 
@@ -36,7 +36,7 @@ def search():
 def search_data(search_value):
     if request.method == 'GET':
         # search_value = request.form.get("search_value")
-        data = db_search.db_connection(search_value)
+        data = ''
         # data = search_online.main(search_online.create_url(search_value, 'Egypt'))
         return render_template('search.html', data=data)
     else:
