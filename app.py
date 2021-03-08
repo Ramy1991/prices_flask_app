@@ -9,7 +9,7 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/home')
 def index():
-    return render_template('home.html')
+    return 'hello'
 
 
 @app.route('/user/<string:name>')
@@ -21,8 +21,8 @@ def user(name):
 def get_item_data():
     if request.method == 'POST':
         item_data = request.form.get("name")
-        responses = py_get_data.check_url(item_data)
-        return responses
+        # responses = py_get_data.check_url(item_data)
+        return 'responses'
     else:
         return render_template('user.html')
 
