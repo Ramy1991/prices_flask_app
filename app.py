@@ -43,4 +43,4 @@ def search_data(search_value):
         return render_template('search.html')
 
 
-app.run(debug=True, port=5000)
+# app.run(debug=True, port=5000)
