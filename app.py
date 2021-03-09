@@ -18,18 +18,7 @@ def user(name):
     return render_template('user.html', username=name)
 
 
-@app.route('/get_item_data', methods=['GET', 'POST'])
-def get_item_data():
-    if request.method == 'POST':
-        item_data = request.form.get("name")
-        responses = py_get_data.check_url(item_data)
-        return responses
-    else:
-        return render_template('user.html')
-
-
 @app.route('/search')
-# @app.route('/search/')
 def search():
     return render_template('search.html', data='')
 
@@ -45,3 +34,18 @@ def search():
 #         return render_template('search.html')
 
 # app.run(debug=True, port=5000)
+
+
+@app.route('/get_item_data', methods=['GET', 'POST'])
+def get_item_data():
+    if request.method == 'POST':
+        item_data = request.form.get("name")
+        responses = py_get_data.check_url(item_data)
+        return responses
+    else:
+        return render_template('user.html')
+
+
+
+
+
