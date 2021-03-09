@@ -33,8 +33,6 @@ def search():
 #     else:
 #         return render_template('search.html')
 
-# app.run(debug=True, port=5000)
-
 
 @app.route('/get_item_data', methods=['GET', 'POST'])
 def get_item_data():
@@ -44,6 +42,11 @@ def get_item_data():
         return responses
     else:
         return render_template('user.html')
+
+# app.run(debug=True, port=5000)
+
+
+
 
 
 
