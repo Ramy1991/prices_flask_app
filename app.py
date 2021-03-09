@@ -6,7 +6,7 @@ from scripts_py import py_get_data
 app = Flask(__name__)
 
 
-@app.route('/')
+# @app.route('/')
 @app.route('/home')
 @app.route('/home/')
 def index():
