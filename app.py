@@ -29,7 +29,7 @@ def get_item_data():
 
 
 @app.route('/search')
-@app.route('/search/')
+# @app.route('/search/')
 def search():
     return render_template('search.html', data='')
 
