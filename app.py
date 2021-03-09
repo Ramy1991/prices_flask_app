@@ -1,12 +1,13 @@
 from flask import Flask, request, render_template
 from scripts_py import py_get_data
+
 # from scripts_py import search_online
 # from scripts_py import db_search
 
 app = Flask(__name__)
 
 
-# @app.route('/')
+@app.route('/')
 @app.route('/home')
 @app.route('/home/')
 def index():
@@ -19,8 +20,8 @@ def user(name):
 
 
 @app.route('/search')
-def search_page():
-    return "hello"
+def search():
+    return render_template('search.html', data='')
 
 
 # @app.route('/search/<search_value>')
@@ -33,7 +34,6 @@ def search_page():
 #     else:
 #         return render_template('search.html')
 
-
 @app.route('/get_item_data', methods=['GET', 'POST'])
 def get_item_data():
     if request.method == 'POST':
@@ -44,11 +44,3 @@ def get_item_data():
         return render_template('user.html')
 
 # app.run(debug=True, port=5000)
-
-
-
-
-
-
-
-
