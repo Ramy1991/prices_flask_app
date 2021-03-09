@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template
 from scripts_py import py_get_data
-from scripts_py import search_online
-from scripts_py import db_search
+# from scripts_py import search_online
+# from scripts_py import db_search
 
 app = Flask(__name__)
 
