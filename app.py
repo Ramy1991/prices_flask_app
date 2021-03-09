@@ -18,9 +18,9 @@ def user(name):
     return render_template('user.html', username=name)
 
 
-@app.route('/ramyyy')
-def search():
-    return render_template('search.html', data='')
+@app.route('/search')
+def search_page():
+    return "hello"
 
 
 # @app.route('/search/<search_value>')
