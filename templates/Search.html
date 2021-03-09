@@ -707,67 +707,14 @@
             }catch(err) {
                 default_query();
             }
-
             $(".search_btn").on("click", function(e){
                 e.preventDefault();
                 $("#products-articles" ).html('<div class="lds-dual-ring" id="loading_main_page"></div>');
                 $("#loading_main_page").css('display','');
-                var search_val = $('#search_val').val();
-                if(search_val){
-                    window.location.href = window.location.origin + '/search/' + search_val;
-                }
-
+                var search_val = $('#search_val').val().replace(/[-\/\\!@#$%^&*(),.?":{}|<>]/g, "");
+                window.location.href = window.location.origin + '/search/' + search_val;
             });
-
-
-
-            // $(".search_btn").on("click", function(e){
-            //     e.preventDefault();
-            //     var search_val = $('#search_val').val();
-            //     if(search_val){
-            //         $("#products-articles" ).html('<div class="lds-dual-ring" id="loading_main_page"></div>');
-            //         $("#loading_main_page").css('display','');
-            //         $.ajax({
-            //             type: "GET",
-            //             url: '/search/' + search_val,
-            //             data: {search_value: search_val}
-            //         }).done(function(data){
-            //             console.log(data)
-            //             var items_html_search = []
-            //             var i = [];
-            //             var item_num = 0;
-
-            //             if (data == 'missing_data'){
-            //                 console.log('no results')
-            //                  $("#loading_main_page").css('display','none');
-            //                  default_query();
-            //             }else{
-            //                 try{
-            //                     data = {{data}}
-            //                     item_data = JSON.parse(data);
-            //                     $.each(item_data, function(key, values){ // website num
-            //                         $.each(values, function(source, items) {//items
-            //                             $.each(items, function(source, item) { //item
-            //                                 items_html_search.push(html_item(item, item.item_price, "item_curr"));
-            //                                 i.push("1");
-            //                                 item_num  = item_num + 1;
-            //                                 if (i.length === item_num){
-            //                                     console.log(item_num)
-            //                                     $("#loading_main_page").css('display','none');
-            //                                     $("#products-articles" ).html(items_html_search.join(''));
-            //                                 }
-            //                             });
-            //                         });
-            //                     });
-            //                 }catch(err) {
-            //                     console.log(err)
-            //                 }
-            //             }
-            //         });
-            //     }else{
-            //         console.log(search_val);
-            //     }
-            // });
+            $('#search_val').val(window.location.pathname.split('/')[2]);
 
 
             // function get_ip(){
