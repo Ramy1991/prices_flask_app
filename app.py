@@ -35,13 +35,16 @@ def search_data(search_value):
     return search_value
 
 
-@app.route('/get_item_data', methods=['GET', 'POST'])
-def get_item_data():
-    if request.method == 'POST':
-        item_data = request.form.get("name")
-        responses = py_get_data.check_url(item_data)
+@app.route('/get_item_data/<url>', methods=['GET', 'POST'])
+def get_item_data(url):
+    # if request.method == 'POST':
+    #     item_data = request.form.get("name")
+    #     responses = py_get_data.check_url(item_data)
+    #     return responses
+    # else:
+    #     return render_template('user.html')
+    if url:
+        responses = py_get_data.check_url(url)
         return responses
-    else:
-        return render_template('user.html')
 
 # app.run(debug=True, port=5000)
