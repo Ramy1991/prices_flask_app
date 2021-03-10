@@ -49,3 +49,6 @@ def get_item_data(url):
 
 
 # app.run(debug=True, port=5000)
+# link = "https://egypt.souq.com/eg-en/{}/s/?as=1".format('2724571466253')
+# responses = py_get_data.check_url(link)
+# print(responses)
