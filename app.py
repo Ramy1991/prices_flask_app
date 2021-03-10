@@ -44,7 +44,8 @@ def get_item_data(url):
     # else:
     #     return render_template('user.html')
     if url:
-        responses = py_get_data.check_url(url)
+        link = 'https://egypt.souq.com/eg-en/{}/s/?as=1'.format(url)
+        responses = py_get_data.check_url(link)
         return responses
 
 # app.run(debug=True, port=5000)
