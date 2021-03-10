@@ -5,16 +5,6 @@ from scripts_py import py_get_data
 # from scripts_py import db_search
 
 app = Flask(__name__)
-app.url_map.strict_slashes = False
-
-
-@app.before_request
-def clear_trailing():
-    from flask import redirect, request
-
-    rp = request.path
-    if rp != '/' and rp.endswith('/'):
-        return redirect(rp[:-1])
 
 
 @app.route('/')
@@ -52,5 +42,6 @@ def get_item_data():
         return responses
     else:
         return render_template('user.html')
+
 
 # app.run(debug=True, port=5000)
