@@ -24,9 +24,9 @@ def website_check(url):
 
 
 def upload_image(image_url, uid):
-    if not firebase_admin._apps:
-        cred = credentials.Certificate(r'scripts_py\bright-lattice-260000-firebase-adminsdk.json')
-        firebase_admin.initialize_app(cred, {'storageBucket': 'bright-lattice-260000.appspot.com'})
+    # if not firebase_admin._apps:
+    cred = credentials.Certificate(r'scripts_py\bright-lattice-260000-firebase-adminsdk.json')
+    firebase_admin.initialize_app(cred, {'storageBucket': 'bright-lattice-260000.appspot.com'})
     bucket = storage.bucket()
     image_data = requests.get(image_url).content
     blob = bucket.blob("product_images/" + uid + '.jpg')
@@ -132,7 +132,7 @@ def get_data(url):
             time_now = datetime.now().strftime("%H:%M:%S")
 
             items_data_list = {'item_title': item_title.strip(),
-                               # 'item_image': upload_image(item_image, item_uid.strip()),
+                               'item_image': upload_image(item_image, item_uid.strip()),
                                'item_url': url.strip(), 'item_price': item_price, 'item_uid': item_uid.strip(),
                                'currency': currency(url), 'time': time_now, 'date': date_now,
                                'website': domain}
