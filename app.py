@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template
 from scripts_py import py_get_data
+import requests
 
 # from scripts_py import search_online
 # from scripts_py import db_search
@@ -45,7 +46,8 @@ def get_item_data(url):
     #     return render_template('user.html')
     if url:
         link = 'https://egypt.souq.com/eg-en/{}/s/?as=1'.format(url)
-        responses = py_get_data.check_url(link)
-        return responses
+        data = requests.get(link)
+        # responses = py_get_data.check_url(link)
+        return data.content
 
 # app.run(debug=True, port=5000)
