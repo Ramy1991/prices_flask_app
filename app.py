@@ -19,20 +19,21 @@ def user(name):
     return render_template('user.html', username=name)
 
 
-@app.route('/home/search', methods=['GET', 'POST'])
+@app.route('/search', methods=['GET', 'POST'])
 def search():
     return render_template('search.html', data='')
 
 
-# @app.route('/search/<search_value>')
-# def search_data(search_value):
-#     if search_value:
-#         # search_value = request.form.get("search_value")
-#         data = db_search.db_connection(search_value)
-#         # data = search_online.main(search_online.create_url(search_value, 'Egypt'))
-#         return render_template('search.html', data=data)
-#     else:
-#         return render_template('search.html')
+@app.route('/search/<search_value>')
+def search_data(search_value):
+    if search_value:
+        # search_value = request.form.get("search_value")
+        data = db_search.db_connection(search_value)
+        # data = search_online.main(search_online.create_url(search_value, 'Egypt'))
+        return render_template('search.html', data=data)
+    else:
+        return render_template('search.html')
+
 
 @app.route('/get_item_data', methods=['GET', 'POST'])
 def get_item_data():
@@ -42,6 +43,5 @@ def get_item_data():
         return responses
     else:
         return render_template('user.html')
-
 
 # app.run(debug=True, port=5000)
