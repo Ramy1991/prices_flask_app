@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template
 from scripts_py import py_get_data
 import requests
+from concurrent.futures import ThreadPoolExecutor
 
 # from scripts_py import search_online
 # from scripts_py import db_search
@@ -46,8 +47,11 @@ def get_item_data(url):
     #     return render_template('user.html')
     if url:
         link = 'https://egypt.souq.com/eg-en/{}/s/?as=1'.format(url)
-        data = requests.get(link)
+        with ThreadPoolExecutor(max_workers=20) as executor:
+            request_1 = executor.submit(lambda: requests.get(link))
+            html_page = request_1.result().content
+            # tree = html.fromstring(html_page)
         # responses = py_get_data.check_url(link)
-        return data.content
+        return html_page
 
 # app.run(debug=True, port=5000)
