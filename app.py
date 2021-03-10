@@ -39,19 +39,13 @@ def search_data(search_value):
 
 @app.route('/get_item_data/<url>', methods=['GET', 'POST'])
 def get_item_data(url):
-    # if request.method == 'POST':
-    #     item_data = request.form.get("name")
-    #     responses = py_get_data.check_url(item_data)
-    #     return responses
-    # else:
-    #     return render_template('user.html')
     if url:
-        link = 'https://egypt.souq.com/eg-en/{}/s/?as=1'.format(url)
-        with ThreadPoolExecutor(max_workers=20) as executor:
-            request_1 = executor.submit(lambda: requests.get(link))
-            html_page = request_1.result().content
-            # tree = html.fromstring(html_page)
-        # responses = py_get_data.check_url(link)
-        return html_page
+        # item_data = request.form.get("name")
+        link = "https://egypt.souq.com/eg-en/{}/s/?as=1".format(url)
+        responses = py_get_data.check_url(link)
+        return responses
+    else:
+        return render_template('user.html')
+
 
 # app.run(debug=True, port=5000)
