@@ -20,10 +20,6 @@ def user(name):
 
 @app.route('/search')
 @app.route('/search/')
-def search():
-    return render_template('Search.html', data='')
-
-
 @app.route('/search/<search_value>')
 def search_data(search_value):
     if search_value:
@@ -33,10 +29,6 @@ def search_data(search_value):
         return render_template('search.html', data=data)
     else:
         return render_template('search.html', data='')
-    # if search_value:
-    #     return search_value
-    # else:
-    #     return "default"
 
 
 #
