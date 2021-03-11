@@ -19,11 +19,11 @@ def user(name):
 
 
 @app.route('/search')
-@app.route('/search/')
 def search():
     return render_template('search.html', data='')
 
 
+@app.route('/search/')
 @app.route('/search/<search_value>')
 def search_data(search_value):
     if search_value:
@@ -48,6 +48,5 @@ def get_item_data():
         return responses
     else:
         return render_template('user.html')
-
 
 # app.run(debug=True, port=5000)
