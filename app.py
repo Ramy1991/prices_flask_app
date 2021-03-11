@@ -20,6 +20,10 @@ def user(name):
 
 @app.route('/search')
 @app.route('/search/')
+def search():
+    return render_template('search.html', data='')
+
+
 @app.route('/search/<search_value>')
 def search_data(search_value):
     if search_value:
