@@ -19,13 +19,9 @@ def user(name):
 
 
 @app.route('/search')
-def search():
-    return render_template('home.html')
-
-
 @app.route('/search/')
-def search2():
-    return render_template('home.html')
+def search():
+    return render_template('Search.html', data='')
 
 
 @app.route('/search/<search_value>')
