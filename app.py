@@ -27,7 +27,6 @@ def search():
 @app.route('/search/<search_value>')
 def search_data(search_value):
     if search_value:
-        # search_value = request.form.get("search_value")
         data = db_search.db_connection(search_value)
         # data = search_online.main(search_online.create_url(search_value, 'Egypt'))
         return render_template('search.html', data=data)
@@ -45,4 +44,4 @@ def get_item_data():
         return render_template('user.html')
 
 
-# app.run(debug=True, port=5000)
+app.run(debug=True, port=5000)
