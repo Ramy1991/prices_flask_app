@@ -24,7 +24,7 @@ app = Flask(__name__)
 
 @app.route('/search-item')
 # @app.route('/search-item/<search_value>')
-def search_data(search_value):
+def search_data():
     # if search_value:
     #     # search_value = request.form.get("search_value")
     #     data = db_search.db_connection(search_value)
