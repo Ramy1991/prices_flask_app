@@ -1,8 +1,5 @@
 from flask import Flask, request, render_template
 from scripts_py import py_get_data
-import requests
-from concurrent.futures import ThreadPoolExecutor
-
 # from scripts_py import search_online
 # from scripts_py import db_search
 
