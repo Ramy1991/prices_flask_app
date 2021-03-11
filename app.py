@@ -31,10 +31,8 @@ def search_data(search_value):
     #     # data = search_online.main(search_online.create_url(search_value, 'Egypt'))
     #     return render_template('search.html', data=data)
     # else:
-    if search_value:
-        return search_value
-    else:
-        return "find"
+
+    return "Hello"
 
 #
 # @app.route('/get_item_data', methods=['GET', 'POST'])
