@@ -21,11 +21,11 @@ def user(name):
     return render_template('user.html', username=name)
 
 
-@app.route('/search', methods=['GET', 'POST'])
-def search():
-    return render_template('search.html', data='')
+# @app.route('/search', methods=['GET', 'POST'])
+# def search():
+#     return render_template('search.html', data='')
 
-
+@app.route('/search')
 @app.route('/search/<search_value>')
 def search_data(search_value):
     # if search_value:
@@ -34,21 +34,19 @@ def search_data(search_value):
     #     # data = search_online.main(search_online.create_url(search_value, 'Egypt'))
     #     return render_template('search.html', data=data)
     # else:
-    return search_value
+    if search_value:
+        return search_value
+    else:
+        return ""
 
 
-@app.route('/get_item_data/<url>', methods=['GET', 'POST'])
-def get_item_data(url):
-    if url:
-        # item_data = request.form.get("name")
-        link = "https://egypt.souq.com/eg-en/{}/s/?as=1".format(url)
-        responses = py_get_data.check_url(link)
+@app.route('/get_item_data', methods=['GET', 'POST'])
+def get_item_data():
+    if request.method == 'POST':
+        item_data = request.form.get("name")
+        responses = py_get_data.check_url(item_data)
         return responses
     else:
         return render_template('user.html')
 
-
 # app.run(debug=True, port=5000)
-# link = "https://egypt.souq.com/eg-en/{}/s/?as=1".format('2724571466253')
-# responses = py_get_data.check_url(link)
-# print(responses)
