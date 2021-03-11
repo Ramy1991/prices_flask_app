@@ -3,7 +3,7 @@ from datetime import datetime, date
 from concurrent.futures import ThreadPoolExecutor
 from scripts_py.supported_website import supported_website_xp, currency
 import firebase_admin
-from firebase_admin import credentials, storage
+from firebase_admin import credentials, storage, exceptions
 import requests
 import re
 import json
@@ -24,14 +24,17 @@ def website_check(url):
 
 
 def upload_image(image_url, uid):
-    # if not firebase_admin._apps:
-    cred = credentials.Certificate(r'scripts_py\bright-lattice-260000-firebase-adminsdk.json')
-    firebase_admin.initialize_app(cred, {'storageBucket': 'bright-lattice-260000.appspot.com'})
-    bucket = storage.bucket()
-    image_data = requests.get(image_url).content
-    blob = bucket.blob("product_images/" + uid + '.jpg')
-    blob.upload_from_string(image_data, content_type='image/jpg')
-    return blob.public_url
+    try:
+        if not firebase_admin._apps:
+            cred = credentials.Certificate(r'scripts_py\bright-lattice-260000-firebase-adminsdk.json')
+            firebase_admin.initialize_app(cred, {'storageBucket': 'bright-lattice-260000.appspot.com'})
+        bucket = storage.bucket()
+        image_data = requests.get(image_url).content
+        blob = bucket.blob("product_images/" + uid + '.jpg')
+        blob.upload_from_string(image_data, content_type='image/jpg')
+        return blob.public_url
+    except exceptions:
+        return exceptions
 
 
 def user_agent():
