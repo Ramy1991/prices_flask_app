@@ -709,7 +709,7 @@
                 e.preventDefault();
                 $("#products-articles" ).html('<div class="lds-dual-ring" id="loading_main_page"></div>');
                 $("#loading_main_page").css('display','');
-                var search_val = $('#search_val').val().replace(/[-\/\\!@#$%^&*(),.?":{}|<>]/g, "");
+                var search_val = $('#search_val').val().replace(/[-\/\\!@#$%^&*'(),.?":{}|<>]/g, "");
                 window.location.href = window.location.origin + '/search/' + search_val;
             });
             $('#search_val').val(window.location.pathname.split('/')[2]);
