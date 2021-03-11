@@ -26,7 +26,7 @@ def website_check(url):
 def upload_image(image_url, uid):
     try:
         if not firebase_admin._apps:
-            cred = credentials.Certificate(r'scripts_py\bright-lattice-260000-firebase-adminsdk.json')
+            cred = credentials.Certificate(r'scripts_py/bright-lattice-260000-firebase-adminsdk.json')
             firebase_admin.initialize_app(cred, {'storageBucket': 'bright-lattice-260000.appspot.com'})
         bucket = storage.bucket()
         image_data = requests.get(image_url).content
