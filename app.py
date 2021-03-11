@@ -7,22 +7,23 @@ app = Flask(__name__)
 
 
 # @app.route('/')
-@app.route('/home')
-@app.route('/home/')
-def index():
-    return render_template('home.html')
-
-
-@app.route('/user/<string:name>')
-def user(name):
-    return render_template('user.html', username=name)
+# @app.route('/home')
+# @app.route('/home/')
+# def index():
+#     return render_template('home.html')
+#
+#
+# @app.route('/user/<string:name>')
+# def user(name):
+#     return render_template('user.html', username=name)
 
 
 # @app.route('/search', methods=['GET', 'POST'])
 # def search():
 #     return render_template('search.html', data='')
+
 @app.route('/search-item')
-@app.route('/search-item/<search_value>')
+# @app.route('/search-item/<search_value>')
 def search_data(search_value):
     # if search_value:
     #     # search_value = request.form.get("search_value")
@@ -35,14 +36,14 @@ def search_data(search_value):
     else:
         return "find"
 
-
-@app.route('/get_item_data', methods=['GET', 'POST'])
-def get_item_data():
-    if request.method == 'POST':
-        item_data = request.form.get("name")
-        responses = py_get_data.check_url(item_data)
-        return responses
-    else:
-        return render_template('user.html')
+#
+# @app.route('/get_item_data', methods=['GET', 'POST'])
+# def get_item_data():
+#     if request.method == 'POST':
+#         item_data = request.form.get("name")
+#         responses = py_get_data.check_url(item_data)
+#         return responses
+#     else:
+#         return render_template('user.html')
 
 # app.run(debug=True, port=5000)
