@@ -35,7 +35,6 @@ def search_data(search_value):
         return render_template('search.html', data='')
 
 
-#
 @app.route('/get_item_data', methods=['GET', 'POST'])
 def get_item_data():
     if request.method == 'POST':
