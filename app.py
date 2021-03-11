@@ -22,7 +22,7 @@ app = Flask(__name__)
 # def search():
 #     return render_template('search.html', data='')
 
-@app.route('/searchitem')
+@app.route('/search')
 # @app.route('/search-item/<search_value>')
 def search_data():
     # if search_value:
