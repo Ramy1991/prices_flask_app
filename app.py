@@ -33,7 +33,7 @@ def search_data(search_value):
     if search_value:
         return search_value
     else:
-        return ""
+        return "find"
 
 
 @app.route('/get_item_data', methods=['GET', 'POST'])
