@@ -25,15 +25,17 @@ app = Flask(__name__)
 @app.route('/search')
 @app.route('/search/')
 @app.route('/search/<search_value>')
-def search_data():
+def search_data(search_value):
     # if search_value:
     #     # search_value = request.form.get("search_value")
     #     data = db_search.db_connection(search_value)
     #     # data = search_online.main(search_online.create_url(search_value, 'Egypt'))
     #     return render_template('search.html', data=data)
     # else:
-
-    return "Hello"
+    if search_value:
+        return search_value
+    else:
+        return "fsf"
 
 #
 # @app.route('/get_item_data', methods=['GET', 'POST'])
