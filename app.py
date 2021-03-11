@@ -21,7 +21,7 @@ def user(name):
 # @app.route('/search', methods=['GET', 'POST'])
 # def search():
 #     return render_template('search.html', data='')
-
+@app.route('/search')
 @app.route('/search/')
 @app.route('/search/<search_value>')
 def search_data(search_value):
