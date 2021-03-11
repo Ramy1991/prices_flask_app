@@ -21,8 +21,8 @@ def user(name):
 # @app.route('/search', methods=['GET', 'POST'])
 # def search():
 #     return render_template('search.html', data='')
-@app.route('/find')
-@app.route('/find/<search_value>')
+@app.route('/search-item')
+@app.route('/search-item/<search_value>')
 def search_data(search_value):
     # if search_value:
     #     # search_value = request.form.get("search_value")
