@@ -88,18 +88,24 @@ for prefix, event, value in data:
     elif prefix == 'item.data.item.Brand_AR':
         Brand_AR = value
         item.append(Brand_AR)
-    elif prefix == 'item.data.item.Description_EN':
-        Description_EN = value
-        item.append(Description_EN)
-    elif prefix == 'item.data.item.Description_AR':
-        Description_AR = value
-        item.append(Description_AR)
+    # elif prefix == 'item.data.item.Description_EN':
+    #     Description_EN = value
+    #     item.append(Description_EN)
+    # elif prefix == 'item.data.item.Description_AR':
+    #     Description_AR = value
+    #     item.append(Description_AR)
     elif prefix == 'item.data.item.Item_Specs_en':
         Item_Specs_en = value
-        item.append(Item_Specs_en)
+        att = re.findall(r'dt>(.*?)<.dt', Item_Specs_en)
+        att_values = re.findall(r'dd>(.*?)<.dd', Item_Specs_en)
+        specs = dict(zip(att, att_values))
+        item.append(specs)
     elif prefix == 'item.data.item.Item_Specs_ar':
         Item_Specs_ar = value
-        item.append(Item_Specs_ar)
+        att = re.findall(r'dt>(.*?)<.dt', Item_Specs_ar)
+        att_values = re.findall(r'dd>(.*?)<.dd', Item_Specs_ar)
+        specs_ar = dict(zip(att, att_values))
+        item.append(specs_ar)
     elif prefix == 'item.data.item.Images_URL':
         Images_URL = value
         item.append(Images_URL)
@@ -128,30 +134,32 @@ for prefix, event, value in data:
         item_date = re.search(r'item.(\d+.\d+.\d+)', Images_URL)
         item.append(item_date.group(1))
 
-        if n > 81567:
-            items.append("('" + "', '".join(map(str, item)) + "')")
-            if 400000 <= len(', '.join(items) + ';') <= 450000:
-                # if len(items) == 1:
-                items_to_set = ', '.join(items) + ';'
-                query_string = "INSERT INTO products ( Unique_Product_Code, Website_Name, UIC, URL_EN, URL_AR, Cate_URL_EN," \
-                               " Cate_URL_AR, Country, sub_category_URL_EN, sub_category_en, sub_category_ar, Item_Type_EN," \
-                               " Item_Type_AR, Title_EN, Title_AR, Brand_EN, Brand_AR, Description_EN, Description_AR," \
-                               " Item_Specs_en, Item_Specs_ar, Images_URL, Product_Direct_Link_EN, Product_Direct_Link_AR," \
-                               " Price_eg, Item_UPC, Sold_Out, link_en, link_ar, item_date) " \
-                               "VALUES {}".format(items_to_set)
-                my_item = {'query': query_string}
-                print(str(len(query_string)) + '-' + str(n))
-                header = {
-                    "User-Agent": user_agent(),
-                    "Accept": "*/*",
-                    "Accept-Language": "*/*",
-                    "Accept-Charset": "*/*",
-                    "Connection": "keep-alive",
-                    "Keep-Alive": "300"
-                }
-                response = requests.post(url, data=my_item)
-                print(str(Unique_Product_Code) + '-' + response.text + '-' + str(n))
-                items = []
+        # if n > 81567:
+        items.append("('" + "', '".join(map(str, item)) + "')")
+        if 400000 <= len(', '.join(items) + ';') <= 450000:
+            # if len(items) == 1:
+            items_to_set = ', '.join(items) + ';'
+            query_string = "INSERT INTO products ( Unique_Product_Code, Website_Name, UIC, URL_EN, URL_AR, Cate_URL_EN," \
+                           " Cate_URL_AR, Country, sub_category_URL_EN, sub_category_en, sub_category_ar, Item_Type_EN," \
+                           " Item_Type_AR, Title_EN, Title_AR, Brand_EN, Brand_AR," \
+                           " Item_Specs_en, Item_Specs_ar, Images_URL, Product_Direct_Link_EN, Product_Direct_Link_AR," \
+                           " Price_eg, Item_UPC, Sold_Out, link_en, link_ar, item_date) " \
+                           "VALUES {}".format(items_to_set)
+            my_item = {'query': query_string}
+            print(str(len(query_string)) + '-' + str(n))
+            print(query_string)
+            header = {
+                "User-Agent": user_agent(),
+                "Accept": "*/*",
+                "Accept-Language": "*/*",
+                "Accept-Charset": "*/*",
+                "Connection": "keep-alive",
+                "Keep-Alive": "300"
+            }
+            # response = requests.post(url, data=my_item)
+            # print(str(Unique_Product_Code) + '-' + response.text + '-' + str(n))
+            items = []
+            break
 
         n += 1
         item = []
