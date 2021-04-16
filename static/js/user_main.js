@@ -162,15 +162,17 @@
         function get_size_url(data, item_url){
             $('#loading_add_item').css('display','none');
             $('#select_dialog').css('display','block');
+            var item_info = JSON.parse(data);
+            console.log(item_info)
 
-            var title = data.split('@')[0];
-            var img = data.split('@')[1];
-            var price_sata = data.split('@')[2];
-            var size_data = JSON.parse(data.split('@')[3]);
+            var title = item_info.item_title;
+            var img = item_info.item_image;
+            var price_data = item_info.item_price;
+            var size_data = item_info.item_sizes;
 
             $('#title').text(title);
             $('#item-img').attr("src", img);
-            $('#price_range').text(price_sata);
+            $('#price_range').text(price_data);
 
 
             var option = ['<option value=""> Select </option>']

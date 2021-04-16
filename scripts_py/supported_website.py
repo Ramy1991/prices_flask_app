@@ -1,33 +1,34 @@
 supported_website_xp = {
-
+    # //*[@id='imageBlockThumbs']/span/div/img/@src
+    # //*[@id='landingImage']/@src
     'amazon.': {
-        'image_xp': "//*[@id='imgTagWrapperId']/img/@data-old-hires | //*[@id='imageBlockThumbs']/span/div/img/@src | //*[@id='landingImage']/@src",
-        'price_xp': "//*[@id='priceblock_ourprice']/text() | //*[@id='priceblock_dealprice']/text() | //*[@id='buyNewSection']/h5/div/div[2]/div/span[2]/text() | //*[@id='cerberus-data-metrics']/@data-asin-price",
+        'image_xp': "//*[@id='imgTagWrapperId']/img/@data-old-hires | //*[@id='imgBlkFront']/@data-a-dynamic-image | //div[@id='ebooks-main-image-container']/div/div/img/@src | //div[@id='audibleimageblock_feature_div']//img/@src",
+        'price_xp': "//*[@id='priceblock_ourprice']/text() | //*[@id='priceblock_dealprice']/text() | //*[@id='buyNewSection']/h5/div/div[2]/div/span[2]/text() | //*[@id='cerberus-data-metrics']/@data-asin-price | //span[@class='a-color-base']/span//text() | //*[@id='newBuyBoxPrice']/text() | //*[@id='rentPrice']/text()",
         'title_xp': "//*[@id='productTitle']/text()",
-        'uid_xp': "//*[@id='cerberus-data-metrics']/@data-asin | //*[contains(text(),'ISBN-10')]/ancestor::li[1]/text()",
+        'uid_xp': "//*[@id='cerberus-data-metrics']/@data-asin | //*[contains(text(),'ISBN-10')]/ancestor::li[1]/text() | //input[@id='ASIN']/@value",
         'url_xp': "//link[@rel='canonical']/@href",
         'drop_down_size_XP': "//ul[@class='a-nostyle a-list-link']//li//text()",
         'item_size': "//*[@id='dropdown_selected_size_name']/span/span/span//text()"
     },
     'btech.com': {
-        'image_xp': "//*[@data-gallery-role='gallery-placeholder']/following-sibling::script//text()",
-        'price_xp': "//*[@id='nav-tabs__cash']//p[1]/span[1]/text()",
-        'title_xp': "//*[@name='keywords']/@content",
-        'uid_xp': "//*[@class='product-add-form']/form/@data-product-sku",
+        'image_xp': "//div[@id='tab-images-content']/a[1]/@href",
+        'price_xp': "//input[@id='gtm_price']/@value",
+        'title_xp': "//input[@id='gtm_name']/@value",
+        'uid_xp': "//input[@id='gtm_id']/@value",
         'url_xp': "//*[@property='og:url']/@content"
     },
     'jumia.com': {
         'image_xp': "//meta[@property='og:image']/@content",
-        'price_xp': "//*[@id='jm']/main/div[2]/section//div[2]/div[3]/span/text() | //*[@id='jm']//section//div[3]/span/text()",
+        'price_xp': "//script[3]/text()",
         'title_xp': "//*[@id='jm']//section//div/h1/text()",
         'uid_xp': "//*[contains(text(),'SKU')]//ancestor::li[1]/text()",
         'url_xp': "//meta[@property='og:url']/@content"
     },
     'noon.com': {
         'image_xp': "//*[@property='og:image']/@content",
-        'price_xp': "//*[@id='content']//p[2]/span[2]/span/span[1]/span/span[2]/text() | //*[@id='content']//p/span/span/span[1]/span/span[2]/text()",
+        'price_xp': "//script[@id='__NEXT_DATA__']/text()",
         'title_xp': "//*[@id='content']/div/div/div[3]/div/div[1]/div[2]/div[1]/h1/text() | //*[@id='__next']/div/section/div/div[1]/div/div[2]/div[1]/div[2]/h1/text()",
-        'uid_xp': "//*[@rel='canonical']/@href",
+        'uid_xp': "//script[@id='__NEXT_DATA__']/text()",
         'url_xp': "//*[@rel='canonical']/@href"
     },
     'souq.com': {
