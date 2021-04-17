@@ -140,7 +140,7 @@
                 console.log(data1)
                 if(data1.trim() == "missing_data: item_price"){
                     $('#price_range').text('out of stock')
-                }else if(data1.trim().includes("missing_data"))){
+                }else if(data1.trim().includes("missing_data")){
                     console.log(data1)
                     $('.err_load_data').css('display','');
                 }else{
