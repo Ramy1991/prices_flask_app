@@ -141,9 +141,11 @@
                 if(data1.trim().includes("missing_data")){
                     console.log(data1)
                     $('.err_load_data').css('display','');
+                }else if(data1.trim().includes("missing_data: item_price")){
+                    $('#price_range').text('out of stock')
                 }else{
                     var item_data = JSON.parse(data1);
-                    if(item_data.item_price == 'Out of Stock'){
+                    if(item_data.item_price == 'out of stock'){
                         $('#price_range').text(item_data.item_price)
                     }else{
                         $('#price_range').text(item_data.item_price + ' ' + item_data.currency);
