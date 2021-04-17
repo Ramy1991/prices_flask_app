@@ -138,11 +138,11 @@
                 data: {name: this.value}
             }).done(function(data1){
                 console.log(data1)
-                if(data1.trim().includes("missing_data")){
+                if(data1.trim() == "missing_data: item_price"){
+                    $('#price_range').text('out of stock')
+                }else if(data1.trim().includes("missing_data"))){
                     console.log(data1)
                     $('.err_load_data').css('display','');
-                }else if(data1.trim().includes("missing_data: item_price")){
-                    $('#price_range').text('out of stock')
                 }else{
                     var item_data = JSON.parse(data1);
                     if(item_data.item_price == 'out of stock'){
