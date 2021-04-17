@@ -1,8 +1,8 @@
 from lxml import html
 from datetime import datetime, date
 from concurrent.futures import ThreadPoolExecutor
-# from scripts_py.supported_website import supported_website_xp, currency
-from supported_website import supported_website_xp, currency
+from scripts_py.supported_website import supported_website_xp, currency
+# from supported_website import supported_website_xp, currency
 import firebase_admin
 from firebase_admin import credentials, storage, exceptions
 import requests
@@ -175,17 +175,6 @@ def get_data(url):
                 }
                 return json.dumps(validate_json(items))
 
-            # items_data_list = {'item_title': item_title.strip(),
-            #                    # 'item_image': upload_image(item_image, item_uid.strip()),
-            #                    'item_image': item_image,
-            #                    'item_url': url.strip(), 'item_price': item_price, 'item_uid': item_uid.strip(),
-            #                    'currency': currency(url), 'time': time_now, 'date': date_now,
-            #                    'website': domain}
-            # item_data = validate_json(items_data_list)
-
-            # print(json.dumps(item_data))
-
-    # loop = asyncio.get_event_loop()
     return main()
 
 
@@ -195,38 +184,3 @@ def check_url(url):
     else:
         return "dummy_website"
 
-
-# print(check_url('https://egypt.souq.com/eg-en//i/'))
-
-# ua = UserAgent()
-#
-# header = {'User-Agent': str(ua.chrome)}
-# page = requests.get(url, headers=header)
-#
-#
-# tree = html.fromstring(page.content)
-# item_title = tree.xpath(title_xp+"//text()")
-# item_image = tree.xpath(image_xp)[0]
-# item_url = tree.xpath(url_xp)[0]
-# item_price = tree.xpath(price_xp+"//text()") https://btech.com/ar/xiaomi-redmi-note-9-pro-64gb-green-1614003650.html
-# item_uid = tree.xpath(uid_xp+"//text()")
-#
-
-#
-# user_id = u'9VTVXwqtV1bwx5ug9vSqywGsPgF3'
-#
-#
-# doc_ref = db.collection(u'users').document(user_id)
-#
-# doc_ref.update({
-#     u'name': u'Frank',
-#     u'tracking_items': {
-#         u'item_uid': {
-#             u'item_uid': u'item_uid',
-#             u'item_image': u'Blue',
-#             u'item_url': u'Recess',
-#             u'item_title': u'Recess',
-#             u'item_price': u'Recess'
-#         }
-#     }
-# })
