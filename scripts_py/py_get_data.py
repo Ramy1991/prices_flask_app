@@ -24,18 +24,7 @@ def website_check(url):
             return website
 
 
-def upload_image(image_url, uid):
-    try:
-        if not firebase_admin._apps:
-            cred = credentials.Certificate(r'scripts_py\bright-lattice-260000-firebase-adminsdk.json')
-            firebase_admin.initialize_app(cred, {'storageBucket': 'bright-lattice-260000.appspot.com'})
-        bucket = storage.bucket()
-        image_data = requests.get(image_url).content
-        blob = bucket.blob("product_images/" + uid + '.jpg')
-        blob.upload_from_string(image_data, content_type='image/jpg')
-        return blob.public_url
-    except exceptions:
-        return exceptions
+
 
 
 def user_agent():
@@ -67,6 +56,19 @@ class Websites(object):
         self.website = re.search(r':\/\/(.*?)\/', _url.strip()).group(1)
         self.tree = tree
 
+    def upload_image(self):
+        try:
+            if not firebase_admin._apps:
+                cred = credentials.Certificate(r'scripts_py\bright-lattice-260000-firebase-adminsdk.json')
+                firebase_admin.initialize_app(cred, {'storageBucket': 'bright-lattice-260000.appspot.com'})
+            bucket = storage.bucket()
+            image_data = requests.get(self.item_image).content
+            blob = bucket.blob("product_images/" + self.item_uid + '.jpg')
+            blob.upload_from_string(image_data, content_type='image/jpg')
+            return blob.public_url
+        except exceptions:
+            return exceptions
+
     def noon(self):
         item_uid_ = json.loads(self.item_uid)
         self.item_price = str(
@@ -76,11 +78,11 @@ class Websites(object):
                 item_uid_['props']['pageProps']['catalog']['product']['variants'][0]['offers'][0]['price'])
         self.item_uid = item_uid_['props']['pageProps']['catalog']['product']['variants'][0]['offers'][0][
             'sku_config']
-        self.item_image = upload_image(self.item_image, self.item_uid.strip())
+        self.item_image = self.upload_image()
         return self.__dict__
 
     def b_tech(self):
-        self.item_image = upload_image(self.item_image, self.item_uid.strip())
+        self.item_image = self.upload_image()
         return validate_json(self.__dict__)
 
     def jumia(self):
@@ -88,10 +90,11 @@ class Websites(object):
         if self.item_price.strip():
             item_price = self.item_price.replace(r'window.__STORE__=', '')
             self.item_price = json.loads(item_price.replace(r';', '').strip())['simples'][0]['prices']['rawPrice']
-        self.item_image = upload_image(self.item_image, self.item_uid.strip())
+        self.item_image = self.upload_image()
         return self.__dict__
 
     def souq(self):
+        self.item_image = self.upload_image()
         return self.__dict__
 
     def amazon(self):
@@ -121,7 +124,7 @@ class Websites(object):
             }
             return json.dumps(item_info)
         else:
-            self.item_image = upload_image(self.item_image, self.item_uid.strip())
+            self.item_image = self.upload_image()
             self.tree = ''
             return self.__dict__
 
@@ -152,28 +155,28 @@ def get_data(url):
             item_uid = ''.join(list(dict.fromkeys(tree.xpath(uid_xp))))
             item_price = re.sub(r'\s+', ' ', item_price)
 
-        if item_title and item_image and item_price and item_uid:
-            websites_ob = Websites(item_title, item_image, url, item_price, item_uid, currency(url), '')
-            #  website validation
-            if website_check(url) == "noon.com":
-                return json.dumps(websites_ob.noon())
-            elif "amazon." in website_check(url):
-                websites_sub = Websites(item_title, item_image, url, item_price, item_uid, currency(url), tree)
-                return json.dumps(websites_sub.amazon())
-            elif website_check(url) == "btech.com":
-                return json.dumps(websites_ob.b_tech())
-            elif website_check(url) == "jumia.com":
-                return json.dumps(websites_ob.jumia())
-            elif website_check(url) == "souq.com":
-                return json.dumps(websites_ob.souq())
-        else:
-            items = {
-                'item_title': item_title,
-                'item_image': item_image,
-                'item_price': item_price,
-                'item_uid': item_uid
-            }
-            return json.dumps(validate_json(items))
+            if item_title and item_image and item_price and item_uid:
+                websites_ob = Websites(item_title, item_image, url, item_price, item_uid, currency(url), '')
+                #  website validation
+                if website_check(url) == "noon.com":
+                    return json.dumps(websites_ob.noon())
+                elif "amazon." in website_check(url):
+                    websites_sub = Websites(item_title, item_image, url, item_price, item_uid, currency(url), tree)
+                    return json.dumps(websites_sub.amazon())
+                elif website_check(url) == "btech.com":
+                    return json.dumps(websites_ob.b_tech())
+                elif website_check(url) == "jumia.com":
+                    return json.dumps(websites_ob.jumia())
+                elif website_check(url) == "souq.com":
+                    return json.dumps(websites_ob.souq())
+            else:
+                items = {
+                    'item_title': item_title,
+                    'item_image': item_image,
+                    'item_price': item_price,
+                    'item_uid': item_uid
+                }
+                return json.dumps(validate_json(items))
 
     return main()
 
