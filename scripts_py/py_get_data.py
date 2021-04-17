@@ -63,7 +63,7 @@ class Websites(object):
                 firebase_admin.initialize_app(cred, {'storageBucket': 'bright-lattice-260000.appspot.com'})
             bucket = storage.bucket()
             image_data = requests.get(item_image).content
-            blob = bucket.blob("product_images/" + uif + '.jpg')
+            blob = bucket.blob("product_images/" + uid + '.jpg')
             blob.upload_from_string(image_data, content_type='image/jpg')
             return blob.public_url
         except exceptions:
