@@ -83,7 +83,7 @@ class Websites(object):
 
     def b_tech(self):
         self.item_image = self.upload_image(self.item_image, self.item_uid)
-        return validate_json(self.__dict__)
+        return self.__dict__
 
     def jumia(self):
         self.item_uid = self.item_uid.replace(':', '').strip()
