@@ -56,13 +56,13 @@ class Websites(object):
         self.website = re.search(r':\/\/(.*?)\/', _url.strip()).group(1)
         self.tree = tree
 
-    def upload_image(self):
+    def upload_image(self, item_image):
         try:
             if not firebase_admin._apps:
                 cred = credentials.Certificate(r'scripts_py\bright-lattice-260000-firebase-adminsdk.json')
                 firebase_admin.initialize_app(cred, {'storageBucket': 'bright-lattice-260000.appspot.com'})
             bucket = storage.bucket()
-            image_data = requests.get(self.item_image).content
+            image_data = requests.get(item_image).content
             blob = bucket.blob("product_images/" + self.item_uid + '.jpg')
             blob.upload_from_string(image_data, content_type='image/jpg')
             return blob.public_url
@@ -94,7 +94,7 @@ class Websites(object):
         return self.__dict__
 
     def souq(self):
-        self.item_image = self.upload_image()
+        self.item_image = self.upload_image(self.item_image)
         return self.__dict__
 
     def amazon(self):
