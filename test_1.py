@@ -134,7 +134,7 @@ for prefix, event, value in data:
         item_date = re.search(r'item.(\d+.\d+.\d+)', Images_URL)
         item.append(item_date.group(1))
 
-        if n > 656545:
+        if n > 812820:
             items.append("('" + "', '".join(map(str, item)) + "')")
             if 350000 <= len(', '.join(items) + ';') <= 390000:
                 # if len(items) == 1:
