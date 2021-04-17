@@ -172,7 +172,7 @@
 
             $('#title').text(title);
             $('#item-img').attr("src", img);
-            if price_data.includes("missing_data"){
+            if(price_data.includes("missing_data")){
                 price_data = 'out of stock'
             }
             $('#price_range').text(price_data);
