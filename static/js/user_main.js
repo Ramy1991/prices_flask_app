@@ -138,7 +138,7 @@
                 data: {name: this.value}
             }).done(function(data1){
                 console.log(data1)
-                if(data1.trim() == "missing_data: item_price"){
+                if(data1.trim()includes("missing_data: item_price")){
                     $('#price_range').text('out of stock')
                 }else if(data1.trim().includes("missing_data")){
                     console.log(data1)
