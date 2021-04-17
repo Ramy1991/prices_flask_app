@@ -78,11 +78,11 @@ class Websites(object):
                 item_uid_['props']['pageProps']['catalog']['product']['variants'][0]['offers'][0]['price'])
         self.item_uid = item_uid_['props']['pageProps']['catalog']['product']['variants'][0]['offers'][0][
             'sku_config']
-        self.item_image = self.upload_image()
+        self.item_image = self.upload_image(self.item_image)
         return self.__dict__
 
     def b_tech(self):
-        self.item_image = self.upload_image()
+        self.item_image = self.upload_image(self.item_image)
         return validate_json(self.__dict__)
 
     def jumia(self):
@@ -124,7 +124,7 @@ class Websites(object):
             }
             return json.dumps(item_info)
         else:
-            self.item_image = self.upload_image()
+            self.item_image = self.upload_image(self.item_image)
             self.tree = ''
             return self.__dict__
 
