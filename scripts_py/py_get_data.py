@@ -152,28 +152,28 @@ def get_data(url):
             item_uid = ''.join(list(dict.fromkeys(tree.xpath(uid_xp))))
             item_price = re.sub(r'\s+', ' ', item_price)
 
-            if item_title and item_image and item_price and item_uid:
-                websites_ob = Websites(item_title, item_image, url, item_price, item_uid, currency(url), '')
-                #  website validation
-                if website_check(url) == "noon.com":
-                    return json.dumps(websites_ob.noon())
-                elif "amazon." in website_check(url):
-                    websites_sub = Websites(item_title, item_image, url, item_price, item_uid, currency(url), tree)
-                    return json.dumps(websites_sub.amazon())
-                elif website_check(url) == "btech.com":
-                    return json.dumps(websites_ob.b_tech())
-                elif website_check(url) == "jumia.com":
-                    return json.dumps(websites_ob.jumia())
-                elif website_check(url) == "souq.com":
-                    return json.dumps(websites_ob.souq())
-            else:
-                items = {
-                    'item_title': item_title,
-                    'item_image': item_image,
-                    'item_price': item_price,
-                    'item_uid': item_uid
-                }
-                return json.dumps(validate_json(items))
+        if item_title and item_image and item_price and item_uid:
+            websites_ob = Websites(item_title, item_image, url, item_price, item_uid, currency(url), '')
+            #  website validation
+            if website_check(url) == "noon.com":
+                return json.dumps(websites_ob.noon())
+            elif "amazon." in website_check(url):
+                websites_sub = Websites(item_title, item_image, url, item_price, item_uid, currency(url), tree)
+                return json.dumps(websites_sub.amazon())
+            elif website_check(url) == "btech.com":
+                return json.dumps(websites_ob.b_tech())
+            elif website_check(url) == "jumia.com":
+                return json.dumps(websites_ob.jumia())
+            elif website_check(url) == "souq.com":
+                return json.dumps(websites_ob.souq())
+        else:
+            items = {
+                'item_title': item_title,
+                'item_image': item_image,
+                'item_price': item_price,
+                'item_uid': item_uid
+            }
+            return json.dumps(validate_json(items))
 
     return main()
 
@@ -183,4 +183,7 @@ def check_url(url):
         return get_data(url)
     else:
         return "dummy_website"
+
+
+# print(check_url('https://www.amazon.com/Acer-Display-Graphics-Keyboard-A515-43-R19L/dp/B07RF1XD36/ref=lp_16225007011_1_2'))
 
