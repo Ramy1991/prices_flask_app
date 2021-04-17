@@ -56,14 +56,14 @@ class Websites(object):
         self.website = re.search(r':\/\/(.*?)\/', _url.strip()).group(1)
         self.tree = tree
 
-    def upload_image(self, item_image):
+    def upload_image(self, item_image, uid):
         try:
             if not firebase_admin._apps:
                 cred = credentials.Certificate(r'scripts_py/bright-lattice-260000-firebase-adminsdk.json')
                 firebase_admin.initialize_app(cred, {'storageBucket': 'bright-lattice-260000.appspot.com'})
             bucket = storage.bucket()
             image_data = requests.get(item_image).content
-            blob = bucket.blob("product_images/" + self.item_uid + '.jpg')
+            blob = bucket.blob("product_images/" + uif + '.jpg')
             blob.upload_from_string(image_data, content_type='image/jpg')
             return blob.public_url
         except exceptions:
@@ -78,11 +78,11 @@ class Websites(object):
                 item_uid_['props']['pageProps']['catalog']['product']['variants'][0]['offers'][0]['price'])
         self.item_uid = item_uid_['props']['pageProps']['catalog']['product']['variants'][0]['offers'][0][
             'sku_config']
-        self.item_image = self.upload_image(self.item_image)
+        self.item_image = self.upload_image(self.item_image, self.item_uid)
         return self.__dict__
 
     def b_tech(self):
-        self.item_image = self.upload_image(self.item_image)
+        self.item_image = self.upload_image(self.item_image, self.item_uid)
         return validate_json(self.__dict__)
 
     def jumia(self):
@@ -90,11 +90,11 @@ class Websites(object):
         if self.item_price.strip():
             item_price = self.item_price.replace(r'window.__STORE__=', '')
             self.item_price = json.loads(item_price.replace(r';', '').strip())['simples'][0]['prices']['rawPrice']
-        self.item_image = self.upload_image()
+        self.item_image = self.upload_image(self.item_image, self.item_uid)
         return self.__dict__
 
     def souq(self):
-        self.item_image = self.upload_image(self.item_image)
+        self.item_image = self.upload_image(self.item_image, self.item_uid)
         return self.__dict__
 
     def amazon(self):
@@ -124,7 +124,7 @@ class Websites(object):
             }
             return json.dumps(item_info)
         else:
-            self.item_image = self.upload_image(self.item_image)
+            self.item_image = self.upload_image(self.item_image, self.item_uid)
             self.tree = ''
             return self.__dict__
 
