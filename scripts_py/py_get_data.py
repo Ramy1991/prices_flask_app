@@ -122,7 +122,7 @@ class Websites(object):
                 'item_price': self.item_price.strip(),
                 'item_sizes': validate_json(item_size_dict)
             }
-            return json.dumps(item_info)
+            return item_info
         else:
             self.item_image = self.upload_image(self.item_image, self.item_uid)
             self.tree = ''
