@@ -60,11 +60,11 @@ driver.find_element_by_xpath('//*[@id="wdc_login_button"]').click()
 
 tab = ['tab2', 'tab3', 'tab4']
 while True:
-    time.sleep(650)
+    time.sleep(300)
     driver.switch_to.window("tab2")
-    time.sleep(550)
+    time.sleep(450)
     driver.switch_to.window("tab3")
-    time.sleep(600)
+    time.sleep(200)
     driver.switch_to.window("tab4")
-    time.sleep(700)
+    time.sleep(250)
     driver.switch_to.window(driver.window_handles[0])
