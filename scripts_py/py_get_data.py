@@ -24,9 +24,6 @@ def website_check(url):
             return website
 
 
-
-
-
 def user_agent():
     return re.search(r'(.*?)\)', UserAgent().random).group(1) + "MSIE 12;)"
 

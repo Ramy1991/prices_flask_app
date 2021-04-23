@@ -9,11 +9,20 @@ from lxml import html
 import os
 import time
 from datetime import datetime
+import mouse
+
+
+# left click
+
+mouse.move(-200, 200, absolute=False, duration=0.2)
+mouse.click('left')
+
 
 executable_path = r'C:\Users\ramyg\Downloads\chromedriver_win32 (1)\chromedriver.exe'
 os.environ['webdriver.chrome.driver'] = executable_path
 chrome_options = Options()
-driver = webdriver.Chrome(executable_path=executable_path)
+chrome_options.add_argument('--disable-blink-features=AutomationControlled')
+driver = webdriver.Chrome(executable_path=executable_path, options=chrome_options)
 driver.get('http://shops.syaanh.com/login')
 
 driver.find_element_by_xpath('//*[@id="email"]').send_keys('ramy.zaghloul@mzadqatar.com')
@@ -34,9 +43,8 @@ time.sleep(1)
 driver.find_element_by_xpath('//*[@id="login-submit"]/span/span').click()
 time.sleep(3)
 
-driver.get(
-    'https://ebdaadt.atlassian.net/browse/CON-23?focusedCommentId=46358&page=com.atlassian.jira.plugin.system.'
-    'issuetabpanels%3Acomment-tabpanel#comment-46358')
+# driver.get(
+#     'https://aid-frontend.prod.atl-paas.net/atlassian-id/front-end/5.0.224')
 
 driver.execute_script("window.open('about:blank', 'tab3');")
 driver.switch_to.window("tab3")
@@ -60,11 +68,19 @@ driver.find_element_by_xpath('//*[@id="wdc_login_button"]').click()
 
 tab = ['tab2', 'tab3', 'tab4']
 while True:
-    time.sleep(300)
+    mouse.move(-200, 200, absolute=False, duration=0.2)
+    mouse.click('left')
+    time.sleep(9)
     driver.switch_to.window("tab2")
-    time.sleep(450)
+    mouse.move(200, -200, absolute=False, duration=0.2)
+    mouse.click('left')
+    time.sleep(6)
     driver.switch_to.window("tab3")
-    time.sleep(200)
+    mouse.move(-200, 200, absolute=False, duration=0.2)
+    mouse.click('left')
+    time.sleep(5)
     driver.switch_to.window("tab4")
-    time.sleep(250)
+    time.sleep(10)
+    mouse.move(200, -200, absolute=False, duration=0.2)
+    mouse.click('left')
     driver.switch_to.window(driver.window_handles[0])

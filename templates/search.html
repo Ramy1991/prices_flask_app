@@ -36,7 +36,9 @@
                 font-size: 15px;
                 display: none;
             }
-
+            .actions{
+                display: none;
+            }
             @keyframes lds-dual-ring {
                 0% {
                     transform: rotate(0deg);
@@ -220,7 +222,7 @@
               position: fixed;
               z-index: 1;
               top: 0;
-              left: -250;
+              left: -250px;
               width: 250px;
               background-color: #111;
               overflow-x: hidden;
@@ -442,8 +444,12 @@
                     </ul>
                 </div>
                 <span class="navbar-text actions user_display">
-                    <span style="color: rgb(255,252,252); padding-right: 25px;padding-top: 3px;" id="user">Hello, Ramy Gharib</span>
+                    <span style="color: rgb(255,252,252); padding-right: 25px;padding-top: 3px;" id="user"></span>
                     <a class="btn btn-light action-button signOut" role="button" href="#" style="background-color: #f0c14b;color: #232f3e;" data-ol-has-click-handler="">Sign Out</a>
+                </span>
+                <span class="navbar-text actions guest_user"> 
+                    <a class="login btn-header" href="#" style="color: rgb(227,232,237);" name="sign_in">Log In</a>
+                    <a class="btn btn-light action-button btn-header" role="button" href="#" style="background-color: #f0c14b;color: #232f3e;" name="sign_up">Sign Up</a>
                 </span>
             <!-- </div> -->
             </div>
@@ -580,40 +586,29 @@
             firebase.initializeApp(firebaseConfig);
             var db = firebase.firestore();
 
-            // firebase.auth().onAuthStateChanged(function (user) {
-            //     // to be change to firebase
-            //     if (user) {
-            //         var displayName = user.displayName;
-            //         $("#user").text("Hello, " + displayName);
-            //         $("#products-articles").css("display", "");
-            //         $("#status").html("Dashboard");
-            //         // load_content(user.uid,db);
-            //         // var email = user.email;
-            //         // var emailVerified = user.emailVerified;
-            //         // var photoURL = user.photoURL;
-            //         // var isAnonymous = user.isAnonymous;
-            //         // var uid = user.uid;
-            //         // var providerData = user.providerData;
-
-
-
-
-            //     } else {
-            //         setTimeout(() => {
-            //             $("#status").html("404 Error");
-            //         }, 100);
-            //     }
-            //     $('.signOut').click(function(e){
-            //         e.preventDefault();
-            //         firebase.auth().signOut().then(function() {
-            //             // Sign-out successful.
-            //             window.location = 'http://localhost/main2/';
-            //         }).catch(function(error) {
-            //             // An error happened.
-            //         alert(error.message);
-            //         });
-            //     });
-            // });
+            firebase.auth().onAuthStateChanged(function (user) {
+                // to be change to firebase
+                if (user) {
+                    var displayName = user.displayName;
+                    $("#user").text("Hello, " + displayName);
+                    $('.user_display').css("display", "block");
+                    $(".guest_user").css('display', 'none');
+                } else {
+                    $(".user_display").css('display', 'none');
+                    $(".guest_user").css('display', 'block')
+                }
+               
+            });
+            $('.signOut').click(function(e){
+                e.preventDefault();
+                firebase.auth().signOut().then(function() {
+                // Sign-out successful.
+                    window.location = window.location.href;
+                }).catch(function(error) {
+                        // An error happened.
+                    alert(error.message);
+                });
+            });
             // $('.side_bar').click(function(){
             //     $('#mySidenav').toggleClass('active_bar');
             // });

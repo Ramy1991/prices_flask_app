@@ -6,195 +6,404 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>dashboard</title>
 
-    <link rel="stylesheet" href="{{url_for('static', filename='bootstrap/css/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename='fonts/typicons.min.css')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename='css/Article-List2.1.css')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename='css/Navigation-with-Button.css')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename='css/popbox.css')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
-    <style>
-        .lds-dual-ring {
-            display: inline-block;
-            width: 80px;
-            height: 80px;
-            margin: auto;
-            padding-top: 120px;
-        }
-        .lds-dual-ring:after {
-            content: " ";
-            display: block;
-            width: 64px;
-            height: 64px;
-            margin: 8px;
-            border-radius: 50%;
-            border: 6px solid #7d8285;
-            border-color: #7d8285 transparent #7d8285 transparent;
-            animation: lds-dual-ring 1.2s linear infinite;
-        }
-        .err_load_data{
-            color: red; 
-            font-size: 15px; 
-            display: none;
-        }
-        @keyframes lds-dual-ring {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-        /* loading TEXT */
-        #loading_add_item{
-            display: none;
-        }
-        .loading {
-            font-size: 40px;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
-            text-align: center;
-            padding: 30px;
-            color: #7d8285; 
-        }
-        .loading span {
-            display: inline-block;
-            margin: 0 -.05em;
-        }
-    
-        /* code #1 */
-        .loading01 span {
-            animation: loading01 1.4s infinite alternate;
-        }
-        .loading01 span:nth-child(1) {
-            animation-delay: 0s;
-        }
-        .loading01 span:nth-child(2) {
-            animation-delay: 0.1s;
-        }
-        .loading01 span:nth-child(3) {
-            animation-delay: 0.2s;
-        }
-        .loading01 span:nth-child(4) {
-            animation-delay: 0.3s;
-        }
-        .loading01 span:nth-child(5) {
-            animation-delay: 0.4s;
-        }
-        .loading01 span:nth-child(6) {
-            animation-delay: 0.5s;
-        }
-        .loading01 span:nth-child(7) {
-            animation-delay: 0.6s;
-        }
-    
-        @keyframes loading01 {
-            0% {
-            opacity: 1;
-            }
-            100% {
-                opacity: 0.01;
-            }
-        }
-        .image_box{
-            height: auto;
-            max-height: 225px;
-            padding: 28px;
-        }
-        .a_del_item{
-            float: left;
-            color: red;
-        }
-        .trash_icon{
-            width: 18px;
-        }
-        .tooltap {
-            position: relative;
-            display: inline-block;
-            /* border-bottom: 1px dotted #7d8285; */
-        }
-
-        .tooltap .tooltaptext {
-            visibility: hidden;
-            width: 110px;
-            background-color:#C0C0C0;
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 5px 0;
-            position: absolute;
-            z-index: 1;
-            bottom: 150%;
-            left: 50%;
-            margin-left: -60px;
-        }
-
-        .tooltap .tooltaptext::after {
-            content: "";
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: 	#C0C0C0 transparent transparent transparent;
-        }
-
-        .tooltap:hover .tooltaptext {
-            visibility: visible;
-        }
-        .img-fluid{
-            height: auto;
-            max-height: 220px;
-            min-height: 170px;
-        }
-
-        #item_data_box{
-            display: flex;
-            justify-content: space-around;
-        }
-        #select_dialog{
-            display: none;
-        }
-        #select_data, #price_range_h{
-            padding-top: 25px;
-        }
-        #price_range{
-            font-size: 20px;
-            color: red;
-        }
-        #size-list{
-            height: 35px;
-            border-radius: 7px;
-            padding-left: 10px;
-        }
-        .modal-dialog{
-            max-width: 630px;
-        }
-        #item-img{
-            max-width: 250px;
-            max-height: 250px;
-        }
-        @media all and (max-width: 600px){
-            img#item-img {order: 1;}
-            div#data_item {order: 2;}
-            #item_data_box{
-                display: grid;
-            }
-            #item-img{
+    <link rel="stylesheet" href="{{url_for('static', filename='bootstrap/css/bootstrap.min.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static', filename='fonts/typicons.min.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static', filename='css/Article-List2.1.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static', filename='css/Navigation-with-Button.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static', filename='css/popbox.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static', filename='fonts/font-awesome.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/flag-icon.css')}}">
+<style>
+            .lds-dual-ring {
+                display: inline-block;
+                width: 80px;
+                height: 80px;
                 margin: auto;
-                padding-bottom: 30px;
-                max-width: 300px;
-                max-height: 300px;
+                padding-top: 120px;
             }
-            #myModal, .modal-open{
-                padding-right: 0px !important;
+            .lds-dual-ring:after {
+                content: " ";
+                display: block;
+                width: 64px;
+                height: 64px;
+                margin: 8px;
+                border-radius: 50%;
+                border: 6px solid #7d8285;
+                border-color: #7d8285 transparent #7d8285 transparent;
+                animation: lds-dual-ring 1.2s linear infinite;
+            }
+            .err_load_data {
+                color: red;
+                font-size: 15px;
+                display: none;
             }
 
-        }
+            @keyframes lds-dual-ring {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+            /* loading TEXT */
+            #loading_add_item {
+                display: none;
+            }
+            .loading {
+                font-size: 40px;
+                font-family: "Montserrat", sans-serif;
+                font-weight: 800;
+                text-align: center;
+                padding: 30px;
+                color: #7d8285;
+            }
+            .loading span {
+                display: inline-block;
+                margin: 0 -0.05em;
+            }
 
-/* code #1 */
-       
-    </style>
+            /* code #1 */
+            .loading01 span {
+                animation: loading01 1.4s infinite alternate;
+            }
+            .loading01 span:nth-child(1) {
+                animation-delay: 0s;
+            }
+            .loading01 span:nth-child(2) {
+                animation-delay: 0.1s;
+            }
+            .loading01 span:nth-child(3) {
+                animation-delay: 0.2s;
+            }
+            .loading01 span:nth-child(4) {
+                animation-delay: 0.3s;
+            }
+            .loading01 span:nth-child(5) {
+                animation-delay: 0.4s;
+            }
+            .loading01 span:nth-child(6) {
+                animation-delay: 0.5s;
+            }
+            .loading01 span:nth-child(7) {
+                animation-delay: 0.6s;
+            }
+
+            @keyframes loading01 {
+                0% {
+                    opacity: 1;
+                }
+                100% {
+                    opacity: 0.01;
+                }
+            }
+            .image_box {
+                height: auto;
+                max-height: 225px;
+                /* padding: 28px; */
+                min-height: 235px;
+            }
+            .a_del_item {
+                float: left;
+                color: red;
+            }
+            .trash_icon {
+                width: 18px;
+            }
+            .tooltap {
+                position: relative;
+                display: inline-block;
+                /* border-bottom: 1px dotted #7d8285; */
+            }
+
+            .tooltap .tooltaptext {
+                visibility: hidden;
+                width: 110px;
+                background-color: #c0c0c0;
+                color: #fff;
+                text-align: center;
+                border-radius: 6px;
+                padding: 5px 0;
+                position: absolute;
+                z-index: 1;
+                bottom: 150%;
+                left: 50%;
+                margin-left: -60px;
+            }
+
+            .tooltap .tooltaptext::after {
+                content: "";
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                margin-left: -5px;
+                border-width: 5px;
+                border-style: solid;
+                border-color: #c0c0c0 transparent transparent transparent;
+            }
+
+            .tooltap:hover .tooltaptext {
+                visibility: visible;
+            }
+            .img-fluid {
+                height: auto;
+                max-height: 220px;
+
+            }
+
+            #item_data_box {
+                display: flex;
+                justify-content: space-around;
+            }
+            #select_dialog {
+                display: none;
+            }
+            #select_data,
+            #price_range_h {
+                padding-top: 25px;
+            }
+            #price_range {
+                font-size: 20px;
+                color: red;
+            }
+            #size-list {
+                height: 35px;
+                border-radius: 7px;
+                padding-left: 10px;
+            }
+            .modal-dialog {
+                max-width: 630px;
+            }
+            #item-img {
+                max-width: 250px;
+                max-height: 250px;
+            }
+            /* .col-md-2 {
+                height: 43px;
+                margin: 1%;
+                border-radius: 15px;
+                border-color: #7d8285;
+                color: #7d8285;
+                text-align: center;
+                padding: 9px;
+                font-weight: 500;
+            }*/
+            .btn_1:hover, .btn_2:hover{
+                background-color: #7d8285 !important;
+                border-color: #7d8285 !important;
+                color: white !important;
+            }
+            .btn_1:focus, .btn_2:focus, .btn_1:active, .btn_2:active{
+                outline: none;
+                box-shadow: 0 0 20px #7d8285 !important;
+                color: #7d8285;
+            }
+            .btn_group_style{
+                display: flex;
+                justify-content: space-around;
+                margin: 1%;
+
+            }
+            .btn_1{
+                margin-right: 27px;
+            }
+            .btn_1, .btn_2{
+                border-radius: 20px !important;
+                background-color: transparent;
+                border-color: #7d8285;
+                color: #7d8285;
+                font-weight: 500;
+                height: 46px;
+            }
+            /* nav bar */
+            .sidenav {
+              height: 100%;
+              position: fixed;
+              z-index: 1;
+              top: 0;
+              left: -250px;
+              width: 250px;
+              background-color: #111;
+              overflow-x: hidden;
+              transition: 0.5s;
+              padding-top: 60px;
+            }
+
+            .sidenav a {
+              padding: 8px 8px 8px 32px;
+              text-decoration: none;
+              font-size: 15px;
+              color: #818181;
+              display: block;
+              transition: 0.3s;
+            }
+
+            .sidenav a:hover {
+              color: #f1f1f1;
+            }
+
+            .sidenav .closebtn {
+              position: absolute;
+              top: 0;
+              /* right: 25px; */
+              font-size: 36px;
+              margin-left: 170px;
+              flex-direction: column-reverse;
+            }
+            .navbar-nav {
+                flex-direction: column !important;
+            }
+            .active_bar{
+                left: 0;
+            }
+            .input_search{
+                border-color: #7d8285 !important;
+                height: 46px;
+                border-radius: 23px 0 0 23px;
+                border-right: 0px;
+                padding-left: 21px;
+            }
+            .input-group:hover, .input-group:focus, .input_search:focus{
+                outline: none;
+                box-shadow: 0 0 20px #7d8285;
+                border-radius: 23px;
+
+            }
+            .input_search:focus, .search_btn:focus{
+                box-shadow: 0 0 0px #7d8285 !important;
+            }
+            .search_btn{
+                border-radius: 0 23px 23px 0;
+                border-left: 0px;
+                width: 45px;
+                z-index: 0 !important;
+            }
+            .input-group{
+                width: 60%;
+                margin: auto;
+                /* margin-bottom: 65px !important; */
+            }
+            .cat_section{
+                /* margin: auto; */
+                padding-left: 23px;
+                padding-bottom: 7px;
+                color: #818181;
+            }
+            .nav-1{
+                /* flex-direction: row-reverse;  */
+                height: 30px;
+                padding-top: 0px;
+                padding-bottom: 3px;
+                background-color: black;
+
+            }
+            #navbar2SupportedContent{
+               margin-top: auto;
+               margin-bottom: auto;
+            }
+            .country{
+                color: white !important;
+            }
+            .country-list{
+                min-width: 140px;
+                right: 0 ;
+                left: auto;
+
+            }
+            .country-list li{
+                padding: 5px 4px 5px 5px;
+                font-size: 15px;
+                margin-right: -1px;
+            }
+            .country-list li:hover{
+                background-color: #7d8285;
+
+            }
+            .country-list li a{
+                color: black !important;
+            }
+            .country-list li a:hover{
+                text-decoration: none;
+
+            }
+            .country-container{
+                list-style: none;
+            }
+
+            @media screen and (max-width: 1200px) {
+                .btn_1, .btn_2{
+                    font-size: 13px;
+                    padding: 0px;
+                }
+                .input-group{
+                    width: 70%;
+                }
+
+            }
+            @media screen and (max-width: 995px) {
+                .btn_1, .btn_2{
+                    font-size: 12px;
+                    height: 46px;
+                }
+                .image_box{
+                    min-height: 224px;
+                }
+                .input-group{
+                    width: 80%;
+                }
+
+            }
+
+            @media screen and (max-width: 774px) {
+                .user_display{
+                   display: none;
+               }
+               .input-group{
+                    width: 100%;
+                }
+            }
+            @media screen and (max-height: 600px) {
+              .sidenav {padding-top: 15px;}
+              .sidenav a {font-size: 18px;}
+            }
+
+            @media all and (max-width: 600px) {
+                img#item-img {
+                    order: 1;
+                }
+                div#data_item {
+                    order: 2;
+                }
+                #item_data_box {
+                    display: grid;
+                }
+                #item-img {
+                    margin: auto;
+                    padding-bottom: 30px;
+                    max-width: 300px;
+                    max-height: 300px;
+                }
+                .btn_group_style{
+                    margin: 2% !important;
+                }
+                #myModal,
+                .modal-open {
+                    padding-right: 0px !important;
+                }
+            }
+            @media all and (max-width: 500px) {
+                .btn_1{
+                    margin-right: 18px;
+                }
+                .btn_1, .btn_2{
+                    font-size: 13px;
+                }
+            }
+
+
+            /* code #1 */
+        </style>
     <style >
         /* common */
     
@@ -203,28 +412,46 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-light navbar-expand-md navigation-clean-button">
-        <div class="container"><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button><a class="navbar-brand" href="#" style="color: rgb(255,255,255);">Price Tracking</a>
-            <div
-                class="collapse navbar-collapse" id="navcol-1" style="color: rgb(255,252,252);">
-                <ul class="nav navbar-nav mr-auto">
-                    <!-- <li class="nav-item" role="presentation"><a class="nav-link active" href="#">First Item</a></li> -->
-                    <!-- <li class="nav-item" role="presentation"><a class="nav-link" href="#">Second Item</a></li> -->
-                    <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">Account Settings</a>
-                        <div class="dropdown-menu" role="menu">
-                            <!-- <a class="dropdown-item" role="presentation" href="#">First Item</a> -->
-                            <a class="dropdown-item" role="presentation" href="#">Change Password</a>
-                            <a class="dropdown-item" role="presentation" href="#">Delete Acccount</a>
-                        </div>
+   <div class="navbar navbar-light navbar-expand-md nav-1 navbar-expand" >
+            <div class="container" style="justify-content: flex-end; padding-right: 0px;">
+                <!-- <div id="options" data-input-name="country2" data-selected-country="AE" class=" nav-select navbar-brand"></div>
+                <input type="text" value="" id="selected_country"> -->
+                <ul class="" id="navbar2SupportedContent">
+                    <li class="dropdown country-container">
+                        <a class="btn btn-default dropdown-toggle country" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <span id="c_flag" class="flag-icon flag-icon-ae"></span>
+                        </a>
+                        <ul class="dropdown-menu text-left country-list" aria-labelledby="dropdownMenu1">
+                            <li><a href="#" class="selected_country" name="eg" data-value="flag-icon flag-icon-eg"><span class="ml-2 flag-icon flag-icon-eg"></span><span class="ml-1 mx-1">Egypt</span></a></li>
+                            <li><a href="#" class="selected_country" name="ae" data-value="flag-icon flag-icon-ae"><span class="ml-2 flag-icon flag-icon-ae"></span><span class="ml-1 mx-1">Dubai</span></a></li>
+                            <li><a href="#" class="selected_country" name="sa" data-value="flag-icon flag-icon-sa"><span class="ml-2 flag-icon flag-icon-sa"></span><span class="ml-1 mx-1">Saudi Arabia</span></a></li>
+                        </ul>
                     </li>
+
                 </ul>
-                
+            </div>
+        </div>
+        <nav class="navbar navbar-light navbar-expand-md navigation-clean-button">
+            <div class="container">
+
+                <span style="font-size:30px;cursor:pointer" class="side_bar" onclick="openNav()">&#9776</span>
+                <a class="navbar-brand" href="#" style="color: rgb(255,255,255); padding-left: 10px;">Price Tracking</a>
+                <div class="navbar-collapse " id="navcol-1" style="color: rgb(255, 252, 252);">
+                    <ul class="nav navbar-nav mr-auto sidenav" id="mySidenav" >
+                        <a href="javascript:void(0)" class="closebtn side_bar" onclick="closeNav()">&times;</a>
+                        <a class="nav-link active menu_item" href="#"  style="padding-top: 40px;">First Item</a>
+                        <a class="nav-link " href="#">Second Item</a>
+                        <a class="nav-link " href="#">Second Item</a>
+                        <a class="nav-link " href="#">Second Item</a>
+                    </ul>
+                </div>
                 <span class="navbar-text actions"> <span style="color: rgb(255,252,252); padding-right: 25px;padding-top: 3px;" id="user"></span>
                     <a class="btn btn-light action-button signOut" role="button" href="#" style="background-color: #f0c14b;color: #232f3e;">Sign Out</a>
                 </span>
+            <!-- </div> -->
             </div>
-        </div>
-    </nav>
+
+        </nav>
     <div class="article-list">
         <div class="container">
             <div class="intro">
@@ -375,6 +602,20 @@
     <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-firestore.js"></script>
     <script src="{{url_for('static', filename='js/user_main.js')}}"></script>
+    <script>
+           $(".dropdown-menu li a").click(function(){
+                // $(this).parents(".dropdown").find('.btn').html($(this).text() );
+                // $(this).parents(".dropdown").find('.btn').val($(this).data('value'));
+                $('#c_flag').removeClass().addClass($(this).data('value'))
+            });
+
+            function openNav(){
+                document.getElementById("mySidenav").style.left = "0";
+            }
+            function closeNav(){
+                document.getElementById("mySidenav").style.left = "-250px";
+            }
+    </script>
 </body>
 
 </html>

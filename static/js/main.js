@@ -214,6 +214,19 @@ var firebaseConfig = {
         });
 
         });
+
+        $(".dropdown-menu li a").click(function(){
+             // $(this).parents(".dropdown").find('.btn').html($(this).text() );
+             // $(this).parents(".dropdown").find('.btn').val($(this).data('value'));
+             $('#c_flag').removeClass().addClass($(this).data('value'))
+        });
+
+            function openNav(){
+                document.getElementById("mySidenav").style.left = "0";
+            }
+            function closeNav(){
+                document.getElementById("mySidenav").style.left = "-250px";
+            }
         // $.ajax({
         //     url: "https://egypt.souq.com/eg-en/",
         //     method: "GET",
