@@ -572,6 +572,7 @@
         <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-database.js"></script>
         <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-firestore.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
         <script>
             var firebaseConfig = {
                 apiKey: "AIzaSyCQYdl0vf8gKnayNRM18dbfMpYIQxzi0LI",
@@ -697,7 +698,7 @@
                         });
                     });
                 }
-            }catch(err) {
+            } catch(err) {
                 default_query();
             }
             $(".search_btn").on("click", function(e){
@@ -709,7 +710,12 @@
             });
             $('#search_val').val(window.location.pathname.split('/')[2]);
 
-
+            $('.btn-header').on('click', function(){
+                var scroll = $.cookie("scroll", this.name, { path: '/' });
+                window.location = window.location.origin;
+             
+            })
+          
             // function get_ip(){
             //     var get_county = $.getJSON('http://ip-api.com/json?callback=?', function(data1) {
             //     }).done(function(){

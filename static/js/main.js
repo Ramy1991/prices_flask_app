@@ -41,6 +41,19 @@ var firebaseConfig = {
             }
         });
 
+        var scroll = $.cookie("scroll");
+        if(scroll){
+            $('body,html').animate({ scrollTop: $('body').height() }, 1200);
+            if(scroll == 'sign_in'){
+                $( "#login_link" ).click();
+            }else{
+                $( "#sign_up_link" ).click();
+            }
+            $.removeCookie('scroll');
+        }
+
+
+
         // function validation(db, name, inputs){
         //     db.collection("users").where(name, "==", inputs).limit(1).get().then(function(snap) {
         //         if(!snap.empty){
