@@ -44,4 +44,4 @@ def get_item_data():
         return render_template('user.html')
 
 
-app.run(debug=True, port=5000)
+# app.run(debug=True, port=5000)
