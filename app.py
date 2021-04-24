@@ -21,19 +21,19 @@ def index(country, lang):
         return render_template('home.html', country=country, lang=lang)
 
 
-@app.route('/user/<string:name>')
-def user(name):
-    return render_template('user.html', username=name)
+@app.route('/<string:country>-<string:lang>/user/<string:name>')
+def user(name, country, lang):
+    return render_template('user.html', username=name, country=country, lang=lang)
 
 
-@app.route('/search')
-@app.route('/search/')
-def search():
-    return render_template('search.html', data='')
+@app.route('/<string:country>-<string:lang>/search')
+@app.route('/<string:country>-<string:lang>/search/')
+def search(country, lang):
+    return render_template('search.html', data='', country=country, lang=lang)
 
 
-@app.route('/search/<search_value>')
-def search_data(search_value):
+@app.route('/<string:country>-<string:lang>/search/<search_value>')
+def search_data(search_value, country, lang):
     if search_value:
         data = db_search.db_connection(search_value)
         # data = search_online.main(search_online.create_url(search_value, 'Egypt'))
@@ -42,7 +42,7 @@ def search_data(search_value):
         return render_template('search.html', data='')
 
 
-@app.route('/get_item_data', methods=['GET', 'POST'])
+@app.route('/<string:country>-<string:lang>/get_item_data', methods=['GET', 'POST'])
 def get_item_data():
     if request.method == 'POST':
         item_data = request.form.get("name")
