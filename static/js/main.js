@@ -53,7 +53,6 @@ var firebaseConfig = {
         }
 
 
-
         // function validation(db, name, inputs){
         //     db.collection("users").where(name, "==", inputs).limit(1).get().then(function(snap) {
         //         if(!snap.empty){
@@ -226,13 +225,20 @@ var firebaseConfig = {
             $('#email-sent').html('');
         });
 
+        // var page_lang =  window.location.href.split('/')[3].split('-')[1]
+        // var page_lang = {{lang}};
+       
+
         });
 
-        $(".dropdown-menu li a").click(function(){
-             // $(this).parents(".dropdown").find('.btn').html($(this).text() );
-             // $(this).parents(".dropdown").find('.btn').val($(this).data('value'));
-             $('#c_flag').removeClass().addClass($(this).data('value'))
-        });
+        // $(".dropdown-menu li a").click(function(){
+        //      // $(this).parents(".dropdown").find('.btn').html($(this).text() );
+        //      // $(this).parents(".dropdown").find('.btn').val($(this).data('value'));
+        //      $('#c_flag').removeClass().addClass($(this).data('value'))
+             
+        //     //  window.location = window.location + this.name + "-" + 
+    
+        // });
 
             function openNav(){
                 document.getElementById("mySidenav").style.left = "0";
@@ -240,6 +246,7 @@ var firebaseConfig = {
             function closeNav(){
                 document.getElementById("mySidenav").style.left = "-250px";
             }
+         
         // $.ajax({
         //     url: "https://egypt.souq.com/eg-en/",
         //     method: "GET",

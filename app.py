@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
 from scripts_py import py_get_data
 # from scripts_py import search_online
 from scripts_py import db_search
@@ -9,8 +9,16 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/home')
 @app.route('/home/')
-def index():
-    return render_template('home.html')
+def redirect_home():
+    return redirect("/eg-en/", code=302)
+
+
+@app.route('/<string:country>-<string:lang>/')
+@app.route('/<string:country>-<string:lang>/home')
+@app.route('/<string:country>-<string:lang>/home/')
+def index(country, lang):
+    if country and lang:
+        return render_template('home.html', country=country, lang=lang)
 
 
 @app.route('/user/<string:name>')

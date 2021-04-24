@@ -71,7 +71,14 @@
                 display: inline-block;
                 margin: 0 -0.05em;
             }
-
+            .lang{
+                color: white;
+                font-size: 13px;
+                padding-right: 20px;
+                padding-left: 8px;
+             
+            }
+    
             /* code #1 */
             .loading01 span {
                 animation: loading01 1.4s infinite alternate;
@@ -312,6 +319,7 @@
             }
             .country{
                 color: white !important;
+                padding-right: 7px;
             }
             .country-list{
                 min-width: 140px;
@@ -422,11 +430,17 @@
             <div class="container" style="justify-content: flex-end; padding-right: 0px;">
                 <!-- <div id="options" data-input-name="country2" data-selected-country="AE" class=" nav-select navbar-brand"></div>
                 <input type="text" value="" id="selected_country"> -->
+                
                 <ul class="" id="navbar2SupportedContent">
                     <li class="dropdown country-container">
+                        
                         <a class="btn btn-default dropdown-toggle country" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                             <span id="c_flag" class="flag-icon flag-icon-ae"></span>
+                            
                         </a>
+                        <span style="color: #666;">|</span>
+                        <a class="lang" name='ar' href='#'>العربية</a>
+                        <!-- <a class="lang_en" name='en' href='#'>English</a> -->
                         <ul class="dropdown-menu text-left country-list" aria-labelledby="dropdownMenu1">
                             <li><a href="#" class="selected_country" name="eg" data-value="flag-icon flag-icon-eg"><span class="ml-2 flag-icon flag-icon-eg"></span><span class="ml-1 mx-1">Egypt</span></a></li>
                             <li><a href="#" class="selected_country" name="ae" data-value="flag-icon flag-icon-ae"><span class="ml-2 flag-icon flag-icon-ae"></span><span class="ml-1 mx-1">Dubai</span></a></li>
@@ -618,6 +632,18 @@
     <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-firestore.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script>
+        var page_lang =  '{{lang}}'
+        $('.lang').attr('href', window.location.origin + '/' + window.location.href.split('/')[3].replace('en','ar'));
+        if (page_lang == 'ar'){
+            $('.lang').text('English');
+            $('.lang').attr('href', window.location.origin + '/' + window.location.href.split('/')[3].replace('ar','en'));
+        }
+        $('#c_flag').addClass('flag-icon-{{country}}');
+        $('.selected_country').each(function() {
+            this.href = window.location.origin + '/' + this.name + '-{{lang}}';
+        });
+    </script>
 
     <script src=" {{url_for('static', filename='js/main.js')}} "></script>
 
