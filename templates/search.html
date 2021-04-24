@@ -39,6 +39,16 @@
             .actions{
                 display: none;
             }
+            .lang{
+                color: white;
+                font-size: 13px;
+                padding-right: 20px;
+                padding-left: 8px;
+            }
+            .lang:hover{
+                color: white;
+                text-decoration: none;
+            }
             @keyframes lds-dual-ring {
                 0% {
                     transform: rotate(0deg);
@@ -417,8 +427,10 @@
                 <ul class="" id="navbar2SupportedContent">
                     <li class="dropdown country-container">
                         <a class="btn btn-default dropdown-toggle country" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                            <span id="c_flag" class="flag-icon flag-icon-ae"></span>
+                            <span id="c_flag" class="flag-icon flag-icon-{{country}}"></span>
                         </a>
+                        <span style="color: #666;">|</span>
+                        <a class="lang" name='ar' href='#'>العربية</a>
                         <ul class="dropdown-menu text-left country-list" aria-labelledby="dropdownMenu1">
                             <li><a href="#" class="selected_country" name="eg" data-value="flag-icon flag-icon-eg"><span class="ml-2 flag-icon flag-icon-eg"></span><span class="ml-1 mx-1">Egypt</span></a></li>
                             <li><a href="#" class="selected_country" name="ae" data-value="flag-icon flag-icon-ae"><span class="ml-2 flag-icon flag-icon-ae"></span><span class="ml-1 mx-1">Dubai</span></a></li>
@@ -706,9 +718,9 @@
                 $("#products-articles" ).html('<div class="lds-dual-ring" id="loading_main_page"></div>');
                 $("#loading_main_page").css('display','');
                 var search_val = $('#search_val').val().replace(/[-\/\\!@#$%^&*'(),.?":{}|<>]/g, "");
-                window.location.href = window.location.origin + '/search/' + search_val;
+                window.location.href = window.location.origin + '/{{country}}-{{lang}}/search/' + search_val;
             });
-            $('#search_val').val(window.location.pathname.split('/')[2]);
+            $('#search_val').val(window.location.pathname.split('/')[3]);
 
             $('.btn-header').on('click', function(){
                 var scroll = $.cookie("scroll", this.name, { path: '/' });
@@ -728,10 +740,15 @@
             //     });
             // }
             // console.log(window.location.href);
-            $(".dropdown-menu li a").click(function(){
-                // $(this).parents(".dropdown").find('.btn').html($(this).text() );
-                // $(this).parents(".dropdown").find('.btn').val($(this).data('value'));
-                $('#c_flag').removeClass().addClass($(this).data('value'))
+            var page_lang =  '{{lang}}'
+            $('.lang').attr('href', window.location.origin + '/{{country}}-ar/' + window.location.pathname.split('/')[2]);
+            if (page_lang == 'ar'){
+                $('.lang').text('English');
+                $('.lang').attr('href', window.location.origin + '/{{country}}-en/' + window.location.pathname.split('/')[2]);
+            }
+     
+            $('.selected_country').each(function() {
+                this.href = window.location.origin + '/' + this.name + '-{{lang}}/' + window.location.pathname.split('/')[2];
             });
 
             function openNav(){

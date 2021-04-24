@@ -37,9 +37,9 @@ def search_data(search_value, country, lang):
     if search_value:
         data = db_search.db_connection(search_value)
         # data = search_online.main(search_online.create_url(search_value, 'Egypt'))
-        return render_template('search.html', data=data)
+        return render_template('search.html', data=data, country=country, lang=lang)
     else:
-        return render_template('search.html', data='')
+        return render_template('search.html', data='', country=country, lang=lang)
 
 
 @app.route('/<string:country>-<string:lang>/get_item_data', methods=['GET', 'POST'])
