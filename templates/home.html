@@ -435,7 +435,7 @@
                     <li class="dropdown country-container">
                         
                         <a class="btn btn-default dropdown-toggle country" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                            <span id="c_flag" class="flag-icon flag-icon-ae"></span>
+                            <span id="c_flag" class="flag-icon flag-icon-{{country}}"></span>
                             
                         </a>
                         <span style="color: #666;">|</span>
@@ -634,12 +634,12 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <script>
         var page_lang =  '{{lang}}'
-        $('.lang').attr('href', window.location.origin + '/' + window.location.href.split('/')[3].replace('en','ar'));
+        $('.lang').attr('href', window.location.origin + '/{{country}}-ar');
         if (page_lang == 'ar'){
             $('.lang').text('English');
-            $('.lang').attr('href', window.location.origin + '/' + window.location.href.split('/')[3].replace('ar','en'));
+            $('.lang').attr('href', window.location.origin + '/{{country}}-en');
         }
-        $('#c_flag').addClass('flag-icon-{{country}}');
+     
         $('.selected_country').each(function() {
             this.href = window.location.origin + '/' + this.name + '-{{lang}}';
         });

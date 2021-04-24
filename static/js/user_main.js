@@ -9,8 +9,8 @@
         var db = firebase.firestore();
 
         firebase.auth().onAuthStateChanged(function(user) { // to be change to firebase
-            c_url = window.location.href.toLowerCase()
-            u_url = window.location.origin + '/user/' + user.displayName.replace(" ", "-").toLowerCase();
+            c_url = window.location.href.split('/')[5].replace('#','');
+            u_url = user.displayName.replace(" ", "-").toLowerCase();
             if (user && (c_url === u_url)) {
                 var displayName = user.displayName;
                 $("#user").text("Hello, " + displayName);
