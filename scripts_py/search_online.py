@@ -126,23 +126,50 @@ def main(links):
     return validate_json(items_json)
 
 
-def create_url(search_value, country):
+def create_url(search_value, country, lang):
+    websites = {
+        'eg': {
+            'en': {
+                'https://www.noon.com/egypt-en/search?q={}',
+                'https://egypt.souq.com/eg-en/{}/s/?as=1',
+                'https://www.jumia.com.eg/catalog/?q={}',
+                'https://btech.com/en/catalogsearch/result/?q={}'
+            },
+            'ar': {
+                'https://www.noon.com/egypt-ar/search?q={}',
+                'https://egypt.souq.com/eg-ar/{}/s/?as=1',
+                'https://www.jumia.com.eg/ar/catalog/?q={}',
+                'https://btech.com/ar/catalogsearch/result/?q={}'
+            }
+        },
+        'ae': {
+            'en': {
+                'https://www.amazon.ae/s?k={}&ref=nb_sb_noss_2',
+                'https://www.noon.com/uae-en/search?q={}'
+            },
+            'ar': {
+                'https://www.amazon.ae/s?k={}&language=ar_AE&ref=nb_sb_noss_2',
+                'https://www.noon.com/uae-ar/search?q={}'
+            }
+        },
+        'sa': {
+            'en': {
+                'https://www.amazon.sa/s?k={}&ref=nb_sb_noss_2',
+                'https://www.noon.com/saudi-en/search?q={}'
+            },
+            'ar': {
+                'https://www.amazon.sa/s?k={}&language=ar_AE&ref=nb_sb_noss_2',
+                'https://www.noon.com/saudi-ar/search?q={}'
+            }
+        }
+    }
     urls = []
-    if country == 'Egypt':
-        urls.append("https://www.noon.com/egypt-en/search?q={}".format(search_value))  # EGYPT
-        urls.append("https://egypt.souq.com/eg-en/{}/s/?as=1".format(search_value))  # EGYPT
-        urls.append("https://www.jumia.com.eg/catalog/?q={}".format(search_value))  # EGYPT
-        urls.append("https://btech.com/en/catalogsearch/result/?cat=All&q={}".format(search_value))  # EGYPT
-
-    elif country == 'UAE':
-        if search_value == "mobiles":
-            urls.append("https://www.amazon.ae/s?k=smart+phone&ref=nb_sb_noss_2")
-        else:
-            urls.append("https://www.amazon.ae/s?k={}&ref=nb_sb_noss_2".format(search_value))
-        urls.append("https://www.noon.com/uae-en/search?q={}".format(search_value))
-
+    for url in websites.get(country).get(lang):
+        urls.append(url.format(search_value))
     return urls
 
+
+# print(create_url('search_value', 'eg', 'en'))
 
 # links = create_url('ramy', 'Egypt')
 

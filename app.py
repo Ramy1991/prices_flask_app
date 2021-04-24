@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, redirect
 from scripts_py import py_get_data
-# from scripts_py import search_online
+from scripts_py import search_online
 from scripts_py import db_search
 
 app = Flask(__name__)
@@ -35,8 +35,8 @@ def search(country, lang):
 @app.route('/<string:country>-<string:lang>/search/<search_value>')
 def search_data(search_value, country, lang):
     if search_value:
-        data = db_search.db_connection(search_value)
-        # data = search_online.main(search_online.create_url(search_value, 'Egypt'))
+        # data = db_search.db_connection(search_value)
+        data = search_online.main(search_online.create_url(search_value, country))
         return render_template('search.html', data=data, country=country, lang=lang)
     else:
         return render_template('search.html', data='', country=country, lang=lang)

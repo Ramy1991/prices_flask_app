@@ -66,11 +66,11 @@ supported_search_website_xp = {
         'item_size': "//*[@id='dropdown_selected_size_name']/span/span/span//text()"
     },
     'btech.com': {
-        'image_xp': "//ul//li//img[@class='product-image-photo default_image']/@src",
-        'price_xp': "//ul//li//div[@class='cash']//span[1]//text()",
-        'title_xp': "//li//a[@class='product-item-link']//text()",
-        'uid_xp': "//ul//li/div/div/a/@href",
-        'url_xp': "//ul//li/div/div/a/@href"
+        'image_xp': "//*[@class='product-item-view ']//a//div//img/@src",
+        'price_xp': "//span[@data-price-type='finalPrice']/@data-price-amount",
+        'title_xp': "//*[@class='product-item-view ']//a//div/div[1]/h2//text()",
+        'uid_xp': "///*[@class='product-item-view ']/a/div/div/@data-product-id",
+        'url_xp': "//*[@class='product-item-view ']/a/@href"
     },
     'jumia.com': {
         'image_xp': "//div[@class='img-c']/img/@data-src",
