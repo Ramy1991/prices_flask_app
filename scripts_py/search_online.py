@@ -65,6 +65,9 @@ def main(links):
             "Connection": "keep-alive",
             "Keep-Alive": "300"
         }
+        main_url = ''.join(url.values())
+        url = ''.join(url.keys())
+
         async with session.get(url, headers=header) as response:
             data = await response.text()
             title_xp = supported_search_website_xp.get(website_check(url)).get('title_xp')
@@ -84,7 +87,7 @@ def main(links):
                 item_urls = []
 
                 for json_item in json_items:
-                    item_urls.append(json_item.get('url'))
+                    item_urls.append(main_url.format(json_item.get('sku')))
                     item_uid.append(json_item.get('sku'))
                     item_titles.append(json_item.get('name'))
                     if type(json_item.get('sale_price')) != int:
@@ -106,6 +109,13 @@ def main(links):
             }
             for uid, title, image, price, i_url in zip(item_uid, item_titles, item_images, item_prices, item_urls):
                 uid = uid.split(",")
+                try:
+                    price = ''.join(re.findall(r'(\d+)', price))
+                except TypeError:
+                    pass
+                if website_check(url) == 'jumia.com':
+                    i_url = ''.join([main_url, i_url])
+
                 item_dict = {
                     uid[0]: {
                         "item_title": title,
@@ -130,46 +140,47 @@ def create_url(search_value, country, lang):
     websites = {
         'eg': {
             'en': {
-                'https://www.noon.com/egypt-en/search?q={}',
-                'https://egypt.souq.com/eg-en/{}/s/?as=1',
-                'https://www.jumia.com.eg/catalog/?q={}',
-                'https://btech.com/en/catalogsearch/result/?q={}'
+                'https://www.noon.com/egypt-en/search?q={}': 'https://www.noon.com/egypt-en/{}/p',
+                'https://egypt.souq.com/eg-en/{}/s/?as=1': 'https://egypt.souq.com/eg-en/{}/s/',
+                'https://www.jumia.com.eg/catalog/?q={}': 'https://www.jumia.com.eg',
+                'https://btech.com/en/catalogsearch/result/?q={}': 'https://btech.com/en/'
             },
             'ar': {
-                'https://www.noon.com/egypt-ar/search?q={}',
-                'https://egypt.souq.com/eg-ar/{}/s/?as=1',
-                'https://www.jumia.com.eg/ar/catalog/?q={}',
-                'https://btech.com/ar/catalogsearch/result/?q={}'
+                'https://www.noon.com/egypt-ar/search?q={}': 'https://www.noon.com/egypt-ar/{}/p',
+                'https://egypt.souq.com/eg-ar/{}/s/?as=1': 'https://egypt.souq.com/eg-ar/{}/s/',
+                'https://www.jumia.com.eg/ar/catalog/?q={}': 'https://www.jumia.com.eg/ar',
+                'https://btech.com/ar/catalogsearch/result/?q={}': 'https://btech.com/ar/'
             }
         },
         'ae': {
             'en': {
-                'https://www.amazon.ae/s?k={}&ref=nb_sb_noss_2',
-                'https://www.noon.com/uae-en/search?q={}'
+                'https://www.amazon.ae/s?k={}&ref=nb_sb_noss_2': 'https://www.amazon.ae/dp/{}/?language=en_AE',
+                'https://www.noon.com/uae-en/search?q={}': 'https://www.noon.com/uae-en/{}/p'
             },
             'ar': {
-                'https://www.amazon.ae/s?k={}&language=ar_AE&ref=nb_sb_noss_2',
-                'https://www.noon.com/uae-ar/search?q={}'
+                'https://www.amazon.ae/s?k={}&language=ar_AE&ref=nb_sb_noss_2': 'https://www.amazon.ae/dp/{}/?language=ar_AE',
+                'https://www.noon.com/uae-ar/search?q={}': 'https://www.noon.com/uae-ar/{}/p'
             }
         },
         'sa': {
             'en': {
-                'https://www.amazon.sa/s?k={}&ref=nb_sb_noss_2',
-                'https://www.noon.com/saudi-en/search?q={}'
+                'https://www.amazon.sa/s?k={}&ref=nb_sb_noss_2': 'https://www.amazon.sa/dp/{}/?language=en_AE',
+                'https://www.noon.com/saudi-en/search?q={}': 'https://www.noon.com/saudi-en/{}/p'
             },
             'ar': {
-                'https://www.amazon.sa/s?k={}&language=ar_AE&ref=nb_sb_noss_2',
-                'https://www.noon.com/saudi-ar/search?q={}'
+                'https://www.amazon.sa/s?k={}&language=ar_AE&ref=nb_sb_noss_2': 'https://www.amazon.sa/dp/{}/?language=ar_AE',
+                'https://www.noon.com/saudi-ar/search?q={}': 'https://www.noon.com/saudi-ar/{}/p'
             }
         }
     }
     urls = []
-    for url in websites.get(country).get(lang):
-        urls.append(url.format(search_value))
+
+    for url, i_url in websites.get(country).get(lang).items():
+        urls.append({url.format(search_value): i_url})
     return urls
 
 
-# print(create_url('search_value', 'eg', 'en'))
+# print(main(create_url('laptop', 'eg', 'en')))
 
 # links = create_url('ramy', 'Egypt')
 

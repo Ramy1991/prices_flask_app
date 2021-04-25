@@ -73,7 +73,7 @@ supported_search_website_xp = {
         'url_xp': "//*[@class='product-item-view ']/a/@href"
     },
     'jumia.com': {
-        'image_xp': "//div[@class='img-c']/img/@data-src",
+        'image_xp': "//div[@class='img-c']/img[1]/@data-src",
         'price_xp': "//div[@class='prc']/text()",
         'title_xp': "//h3[@class='name']/text()",
         'uid_xp': "//a[@class='core']/@data-id",
