@@ -10,7 +10,7 @@ now = datetime.datetime.now()
 
 url = 'http://api-pw.onlinewebshop.net/'
 
-data = ijson.parse(open(r'C:\Users\ramyg\Downloads\products (1).json', encoding="utf8"))
+data = ijson.parse(open(r'C:\Users\ramyg\Downloads\products2.json', encoding="utf8"))
 n = 1
 items = []
 item = []
@@ -121,6 +121,8 @@ for prefix, event, value in data:
         item.append(Product_Direct_Link_AR)
     elif prefix == 'item.data.item.Price_eg':
         Price_eg = value
+        # if Price_eg == 'null':
+        #     Price_eg = ''
         date_time = now.strftime("%Y-%m-%d %H:%M:%S")
         price_dict = {
             'egp': {
@@ -131,6 +133,7 @@ for prefix, event, value in data:
                 }
             }
         }
+        # print(json.dumps(price_dict))
         item.append(json.dumps(price_dict))
     elif prefix == 'item.data.item.Item_UPC':
         Item_UPC = value
@@ -148,32 +151,32 @@ for prefix, event, value in data:
         item_date = re.search(r'item.(\d+.\d+.\d+)', Images_URL)
         item.append(item_date.group(1))
         # print("', '".join(map(str, item)))
-        if n > 235109:
-            items.append("('" + "', '".join(map(str, item)) + "')")
-            if 350000 <= len(', '.join(items) + ';') <= 390000:
-                # if len(items) == 1:
-                items_to_set = ', '.join(items) + ';'
-                query_string = "INSERT INTO products ( Unique_Product_Code, Website_Name, UIC," \
-                               " Country, sub_category_en, sub_category_ar, Item_Type_EN," \
-                               " Item_Type_AR, Title_EN, Title_AR, Brand_EN, Brand_AR," \
-                               " Item_Specs_en, Item_Specs_ar, Images_URL, Product_Direct_Link_EN, Product_Direct_Link_AR,"\
-                               " price_data, Item_UPC, Sold_Out, link_en, link_ar, item_date) " \
-                               "VALUES {}".format(items_to_set)
-                my_item = {'query': query_string}
-                # print(my_item)
-                print(str(len(query_string)) + '-' + str(n))
-                # print(query_string)
-                # header = {
-                #     "User-Agent": user_agent(),
-                #     "Accept": "*/*",
-                #     "Accept-Language": "*/*",
-                #     "Accept-Charset": "*/*",
-                #     "Connection": "keep-alive",
-                #     "Keep-Alive": "300"
-                # }
-                response = requests.post(url, data=my_item)
-                print(str(Unique_Product_Code) + '-' + response.text + '-' + str(n))
-                items = []
+        # if n > 235109:
+        items.append("('" + "', '".join(map(str, item)) + "')")
+        if 350000 <= len(', '.join(items) + ';') <= 390000:
+            # if len(items) == 1:
+            items_to_set = ', '.join(items) + ';'
+            query_string = "INSERT INTO products ( Unique_Product_Code, Website_Name, UIC," \
+                           " Country, sub_category_en, sub_category_ar, Item_Type_EN," \
+                           " Item_Type_AR, Title_EN, Title_AR, Brand_EN, Brand_AR," \
+                           " Item_Specs_en, Item_Specs_ar, Images_URL, Product_Direct_Link_EN, Product_Direct_Link_AR,"\
+                           " price_data, Item_UPC, Sold_Out, link_en, link_ar, item_date) " \
+                           "VALUES {}".format(items_to_set)
+            my_item = {'query': query_string}
+            # print(my_item)
+            print(str(len(query_string)) + '-' + str(n))
+            # print(query_string)
+            # header = {
+            #     "User-Agent": user_agent(),
+            #     "Accept": "*/*",
+            #     "Accept-Language": "*/*",
+            #     "Accept-Charset": "*/*",
+            #     "Connection": "keep-alive",
+            #     "Keep-Alive": "300"
+            # }
+            response = requests.post(url, data=my_item)
+            print(str(Unique_Product_Code) + '-' + response.text + '-' + str(n))
+            items = []
 
         n += 1
         item = []

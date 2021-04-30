@@ -35,7 +35,7 @@ from super_cate_mod import super_care_func
 # Obtain connection string information from the portal
 
 def remove_special_characters(string):
-    replaced = re.sub(r"['|\\\|,|\s\/|-|.|@|$|%|(|)|_|&|+|=|^|{|}|<|>|\"|!|?|:|;]+", "-", string)
+    replaced = re.sub(r"['|\\\|,|\s\/|-|.|@|$|%|(|)|_|&|+|=|^|{|}|<|>|\"|!|?|:|;|*]+", "-", string)
     return re.sub(r"[-]+", "-", replaced)
 
 
@@ -79,13 +79,21 @@ else:
         Sold_Out = ws['y' + str(i)].value
 
         title_en_ = re.sub("'", "''", title_en)
-        title_ar_ = re.sub("'", "''", title_ar)
+        try:
+            title_ar_ = re.sub("'", "''", title_ar)
+        except TypeError:
+            title_ar_ = title_ar
+            pass
 
         Brand_en_ = re.sub("'", "''", Brand_en)
         Brand_ar_ = re.sub("'", "''", Brand_ar)
 
         Description_en_ = re.sub("'", "''", Description_en)
-        Description_ar_ = re.sub("'", "''", Description_ar)
+        try:
+            Description_ar_ = re.sub("'", "''", Description_ar)
+        except TypeError:
+            Description_ar_ = Description_ar
+            pass
         Item_Specs_en_ = re.sub("'", "''", Item_Specs_en)
         Item_Specs_ar_ = re.sub("'", "''", Item_Specs_ar)
         Item_Type_EN_ = re.sub("'", "''", Item_Type_EN)
@@ -94,7 +102,11 @@ else:
         uic = "A0{}".format(str(uuid.uuid4()).upper()[:8])
 
         URL_EN = remove_special_characters(title_en)
-        URL_AR = remove_special_characters(title_ar)
+        try:
+            URL_AR = remove_special_characters(title_ar)
+        except TypeError:
+            URL_AR = remove_special_characters(title_en)
+            pass
 
         Cate_URL_EN = remove_special_characters(Item_Type_EN_)
         Cate_URL_AR = remove_special_characters(Item_Type_AR_)
@@ -114,8 +126,8 @@ else:
         link_ar = '/'.join([Cate_URL_AR, URL_AR, uic])
         # print(Product_Direct_Link_en)
         query = (
-            "INSERT INTO Products (Unique_Product_Code, Country, sub_category_URL_EN, sub_category_en, sub_category_ar, Item_Type_EN, Item_Type_AR, Title_EN, Title_AR, Brand_EN, Brand_AR, Description_EN, Description_AR, Item_Specs_en, Item_Specs_ar, Images_URL, Product_Direct_Link_EN, Product_Direct_Link_AR, Price_EG, Item_UPC, Sold_Out, Affiliate_Link, URL_EN, URL_AR, UIC, Cate_URL_EN, Cate_URL_AR, link_en, link_ar, added_to_specs, Website_Name)"
-            "VALUES (%s, %s, %s,%s, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 'No', 'souq.com')")
+            "INSERT INTO products2 (Unique_Product_Code, Country, sub_category_URL_EN, sub_category_en, sub_category_ar, Item_Type_EN, Item_Type_AR, Title_EN, Title_AR, Brand_EN, Brand_AR, Description_EN, Description_AR, Item_Specs_en, Item_Specs_ar, Images_URL, Product_Direct_Link_EN, Product_Direct_Link_AR, Price_EG, Item_UPC, Sold_Out, Affiliate_Link, URL_EN, URL_AR, UIC, Cate_URL_EN, Cate_URL_AR, link_en, link_ar, Website_Name)"
+            "VALUES (%s, %s, %s,%s, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 'souq.com')")
 
         data = (
             Ean, Country, sub_category_URL_EN, sub_category_en, sub_category_ar, Item_Type_EN_, Item_Type_AR_,
