@@ -20,13 +20,14 @@ driver.find_element_by_xpath('//*[@id="email"]').send_keys('ramy.zaghloul@mzadqa
 driver.find_element_by_xpath('//*[@id="password"]').send_keys('BDZuKtqUwaL2b3fd')
 driver.find_element_by_xpath('//*[@id="app"]/main/div/div/div/div/div[2]/form/div[4]/div/button').click()
 
-wb = load_workbook(filename=r'C:\Users\ramyg\Desktop\Book2.xlsx')
+wb = load_workbook(filename=r'C:\Users\ramyg\Downloads\Al Wakra Backend.xlsx')
 ws = wb.active
 i = 2
 driver.switch_to.window(driver.window_handles[0])
 driver.execute_script("window.open('about:blank', 'tab2');")
 driver.switch_to.window("tab2")
-c_skus = []
+c_skus = [
+          ]
 for row in ws.rows:
     sku = ws['a' + str(i)].value
     p_c = ws['b' + str(i)].value
@@ -49,16 +50,22 @@ for row in ws.rows:
         n = 0
         for sku in c_skus[::-1]:
             driver.find_element_by_xpath(
-                '//*[@id="item-selection-group-data-{}"]/div[1]/div[2]/div[1]/input'.format(str(n))).send_keys(sku)
+                '//*[@id="item-selection-group-data-{}"]/div[1]/div[2]/div[1]/input |'
+                ' //*[@id="item-selection-group-data-{}"]/div[1]/div[3]/div/input'.format(str(n), str(n))).send_keys(
+                sku)
             time.sleep(2)
-            driver.find_element_by_xpath(
+            click_1 = driver.find_element_by_xpath(
                 '//ul[{}][@class="ui-menu ui-widget ui-widget-content ui-autocomplete ui-front"]/li[1]'.format(
-                    str(n + 1))).click()
+                    str(n + 1)))
+            driver.execute_script("arguments[0].click();", click_1)
             time.sleep(2)
-            driver.find_element_by_xpath('//*[@id="item-selection-group"]/div/div[2]/div').click()
+            click_add = driver.find_element_by_xpath('//*[@id="item-selection-group"]/div/div[2]/div')
+            driver.execute_script("arguments[0].click();", click_add)
             n += 1
-            c_skus = []
-        driver.find_element_by_xpath('//*[@id="item-selection-group-item-{}"]/div[2]/div[2]'.format(str(n))).click()
+
+        c_skus = []
+        click_2 = driver.find_element_by_xpath('//*[@id="item-selection-group-item-{}"]/div[2]/div[2]'.format(str(n)))
+        driver.execute_script("arguments[0].click();", click_2)
         time.sleep(3)
         # Texts
         element1 = driver.find_element_by_xpath('//*[@id="item-selection-group"]/div')
@@ -96,6 +103,7 @@ for row in ws.rows:
                 break
 
         driver.find_element_by_xpath('//nav//button[contains(text(),"Save")]').click()
+        time.sleep(3)
         ws.cell(row=i, column=8).value = "Done"
         i += 1
     elif p_c == 'Kids':
@@ -106,23 +114,40 @@ for row in ws.rows:
         time.sleep(2)
         driver.find_element_by_xpath('//li/a[contains(text(),"Categories")]').click()
         time.sleep(1)
-        driver.find_element_by_xpath('//*[@id="category"]/div[1]/table/tbody/tr/td[2]/div').click()
-        time.sleep(1)
+        while True:
+            try:
+                driver.find_element_by_xpath('//*[@id="category"]/div[1]/table/tbody/tr[1]/td[2]/div').click()
+                time.sleep(1)
+            except NoSuchElementException:
+                break
+
         driver.find_element_by_xpath('//li/a[contains(text(),"Characteristics")]').click()
         time.sleep(1)
-        driver.find_element_by_xpath(
-            '//*[@id="characteristic"]/div[3]//option[contains(text(),"Sold By")]/ancestor::td/following-sibling::td[2]/div[2]').click()
-        time.sleep(1)
-        driver.find_element_by_xpath(
-            ' //*[@id="characteristic"]/div[3]//option[contains(text(),"Clothing Size")]/ancestor::td/following-sibling::td[2]/div[2]').click()
-        time.sleep(1)
-        driver.find_element_by_xpath('//*[@id="characteristic"]/div[2]/table/thead/tr/th[3]/div').click()
-        time.sleep(1)
-        driver.find_element_by_xpath(
-            '//*[@id="characteristic"]/div[2]//select//option[contains(text(),"Clothing Size")]').click()
-        time.sleep(1)
-        driver.find_element_by_xpath('//*[@id="characteristic"]/div[2]/table/tbody/tr/td[2]/span/input').send_keys(size)
-        time.sleep(1)
+        try:
+            driver.find_element_by_xpath(
+                '//*[@id="characteristic"]/div[3]//option[contains(text(),"Sold By")]/ancestor::td/following-sibling::td[2]/div[2]').click()
+            time.sleep(1)
+        except NoSuchElementException:
+            pass
+
+        atts_list = ['Clothing Size', 'Footwear Size', 'Jalabiya Length', 'Sirwal Size', 'Ghutra Size']
+        for att in atts_list:
+            try:
+                driver.find_element_by_xpath(
+                    '//*[@id="characteristic"]/div[3]//option[contains(text(),"{}")]/ancestor::td/following-sibling::td[2]/div[2]'.format(
+                        att)).click()
+                time.sleep(1)
+                driver.find_element_by_xpath('//*[@id="characteristic"]/div[2]/table/thead/tr/th[3]/div').click()
+                time.sleep(1)
+                driver.find_element_by_xpath(
+                    '//*[@id="characteristic"]/div[2]//select//option[contains(text(),"{}")]'.format(att)).click()
+                time.sleep(1)
+                driver.find_element_by_xpath(
+                    '//*[@id="characteristic"]/div[2]/table/tbody/tr/td[2]/span/input').send_keys(size)
+                time.sleep(1)
+            except NoSuchElementException:
+                continue
+
         driver.find_element_by_xpath('//nav//button[contains(text(),"Save")]').click()
         ws.cell(row=i, column=8).value = "Done"
         i += 1
