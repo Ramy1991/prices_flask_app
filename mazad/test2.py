@@ -8,7 +8,7 @@ from selenium.common.exceptions import NoSuchElementException
 from lxml import html
 import os
 from pywinauto.application import Application as app
-from pywinauto import mouse as mouse1
+from pywinauto import mouse as mouse1, keyboard
 import time
 from random import randrange
 
@@ -117,6 +117,7 @@ while True:
     time.sleep(1)
     mouse1.click(button='left', coords=(660, 867))
     time.sleep(2 + randrange(3))
+    keyboard.send_keys('^a^c')
     mouse1.move(coords=(963, 18))
     time.sleep(4)
     # Excel
@@ -124,9 +125,14 @@ while True:
     time.sleep(1)
     mouse1.click(button='left', coords=(665, 1061))
     mouse1.move(coords=(1400, 526))
+    mouse1.move(coords=(143, 700))
+    mouse1.move(coords=(645, 1453))
+    mouse1.move(coords=(545, 585))
+    mouse1.move(coords=(1400, 400))
     time.sleep(1)
     mouse1.click(button='left', coords=(1402, 527))
     time.sleep(2)
+    mouse1.move(coords=(111, 666))
     mouse1.move(coords=(925, 527))
     mouse1.click(button='right', coords=(925, 527))
     time.sleep(randrange(3))
@@ -134,6 +140,7 @@ while True:
     time.sleep(2)
     mouse1.click(button='left', coords=(923, 525))
     time.sleep(3 + randrange(3))
+    mouse1.move(coords=(213, 355))
     mouse1.move(coords=(410, 527))
     time.sleep(1)
     mouse1.click(button='left', coords=(410, 527))
@@ -156,8 +163,14 @@ while True:
     mouse1.move(coords=(1500, 704))
     mouse1.move(coords=(1000, 804))
     mouse1.move(coords=(500, 500))
-    mouse1.move(coords=(200, 200))
-    mouse1.move(coords=(200, 900))
+    mouse1.move(coords=(123, 877))
+    mouse1.move(coords=(32, 657))
+    mouse1.move(coords=(435, 321))
+    mouse1.move(coords=(231, 123))
+    mouse1.move(coords=(890, 323))
+    mouse1.move(coords=(324, 322))
+    mouse1.move(coords=(1432, 123))
+    mouse1.move(coords=(543, 978))
     mouse1.move(coords=(400, 600))
     mouse1.click(button='right', coords=(1128, 712))
     time.sleep(randrange(3))
