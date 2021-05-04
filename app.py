@@ -14,7 +14,7 @@ app = Flask(__name__)
 @app.route('/home')
 @app.route('/home/')
 def redirect_home():
-    return redirect("/eg-en/", code=302)
+    return redirect("/eg-en/", code=302)  # to be edit to redirect for country as per region
 
 
 @app.route('/<string:country>-<string:lang>/')
