@@ -29,6 +29,7 @@ def user(name, country, lang):
 @app.route('/<string:country>-<string:lang>/search')
 @app.route('/<string:country>-<string:lang>/search/')
 def search(country, lang):
+    data = db_search.db_connection('default')
     return render_template('search.html', data='', country=country, lang=lang)
 
 
