@@ -2,8 +2,12 @@ from flask import Flask, request, render_template, redirect
 from scripts_py import py_get_data
 from scripts_py import search_online
 from scripts_py import db_search
+from scripts_py import country_lang
 
 app = Flask(__name__)
+
+
+# validate country and land
 
 
 @app.route('/')
@@ -17,25 +21,27 @@ def redirect_home():
 @app.route('/<string:country>-<string:lang>/home')
 @app.route('/<string:country>-<string:lang>/home/')
 def index(country, lang):
-    if country and lang:
+    if country_lang(country, lang):
         return render_template('home.html', country=country, lang=lang)
 
 
 @app.route('/<string:country>-<string:lang>/user/<string:name>')
 def user(name, country, lang):
-    return render_template('user.html', username=name, country=country, lang=lang)
+    if country_lang(country, lang):
+        return render_template('user.html', username=name, country=country, lang=lang)
 
 
 @app.route('/<string:country>-<string:lang>/search')
 @app.route('/<string:country>-<string:lang>/search/')
 def search(country, lang):
-    data = db_search.db_connection('default')
-    return render_template('search.html', data='', country=country, lang=lang)
+    if country_lang(country, lang):
+        data = db_search.db_connection('default')
+        return render_template('search.html', data='', country=country, lang=lang)
 
 
 @app.route('/<string:country>-<string:lang>/search/<search_value>')
 def search_data(search_value, country, lang):
-    if search_value:
+    if search_value and country_lang(country, lang):
         # data = db_search.db_connection(search_value)
         data = search_online.main(search_online.create_url(search_value, country, lang))
         return render_template('search.html', data=data, country=country, lang=lang)

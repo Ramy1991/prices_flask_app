@@ -6,10 +6,14 @@ import json
 #
 class DBSearch(object):
 
-    def __init__(self, search_value):
+    def __init__(self, search_value, country, lang):
         self.search_value = search_value
+        self.country = country
+        self.lang = lang
         self.items_dict_search = {}
 
+    def search_query(self):
+        if self.country ==
     def db_connection(self):
         try:
             conn = mysql.connector.connect(user="admin", password="Api-0000",
@@ -54,4 +58,4 @@ class DBSearch(object):
             return self.items_dict_search
 
 
-print(DBSearch('iphone').db_connection())
+print(DBSearch('iphone', 'eg', 'en').db_connection())
