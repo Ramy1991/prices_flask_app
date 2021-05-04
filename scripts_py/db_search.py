@@ -5,8 +5,8 @@ import json
 
 def db_connection(search_value):
     try:
-        conn = mysql.connector.connect(user="root", password="",
-                                       host="localhost", port=3306, database="test")
+        conn = mysql.connector.connect(user="admin", password="Api-0000",
+                                       host="8.9.3.120", port=3306, database="main_schema")
     except mysql.connector.Error as err:
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
             print("Something is wrong with the user name or password")
