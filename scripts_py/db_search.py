@@ -24,8 +24,8 @@ class DBSearch(object):
         else:
             cursor = conn.cursor()
             cursor.execute(
-                "SELECT website_name, title_en, title_ar, unique_product_code, link_en, price_data, images_url, brand_en, "
-                "brand_ar, item_type_en, item_type_ar, UIC, link_ar, item_upc, product_direct_link_en,"
+                "SELECT website_name, title_en, title_ar, unique_product_code, link_en, price_data, images_url, "
+                "brand_en, brand_ar, item_type_en, item_type_ar, UIC, link_ar, item_upc, product_direct_link_en,"
                 "product_direct_link_ar FROM products WHERE MATCH(title_en) "
                 "against('%{}%' IN NATURAL LANGUAGE MODE) "
                 "AND country like '%eg%' LIMIT 30".format(self.search_value))
@@ -38,7 +38,7 @@ class DBSearch(object):
                         }
                     }
                 item_dict_search = {
-                    item[3]: {      # item_uid
+                    item[3]: {  # item_uid
                         "item_title": item[1],
                         "item_title_AR": item[2],
                         "item_image": item[6].split("\n")[0],
