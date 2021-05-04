@@ -97,6 +97,7 @@ supported_search_website_xp = {
 }
 
 
+# validate country and land
 def country_lang(arg1, arg2):
     country_list = ['af', 'al', 'dz', 'as', 'ad', 'ao', 'ai', 'aq', 'ag', 'ar', 'am', 'aw', 'au', 'at', 'az', 'bs',
                     'bh', 'bd', 'bb', 'by', 'be', 'bz', 'bj', 'bm', 'bt', 'bo', 'bq', 'ba', 'bw', 'bv', 'br', 'io',

@@ -7,7 +7,7 @@ from scripts_py import country_lang
 app = Flask(__name__)
 
 
-# validate country and land
+
 
 
 @app.route('/')
