@@ -13,7 +13,7 @@ class DBSearch(object):
         self.items_dict_search = {}
 
     def search_query(self):
-        if self.country ==
+
     def db_connection(self):
         try:
             conn = mysql.connector.connect(user="admin", password="Api-0000",
