@@ -13,6 +13,32 @@ class DBSearch(object):
         self.items_dict_search = {}
 
     def search_query(self):
+        query = f"WITH r AS (SELECT  website_name, UIC, unique_product_code, title_{self.lang}, brand_{self.lang}," \
+                f" images_url, item_tybe_{self.lang}, sub_category_{self.lang}, item_upc, link_{self.lang}, " \
+                f"product_direct_link_{self.lang}, rating, " \
+                f"number_of_reviews, JSON_EXTRACT(price_data->>'$.egp.*', " \
+                f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) " \
+                f"FROM products WHERE item_tybe_en = (" \
+                f"SELECT item_tybe_en FROM search_mapping WHERE " \
+                f"MATCH(search_key_s) against('+{self.search_value}' IN NATURAL LANGUAGE MODE) " \
+                f"order by search_order ASC limit 1" \
+                f") AND MATCH(title_{self.lang}) against('+{self.search_value}' IN NATURAL LANGUAGE MODE ) AND" \
+                f" JSON_EXTRACT(price_data->>'$.egp.*', " \
+                f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) != 'None' AND" \
+                f" sold_out = 0 AND country like '%{self.country}%' LIMIT 60)" \
+                f" SELECT * FROM r " \
+                f"UNION ALL" \
+                f" SELECT  website_name, UIC, unique_product_code, title_{self.lang}, brand_{self.lang}, " \
+                f"images_url, item_tybe_{self.lang}, sub_category_{self.lang}," \
+                f"item_upc, link_{self.lang}, product_direct_link_{self.lang}, rating, number_of_reviews, " \
+                f"JSON_EXTRACT(price_data->>'$.egp.*', " \
+                f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) " \
+                f"FROM products WHERE " \
+                f"MATCH(title_{self.lang}) against('+{self.search_value}' IN BOOLEAN MODE ) " \
+                f"AND JSON_EXTRACT(price_data->>'$.egp.*', " \
+                f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) != 'None'" \
+                f"AND sold_out = 0 AND country like '%{self.country}%' AND NOT EXISTS (SELECT * FROM r) LIMIT 60;"
+        return query
 
     def db_connection(self):
         try:
@@ -27,12 +53,7 @@ class DBSearch(object):
                 print(err)
         else:
             cursor = conn.cursor()
-            cursor.execute(
-                "SELECT website_name, title_en, title_ar, unique_product_code, link_en, price_data, images_url, "
-                "brand_en, brand_ar, item_type_en, item_type_ar, UIC, link_ar, item_upc, product_direct_link_en,"
-                "product_direct_link_ar FROM products WHERE MATCH(title_en) "
-                "against('%{}%' IN NATURAL LANGUAGE MODE) "
-                "AND country like '%eg%' LIMIT 30".format(self.search_value))
+            cursor.execute(self.search_query())
             result = cursor.fetchall()
             items_dict_search = {}
             for item in result:
@@ -42,20 +63,26 @@ class DBSearch(object):
                         }
                     }
                 item_dict_search = {
-                    item[3]: {  # item_uid
-                        "item_title": item[1],
-                        "item_title_AR": item[2],
-                        "item_image": item[6].split("\n")[0],
-                        "item_price": item[5],
-                        "item_url": item[14],
-                        "item_url_ar": item[15],
-                        "item_uid": item[3],
-                        "search_key": self.search_value
+                    item[2]: {  # item_uid
+                        "website_name": item[0],  #
+                        "item_uid": item[1],
+                        "unique_product_code": item[2],  #
+                        "item_title": item[3],
+                        "brand_en": item[4],  #
+                        "item_image": item[5].split('\n')[0],
+                        "item_tybe_en": item[6],  #
+                        "sub_category_en": item[7],  #
+                        "item_upc": item[8],  #
+                        "link_en": item[9],  #
+                        "item_url": item[10],
+                        "rating": item[11],  #
+                        "number_of_reviews": item[12],  #
+                        "item_price": '{:,.2f}'.format(float(item[13].replace('"', ''))),
+
                     }
                 }
                 items_dict_search[item[0]].update(item_dict_search)
             self.items_dict_search = json.dumps([items_dict_search])
             return self.items_dict_search
 
-
-print(DBSearch('iphone', 'eg', 'en').db_connection())
+# print(DBSearch('iphone', 'eg', 'en').db_connection())

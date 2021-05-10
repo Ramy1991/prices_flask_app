@@ -497,7 +497,7 @@
         </div>
         <div class="article-list">
             <div class="container">
-                <form>
+                <form action="/eg-en/search/" method="POST">
                 <div class="input-group mb-3">
 
                     <input type="text" class="form-control input_search" value="" name="search_val" id="search_val" placeholder="What are you looking for?" aria-label="Search" aria-describedby="basic-addon2" required>
@@ -655,7 +655,7 @@
 
             function html_item(item_data, item_price, item_curr){
                 if (item_price == "Out of Stock"){
-                    item_price = item_price
+                    item_price = item_price.toLocaleString("zh-TW")
                 }else{
                     item_price = item_price + ' ' + item_curr
                 }
@@ -688,7 +688,7 @@
                 $("#loading_main_page").css('display','');
                 item_data = JSON.parse({{ data|tojson|safe }});
                 if(jQuery.isEmptyObject(item_data[0]) == true){
-                default_query();
+                    default_query();
                 // results not found
                 }else{
                     var items_html_search = [];
@@ -696,9 +696,12 @@
                     var item_num = 0;
                     // console.log(item_data.length)
                     $.each(item_data, function(key, values){ // website num
+                        
                         $.each(values, function(source, items) {//items
+                        
                             $.each(items, function(source, item) { //item
-                                items_html_search.push(html_item(item, item.item_price, "item_curr"));
+                                console.log(source)
+                                items_html_search.push(html_item(item, item.item_price, ""));
                                 i.push("1");
                                 item_num  = item_num + 1;
                                 if (i.length === item_num){
@@ -714,19 +717,20 @@
                 default_query();
             }
             $(".search_btn").on("click", function(e){
-                e.preventDefault();
+                // e.preventDefault();
                 $("#products-articles" ).html('<div class="lds-dual-ring" id="loading_main_page"></div>');
                 $("#loading_main_page").css('display','');
-                var search_val = $('#search_val').val().replace(/[-\/\\!@#$%^&*'(),.?":{}|<>]/g, "");
-                window.location.href = window.location.origin + '/{{country}}-{{lang}}/search/' + search_val;
+                // var search_val = $('#search_val').val().replace(/[\/\\!@#$%^&*'().?"{}|<>]/g, "");
+                // window.location.href = window.location.origin + '/{{country}}-{{lang}}/search/' + search_val;
+                
             });
-            $('#search_val').val(window.location.pathname.split('/')[3]);
+
+            $('#search_val').val($('<textarea />').html('{{ search_val }}').text());
 
             $('.btn-header').on('click', function(){
                 var scroll = $.cookie("scroll", this.name, { path: '/' });
                 window.location = window.location.origin;
-             
-            })
+            });
           
             // function get_ip(){
             //     var get_county = $.getJSON('http://ip-api.com/json?callback=?', function(data1) {
