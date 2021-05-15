@@ -684,11 +684,10 @@
                     return  product_template;
             }
             item_data = '{{ data|tojson|safe }}';
-            console.log(item_data)
             if (item_data != ''){
                 $("#products-articles" ).html('<div class="lds-dual-ring" id="loading_main_page"></div>');
                 $("#loading_main_page").css('display','');
-                item_data = JSON.parse(item_data);
+                item_data = JSON.parse('{{ data|tojson|safe }}');
                 if(jQuery.isEmptyObject(item_data[0]) == true){
                     default_query();
                 // results not found
