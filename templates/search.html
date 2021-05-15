@@ -744,16 +744,16 @@
             //     });
             // }
             // console.log(window.location.href);
-            var page_lang =  '{{lang}}'
-            $('.lang').attr('href', window.location.origin + '/{{country}}-ar/' + window.location.pathname.split('/')[2]);
-            if (page_lang == 'ar'){
-                $('.lang').text('English');
-                $('.lang').attr('href', window.location.origin + '/{{country}}-en/' + window.location.pathname.split('/')[2]);
-            }
+            // var page_lang =  '{{lang}}'
+            // $('.lang').attr('href', window.location.origin + '/{{country}}-ar/' + window.location.pathname.split('/')[2]);
+            // if (page_lang == 'ar'){
+            //     $('.lang').text('English');
+            //     $('.lang').attr('href', window.location.origin + '/{{country}}-en/' + window.location.pathname.split('/')[2]);
+            // }
      
-            $('.selected_country').each(function() {
-                this.href = window.location.origin + '/' + this.name + '-{{lang}}/' + window.location.pathname.split('/')[2];
-            });
+            // $('.selected_country').each(function() {
+            //     this.href = window.location.origin + '/' + this.name + '-{{lang}}/' + window.location.pathname.split('/')[2];
+            // });
 
             function openNav(){
                 document.getElementById("mySidenav").style.left = "0";

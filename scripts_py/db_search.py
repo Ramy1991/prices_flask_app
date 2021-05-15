@@ -13,31 +13,20 @@ class DBSearch(object):
         self.items_dict_search = {}
 
     def search_query(self):
-        query = f"WITH r AS (SELECT  website_name, UIC, unique_product_code, title_{self.lang}, brand_{self.lang}," \
-                f" images_url, item_tybe_{self.lang}, sub_category_{self.lang}, item_upc, link_{self.lang}, " \
-                f"product_direct_link_{self.lang}, rating, " \
-                f"number_of_reviews, JSON_EXTRACT(price_data->>'$.egp.*', " \
-                f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) " \
-                f"FROM products WHERE item_tybe_en = (" \
-                f"SELECT item_tybe_en FROM search_mapping WHERE " \
-                f"MATCH(search_key_s) against('+{self.search_value}' IN NATURAL LANGUAGE MODE) " \
-                f"order by search_order ASC limit 1" \
-                f") AND MATCH(title_{self.lang}) against('+{self.search_value}' IN NATURAL LANGUAGE MODE ) AND" \
-                f" JSON_EXTRACT(price_data->>'$.egp.*', " \
-                f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) != 'None' AND" \
-                f" sold_out = 0 AND country like '%{self.country}%' LIMIT 60)" \
-                f" SELECT * FROM r " \
-                f"UNION ALL" \
-                f" SELECT  website_name, UIC, unique_product_code, title_{self.lang}, brand_{self.lang}, " \
-                f"images_url, item_tybe_{self.lang}, sub_category_{self.lang}," \
-                f"item_upc, link_{self.lang}, product_direct_link_{self.lang}, rating, number_of_reviews, " \
+        query = f"SELECT  website_name, UIC, unique_product_code, title_{self.lang}, brand_{self.lang}, images_url, "\
+                f"item_tybe_{self.lang}, sub_category_{self.lang}, item_upc, link_{self.lang}, " \
+                f"product_direct_link_{self.lang}, rating, number_of_reviews, "\
                 f"JSON_EXTRACT(price_data->>'$.egp.*', " \
-                f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) " \
-                f"FROM products WHERE " \
-                f"MATCH(title_{self.lang}) against('+{self.search_value}' IN BOOLEAN MODE ) " \
-                f"AND JSON_EXTRACT(price_data->>'$.egp.*', " \
-                f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) != 'None'" \
-                f"AND sold_out = 0 AND country like '%{self.country}%' AND NOT EXISTS (SELECT * FROM r) LIMIT 60;"
+                f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) "\
+                f"FROM products WHERE item_tybe_en = ( "\
+                f"  SELECT item_tybe_en FROM search_mapping WHERE "\
+                f"  MATCH(search_key_s) against('+\"{self.search_value}\"' IN BOOLEAN MODE) order by search_order" \
+                f" ASC LIMIT 1) " \
+                f" AND MATCH(title_{self.lang}) against('+{self.search_value}' IN NATURAL LANGUAGE MODE ) AND "\
+                f"JSON_EXTRACT(price_data->>'$.egp.*', " \
+                f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price'))" \
+                f" != 'None' AND " \
+                f"sold_out = 0 AND country like '%{self.country}%' LIMIT 30"
         return query
 
     def db_connection(self):

@@ -20,13 +20,14 @@ driver.find_element_by_xpath('//*[@id="email"]').send_keys('ramy.zaghloul@mzadqa
 driver.find_element_by_xpath('//*[@id="password"]').send_keys('BDZuKtqUwaL2b3fd')
 driver.find_element_by_xpath('//*[@id="app"]/main/div/div/div/div/div[2]/form/div[4]/div/button').click()
 
-wb = load_workbook(filename=r'C:\Users\ramyg\Downloads\Al Wakra Backend.xlsx')
+wb = load_workbook(filename=r'C:\Users\ramyg\Desktop\Book2.xlsx')
 ws = wb.active
 i = 2
 driver.switch_to.window(driver.window_handles[0])
 driver.execute_script("window.open('about:blank', 'tab2');")
 driver.switch_to.window("tab2")
 c_skus = [
+
           ]
 for row in ws.rows:
     sku = ws['a' + str(i)].value
