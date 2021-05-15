@@ -683,6 +683,7 @@
                                 </div>';
                     return  product_template;
             }
+            item_data = JSON.parse({{ data|tojson|safe }});
             try{
                 $("#products-articles" ).html('<div class="lds-dual-ring" id="loading_main_page"></div>');
                 $("#loading_main_page").css('display','');
