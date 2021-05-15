@@ -18,7 +18,10 @@ class DBSearch(object):
                 f"product_direct_link_{self.lang}, rating, number_of_reviews, "\
                 f"JSON_EXTRACT(price_data->>'$.egp.*', " \
                 f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) "\
-                f"FROM products WHERE item_tybe_en = 'Mobile Phones' " \
+                f"FROM products WHERE item_tybe_en like ( "\
+                f"  SELECT item_tybe_en FROM search_mapping WHERE "\
+                f"  MATCH(search_key_s) against('+\"{self.search_value}\"' IN BOOLEAN MODE) order by search_order" \
+                f" ASC LIMIT 1) " \
                 f" AND MATCH(title_{self.lang}) against('+{self.search_value}' IN NATURAL LANGUAGE MODE ) AND "\
                 f"JSON_EXTRACT(price_data->>'$.egp.*', " \
                 f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price'))" \
