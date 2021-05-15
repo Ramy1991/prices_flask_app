@@ -687,7 +687,8 @@
             if (item_data != ''){
                 $("#products-articles" ).html('<div class="lds-dual-ring" id="loading_main_page"></div>');
                 $("#loading_main_page").css('display','');
-                item_data = JSON.parse('{{ data|tojson|safe }}');
+                item_data.replace("'[","[").replace("]'","]")
+                item_data = JSON.parse(item_data);
                 if(jQuery.isEmptyObject(item_data[0]) == true){
                     default_query();
                 // results not found
