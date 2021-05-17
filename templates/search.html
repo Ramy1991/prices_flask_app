@@ -696,12 +696,13 @@
                     var i = [];
                     var item_num = 0;
                     // console.log(item_data.length)
+                    console.log(item_data[0]['souq.com'])
                     $.each(item_data, function(key, values){ // website num
                         
                         $.each(values, function(source, items) {//items
-                        
+                           
                             $.each(items, function(source, item) { //item
-                                console.log(source)
+                                // console.log(source)
                                 items_html_search.push(html_item(item, item.item_price, ""));
                                 i.push("1");
                                 item_num  = item_num + 1;
