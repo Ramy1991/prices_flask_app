@@ -3,8 +3,10 @@ from scripts_py import py_get_data
 from scripts_py import search_online
 from scripts_py import db_search
 from scripts_py import country_lang
+from flask_compress import Compress
 
 app = Flask(__name__)
+Compress(app)
 
 
 @app.route('/')
@@ -69,5 +71,4 @@ def get_item_data(country, lang):
     else:
         return '404'
 
-
-app.run(debug=True, port=5000)
+# app.run(debug=True, port=5000)
