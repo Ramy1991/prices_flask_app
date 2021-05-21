@@ -13,16 +13,16 @@ class DBSearch(object):
         self.items_dict_search = {}
 
     def search_query(self):
-        query = f"SELECT  website_name, UIC, unique_product_code, title_{self.lang}, brand_{self.lang}, images_url, "\
+        query = f"SELECT  website_name, UIC, unique_product_code, title_{self.lang}, brand_{self.lang}, images_url, " \
                 f"item_tybe_{self.lang}, sub_category_{self.lang}, item_upc, link_{self.lang}, " \
-                f"product_direct_link_{self.lang}, rating, number_of_reviews, "\
+                f"product_direct_link_{self.lang}, rating, number_of_reviews, " \
                 f"JSON_EXTRACT(price_data->>'$.egp.*', " \
-                f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) "\
-                f"FROM products WHERE item_tybe_en like ( "\
-                f"  SELECT item_tybe_en FROM search_mapping WHERE "\
+                f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) " \
+                f"FROM products WHERE item_tybe_en like ( " \
+                f"  SELECT item_tybe_en FROM search_mapping WHERE " \
                 f"  MATCH(search_key_s) against('+\"{self.search_value}\"' IN BOOLEAN MODE) order by search_order" \
                 f" ASC LIMIT 1) " \
-                f" AND MATCH(title_{self.lang}) against('+{self.search_value}' IN NATURAL LANGUAGE MODE ) AND "\
+                f" AND MATCH(title_{self.lang}) against('+{self.search_value}' IN NATURAL LANGUAGE MODE ) AND " \
                 f"JSON_EXTRACT(price_data->>'$.egp.*', " \
                 f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price'))" \
                 f" != 'None' AND " \
@@ -73,5 +73,6 @@ class DBSearch(object):
                 items_dict_search[item[0]].update(item_dict_search)
             self.items_dict_search = json.dumps([items_dict_search])
             return self.items_dict_search
+
 
 # print(DBSearch('iphone', 'eg', 'en').db_connection())
