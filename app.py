@@ -47,12 +47,15 @@ def search(country, lang):
         return '404'
 
 
-@app.route('/<string:country>-<string:lang>/search/<search_value>')
-def search_data(search_value, country, lang):
+@app.route('/<string:country>-<string:lang>/search/<search_value>/', defaults={'page_num': 1})
+@app.route('/<string:country>-<string:lang>/search/<search_value>/<int:page_num>')
+def search_data(search_value, country, lang, page_num):
     if search_value and country_lang.validate_country_lang(country, lang):
-        data = db_search.DBSearch(search_value, country, lang).db_connection()
-        # data = search_online.main(search_online.create_url(search_value, country, lang))
-        return render_template('search.html', data=data, search_val=search_value, country=country, lang=lang)
+        data = db_search.DBSearch(search_value, country, lang, page_num).db_connection()
+        pages_count = data[1]
+        items = data[0]
+        return render_template('search.html', data=items, search_val=search_value, country=country, lang=lang,
+                               pages_count=pages_count, page_num=page_num)
     elif country_lang.validate_country_lang(country, lang):
         return render_template('search.html', data='', country=country, lang=lang)
     else:

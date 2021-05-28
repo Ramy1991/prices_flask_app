@@ -337,6 +337,7 @@ while True:
     time.sleep(0.2)
     mouse1.scroll(coords=(1500, 600), wheel_dist=-3)
     time.sleep(2 + randrange(9))
+
     mouse1.click(button='left', coords=(295, 1050))
     mouse1.move(coords=(270, 1340))
     mouse1.move(coords=(27, 340))

@@ -44,12 +44,12 @@ var firebaseConfig = {
         var scroll = $.cookie("scroll");
         if(scroll){
             $('body,html').animate({ scrollTop: $('body').height() }, 1200);
+            $.removeCookie('scroll');
             if(scroll == 'sign_in'){
                 $( "#login_link" ).click();
             }else{
                 $( "#sign_up_link" ).click();
             }
-            $.removeCookie('scroll');
         }
 
 
