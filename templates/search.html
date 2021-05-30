@@ -340,6 +340,11 @@
             .country-container{
                 list-style: none;
             }
+            .page-item.active .page-link {
+                background-color: #7d8285;
+                border-color: #7d8285;
+                color: white;
+            }
 
             @media screen and (max-width: 1200px) {
                 .btn_1, .btn_2{
@@ -534,7 +539,7 @@
                 {% endif %}      
                 {% for n in range(pages_count) %}
                     {% if n + 1 == page_num %}
-                        <li class="page-item active"><a class="page-link" href="/{{ country }}-{{ lang }}/search/{{ search_val }}/{{ n + 1 }}"> {{ n + 1 }}</a></li>
+                        <li class="page-item active disabled"><a class="page-link" href="/{{ country }}-{{ lang }}/search/{{ search_val }}/{{ n + 1 }}"> {{ n + 1 }}</a></li>
                     {% else %}  
                         <li class="page-item"><a class="page-link" href="/{{ country }}-{{ lang }}/search/{{ search_val }}/{{ n + 1 }}"> {{ n + 1 }}</a></li>
                     {% endif %}      
@@ -550,6 +555,7 @@
                 {% endif %}  
             </ul>
         </nav>
+        
         <br/>
         <br/>
         
@@ -665,7 +671,7 @@
                 var name = $(this).attr('name');
                 console.log(name);
             });
-
+            
 
             function default_query(){
                 var ref = firebase.database().ref("p_p_data");
