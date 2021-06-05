@@ -12,7 +12,7 @@ class DBSearch(object):
         self.country = country
         self.lang = lang
         self.items_dict_search = {}
-        self.item_tybe = ''
+        self.item_type = ''
         self.page_num = page_num
         self.item_per_page = 20
         self.num_of_pages = 0
@@ -25,19 +25,19 @@ class DBSearch(object):
     def pagination_queries(self, q_mum):
         queries = {
             # search for item tybe by search_key in db
-            'query_0': f"SELECT item_tybe_en FROM main_schema.search_mapping WHERE "
+            'query_0': f"SELECT item_type_en FROM main_schema.search_mapping WHERE "
                        f"MATCH(search_key_s) against('+\"{self.search_value}\"' IN BOOLEAN MODE) "
                        f"order by search_order ASC limit 1",
             # search by keyword after get item tybe from first query
             'query_1': f"SELECT  count(*)"
-                       f"FROM main_schema.products WHERE item_tybe_en like '%{self.item_tybe}%' AND "
+                       f"FROM main_schema.products WHERE item_type_en like '%{self.item_type}%' AND "
                        f"MATCH(title_en) against('+{self.search_value}' IN NATURAL LANGUAGE MODE ) "
                        f"AND JSON_EXTRACT(price_data->>'$.egp.*', "
                        f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) != 'None'"
                        f"AND sold_out = 0 AND country like '%{self.country}%';",
             # if item tybe found but search query not in the titles
             'query_2': f"SELECT  count(*)"
-                       f"FROM main_schema.products WHERE item_tybe_en like '%{self.item_tybe}%' "
+                       f"FROM main_schema.products WHERE item_type_en like '%{self.item_type}%' "
                        f"AND JSON_EXTRACT(price_data->>'$.egp.*', "
                        f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) != 'None'"
                        f"AND sold_out = 0 AND country like '%{self.country}%';",
@@ -56,33 +56,33 @@ class DBSearch(object):
 
         queries = {
             # search for item tybe by search_key in db
-            'query_0': f"SELECT item_tybe_en FROM main_schema.search_mapping WHERE "
+            'query_0': f"SELECT item_type_en FROM main_schema.search_mapping WHERE "
                        f"MATCH(search_key_s) against('+\"{self.search_value}\"' IN BOOLEAN MODE) "
                        f"order by search_order ASC limit 1",
             # search by keyword after get item tybe from first query
             'query_1': f"SELECT  website_name, UIC, unique_product_code, title_{self.lang}, brand_{self.lang}, "
-                       f"images_url, item_tybe_{self.lang}, sub_category_{self.lang}, "
+                       f"images_url, item_type_{self.lang}, sub_category_{self.lang}, "
                        f"item_upc, link_{self.lang}, product_direct_link_{self.lang}, rating, number_of_reviews, "
                        f"JSON_EXTRACT(price_data->>'$.egp.*', "
                        f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) "
-                       f"FROM main_schema.products WHERE item_tybe_en = '{self.item_tybe}' AND "
+                       f"FROM main_schema.products WHERE item_type_en = '{self.item_type}' AND "
                        f"MATCH(title_en) against('+{self.search_value}' IN NATURAL LANGUAGE MODE ) "
                        f"AND JSON_EXTRACT(price_data->>'$.egp.*', "
                        f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) != 'None'"
                        f"AND sold_out = 0 AND country = '{self.country}' LIMIT {self.offset}, {self.item_per_page};",
             # if item tybe found but search query not in the titles
             'query_2': f"SELECT  website_name, UIC, unique_product_code, title_{self.lang}, brand_{self.lang}, "
-                       f"images_url, item_tybe_{self.lang}, sub_category_{self.lang}, "
+                       f"images_url, item_type_{self.lang}, sub_category_{self.lang}, "
                        f"item_upc, link_{self.lang}, product_direct_link_{self.lang}, rating, number_of_reviews, "
                        f"JSON_EXTRACT(price_data->>'$.egp.*', "
                        f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) "
-                       f"FROM main_schema.products WHERE item_tybe_en = '{self.item_tybe}' "
+                       f"FROM main_schema.products WHERE item_type_en = '{self.item_type}' "
                        f"AND JSON_EXTRACT(price_data->>'$.egp.*', "
                        f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) != 'None'"
                        f"AND sold_out = 0 AND country = '{self.country}' LIMIT {self.offset}, {self.item_per_page};",
             # search in entire database if no results in search_mapping table
             'query_3': f"SELECT  website_name, UIC, unique_product_code, title_{self.lang}, brand_{self.lang}, "
-                       f"images_url, item_tybe_{self.lang}, sub_category_{self.lang}, "
+                       f"images_url, item_type_{self.lang}, sub_category_{self.lang}, "
                        f"item_upc, link_{self.lang}, product_direct_link_{self.lang}, rating, number_of_reviews, "
                        f"JSON_EXTRACT(price_data->>'$.egp.*', "
                        f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) "
@@ -99,7 +99,7 @@ class DBSearch(object):
     def db_connection(self):
         try:
             conn = mysql.connector.connect(user="admin", password="Api-0000",
-                                           host="8.9.3.120", port=3306, database="main_schema")
+                                           host="134.122.93.25", port=3306, database="main_schema")
         except mysql.connector.Error as err:
             if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
                 print("Something is wrong with the user name or password")
@@ -112,7 +112,7 @@ class DBSearch(object):
             cursor.execute(self.pagination_queries('query_0'))  # execute query
             result = cursor.fetchall()
             if result:
-                self.item_tybe = result[0][0]
+                self.item_type = result[0][0]
                 query_to_execute = 'query_1'
                 cursor.execute(self.pagination_queries('query_1'))
                 result = cursor.fetchall()
@@ -148,7 +148,7 @@ class DBSearch(object):
                         "item_title": item[3],
                         "brand_en": item[4],  #
                         "item_image": item[5].split('\n')[0],
-                        "item_tybe_en": item[6],  #
+                        "item_type_en": item[6],  #
                         "sub_category_en": item[7],  #
                         "item_upc": item[8],  #
                         "link_en": item[9],  #
