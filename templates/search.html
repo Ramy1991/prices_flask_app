@@ -789,30 +789,31 @@
                 default_query();
             }
             $(".search_btn").on("click", function(e){
-                // e.preventDefault();
                 $("#products-articles" ).html('<div class="lds-dual-ring" id="loading_main_page"></div>');
                 $("#loading_main_page").css('display','');
-                // var search_val = $('#search_val').val().replace(/[\/\\!@#$%^&*'().?"{}|<>]/g, "");
-                // window.location.href = window.location.origin + '/{{country}}-{{lang}}/search/' + search_val;
-                
             });
-
+            // set search value to input from py script
             $('#search_val').val($('<textarea />').html('{{ search_val }}').text());
-
+            // redireect from search page
             $('.btn-header').on('click', function(){
                 var scroll = $.cookie("scroll", this.name, { path: '/' });
                 window.location = window.location.origin;
             });
+
             // add class for pagination
-            $(window).resize(function () {
-                var width = $(window).width();   
+            function mobileViewUpdate(){
+                var width = $(window).width();  
                 if (width <= 500) {
                     $('.pagination').addClass('pagination-sm');
                 }else{
                     $('.pagination').removeClass('pagination-sm');
                 }
-            });
-          
+            }
+            $(window).on("load resize", mobileViewUpdate);
+            // $(window).on("resize", mobileViewUpdate);
+            
+    
+            
             // function get_ip(){
             //     var get_county = $.getJSON('http://ip-api.com/json?callback=?', function(data1) {
             //     }).done(function(){
