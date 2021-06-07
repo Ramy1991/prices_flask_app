@@ -62,19 +62,16 @@ def search_data(search_value, country, lang, page_num):
         return '404'
 
 
-@app.route('/<string:country>-<string:lang>/get_item_data', methods=['GET', 'POST'])
-def get_item_data(country, lang):
-    if country_lang.validate_country_lang(country, lang):
-        if request.method == 'POST':
-            item_data = request.form.get("name")
-            responses = py_get_data.check_url(item_data)
-            return responses
-        else:
-            return render_template('user.html')
+@app.route('/get_item_data', methods=['GET', 'POST'])
+def get_item_data():
+    if request.method == 'POST':
+        item_data = request.form.get("name")
+        responses = py_get_data.check_url(item_data)
+        return responses
     else:
-        return '404'
+        return render_template('user.html')
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0")
-    # app.run(debug=True, port=5000)
+    # app.run(host="0.0.0.0")
+    app.run(debug=True, port=5000)

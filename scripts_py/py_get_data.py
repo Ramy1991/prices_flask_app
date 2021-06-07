@@ -56,6 +56,7 @@ class Websites(object):
     def upload_image(self, item_image, uid):
         try:
             if not firebase_admin._apps:
+                # cred = credentials.Certificate('/scripts_py/bright-lattice-260000-firebase-adminsdk.json')
                 cred = credentials.Certificate(r'scripts_py/bright-lattice-260000-firebase-adminsdk.json')
                 firebase_admin.initialize_app(cred, {'storageBucket': 'bright-lattice-260000.appspot.com'})
             bucket = storage.bucket()
@@ -185,5 +186,5 @@ def check_url(url):
         return "dummy_website"
 
 
-# print(check_url('https://www.amazon.com/Acer-Display-Graphics-Keyboard-A515-43-R19L/dp/B07RF1XD36/ref=lp_16225007011_1_2'))
+# print(check_url('https://egypt.souq.com/eg-ar/%D8%AA%D9%8A-%D8%A8%D9%8A-%D9%84%D9%8A%D9%86%D9%83-%D8%B1%D8%A7%D9%88%D8%AA%D8%B1-%D9%84%D8%A7%D8%B3%D9%84%D9%83%D9%8A-archer-c7-%D8%A8%D9%86%D8%B7%D8%A7%D9%82-%D8%AC%D9%8A%D8%AC%D8%A7%D8%A8%D8%AA-%D8%AB%D9%86%D8%A7%D8%A6%D9%8A-ac1750-6987615/i/'))
 
