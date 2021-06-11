@@ -36,7 +36,7 @@ driver.get('http://shops.syaanh.com/login')
 
 driver.find_element_by_xpath('//*[@id="email"]').send_keys('ramy.zaghloul@mzadqatar.com')
 driver.find_element_by_xpath('//*[@id="password"]').send_keys('BDZuKtqUwaL2b3fd')
-driver.find_element_by_xpath('//*[@id="app"]/main/div/div/div/div/div[2]/form/div[4]/div/button').click()
+# driver.find_element_by_xpath('//*[@id="app"]/main/div/div/div/div/div[2]/form/div[4]/div/button').click()
 driver.get('http://shops.syaanh.com/admin/default/jqadm/search/product?lang=en')
 
 time.sleep(3)

@@ -10,7 +10,7 @@ import os
 import time
 from datetime import datetime
 
-executable_path = r'C:\Users\ramyg\Downloads\chromedriver_win32 (1)\chromedriver.exe'
+executable_path = r"C:\Users\ramyg\Downloads\chromedriver_win32 (1)\chromedriver.exe"
 os.environ['webdriver.chrome.driver'] = executable_path
 chrome_options = Options()
 driver = webdriver.Chrome(executable_path=executable_path)
@@ -20,7 +20,7 @@ driver.find_element_by_xpath('//*[@id="email"]').send_keys('ramy.zaghloul@mzadqa
 driver.find_element_by_xpath('//*[@id="password"]').send_keys('BDZuKtqUwaL2b3fd')
 driver.find_element_by_xpath('//*[@id="app"]/main/div/div/div/div/div[2]/form/div[4]/div/button').click()
 
-wb = load_workbook(filename=r'C:\Users\ramyg\Desktop\Book2.xlsx')
+wb = load_workbook(filename=r"C:\Users\ramyg\Downloads\variance.xlsx")
 ws = wb.active
 i = 2
 driver.switch_to.window(driver.window_handles[0])
@@ -28,7 +28,7 @@ driver.execute_script("window.open('about:blank', 'tab2');")
 driver.switch_to.window("tab2")
 c_skus = [
 
-          ]
+]
 for row in ws.rows:
     sku = ws['a' + str(i)].value
     p_c = ws['b' + str(i)].value
@@ -36,7 +36,7 @@ for row in ws.rows:
     size = ws['d' + str(i)].value
     stock = ws['e' + str(i)].value
 
-    driver.get(link)
+    driver.get("http://shops.syaanh.com/admin/mzadqtrfish/jqadm/get/product/{}?lang=en".format(link))
     if p_c == 'Parent':
         driver.find_element_by_xpath('//*[@id="basic"]/div[1]/div[2]/div/select/option[5]').click()
         time.sleep(1)
@@ -109,9 +109,10 @@ for row in ws.rows:
         i += 1
     elif p_c == 'Kids':
         c_skus.append(sku)
-        time.sleep(1)
+        time.sleep(2)
         if int(stock) != 0:
-            driver.find_element_by_xpath('//*[@id="basic"]/div[1]/div[1]/div/select/option[2]').click()
+            enable = driver.find_element_by_xpath('//*[@id="basic"]/div[1]/div[1]/div/select/option[2]').click()
+            # driver.execute_script("arguments[0].click();", enable)
         time.sleep(2)
         driver.find_element_by_xpath('//li/a[contains(text(),"Categories")]').click()
         time.sleep(1)
@@ -131,7 +132,8 @@ for row in ws.rows:
         except NoSuchElementException:
             pass
 
-        atts_list = ['Clothing Size', 'Footwear Size', 'Jalabiya Length', 'Sirwal Size', 'Ghutra Size']
+        atts_list = ['Clothing Size', 'Footwear Size', 'Jalabiya Length', 'Sirwal Size', 'Ghutra Size',
+                     'Artificial Baits Weight']
         for att in atts_list:
             try:
                 driver.find_element_by_xpath(

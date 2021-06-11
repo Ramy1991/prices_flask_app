@@ -4,6 +4,7 @@ from scripts_py import search_online
 from scripts_py import db_search
 from scripts_py import country_lang
 from flask_compress import Compress
+import json
 
 app = Flask(__name__)
 Compress(app)
@@ -54,7 +55,7 @@ def search_data(search_value, country, lang, page_num):
         data = db_search.DBSearch(search_value, country, lang, page_num).db_connection()
         pages_count = data[1]
         items = data[0]
-        return render_template('search.html', data=items, search_val=search_value, country=country, lang=lang,
+        return render_template('search.html', data=json.loads(items), search_val=search_value, country=country, lang=lang,
                                pages_count=pages_count, page_num=page_num)
     elif country_lang.validate_country_lang(country, lang):
         return render_template('search.html', data='', country=country, lang=lang)
