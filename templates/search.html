@@ -314,6 +314,7 @@
             }
             .country{
                 color: white !important;
+                -webkit-appearance: none;
             }
             .country-list{
                 min-width: 140px;
@@ -608,63 +609,7 @@
         
 
         <!-- POP UP -->
-        <div class="modal fade" role="dialog" tabindex="-1" id="myModal" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4>Change Item Link</h4>
-                        <button type="button" class="close close_rep" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <section id="loading_add_item" style="display: none;">
-                            <div class="loading loading01">
-                                <span>L</span>
-                                <span>O</span>
-                                <span>A</span>
-                                <span>D</span>
-                                <span>I</span>
-                                <span>N</span>
-                                <span>G</span>
-                            </div>
-                        </section>
-                        <p class="err_load_data" style="display: none;">*Something Went Wrong! Please try again later</p>
-                        <span id="add_item_panel" style="">
-                            <input type="url" class="url_style" placeholder="Paste Product Link Here" id="item-link" />
-                            <div class="price_select">
-                                <p style="color: rgb(66, 71, 74);">
-                                    Send E-mail When Price is lower than<br />
-                                    <span style="padding-left: 6px;">*Note: you can leave it blank to notify you once it's drop</span>
-                                </p>
-                                <input type="text" class="price_set" id="price_note" placeholder="Ex. 9999 $" />
-                            </div>
-                        </span>
-                        <span id="select_dialog" style="display: none;">
-                            <div id="item_data_box">
-                                <div id="data_item">
-                                    <h4 id="title">Wrangler Authentics Men's Classic 5-Pocket Regular Fit Flex Jean size, Select</h4>
-                                    <h6 id="price_range_h">
-                                        Price:
-                                        <span id="price_range" style="opacity: 1;">24.22 USD</span>
-                                        <img class="loading_price" style="width: 34px; padding-bottom: 7px; display: none;" src="{{url_for('static', filename='img/loading_price.svg')}}" alt="" />
-                                    </h6>
-                                    <div id="select_data">
-                                        <label style="font-weight: 600;">Please Select Size: </label>
-                                        <!-- <label for="cars">Choose a car:</label> -->
-                                        <select id="size-list"></select>
-                                    </div>
-                                </div>
-
-                        </span>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-light close_modal close_rep" data-dismiss="modal" type="button">Close</button>
-                        <button class="btn btn-primary add-item" type="button" id="">Save</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+    
 
 
         <script src="{{url_for('static', filename='js/jquery.min.js')}} "></script>
@@ -714,11 +659,18 @@
             // $('.side_bar').click(function(){
             //     $('#mySidenav').toggleClass('active_bar');
             // });
-            $('.selected_country').on('click',function(){
-                var name = $(this).attr('name');
-                console.log(name);
-            });
+            // change country and laguage
+    
             
+            if ('{{lang}}' == 'ar'){
+                $('.lang').text('English');
+                $('.lang').attr('href', window.location.origin + window.location.pathname.replace(/.(\w+-\w+)/, '/{{country}}-en'));
+            }else{
+                $('.lang').attr('href', window.location.origin + window.location.pathname.replace(/.(\w+-\w+)/, '/{{country}}-ar'));
+            }
+            $('.selected_country').each(function() {
+                this.href = window.location.origin + window.location.pathname.replace(/.(\w+)/, '/' + this.name);
+            });
 
             function default_query(){
                 var ref = firebase.database().ref("p_p_data");

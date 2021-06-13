@@ -55,12 +55,20 @@ def search_data(search_value, country, lang, page_num):
         data = db_search.DBSearch(search_value, country, lang, page_num).db_connection()
         pages_count = data[1]
         items = data[0]
-        return render_template('search.html', data=json.loads(items), search_val=search_value, country=country, lang=lang,
+        return render_template('search.html', data=json.loads(items), search_val=search_value, country=country,
+                               lang=lang,
                                pages_count=pages_count, page_num=page_num)
     elif country_lang.validate_country_lang(country, lang):
         return render_template('search.html', data='', country=country, lang=lang)
     else:
         return '404'
+
+
+@app.route('/<string:country>-<string:lang>/p/<uid>')
+@app.route('/<string:country>-<string:lang>/p/<item_title>/<uid>')
+def product_page(country, lang, uid):
+    if country_lang.validate_country_lang(country, lang):
+        return render_template('product_page.html', data='', country=country, lang=lang)
 
 
 @app.route('/get_item_data', methods=['GET', 'POST'])
