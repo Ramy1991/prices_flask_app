@@ -520,6 +520,7 @@
                     <div class="lds-dual-ring" id="loading_main_page"></div> 
                     {% if data%}
                         {% for websites , items in data.0.items() %}
+                          
                             {% for upc, item in items.items() %}
                                 <div class="col-sm-6 col-md-3 item" id="{{ item.item_uid }}">
                                     <a href="#">

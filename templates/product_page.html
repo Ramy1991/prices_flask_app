@@ -157,9 +157,15 @@
                 visibility: visible;
             }
             .img-fluid {
-                height: auto;
-                max-height: auto;
+                /* height: auto;
+                max-height: auto; */
+                margin-left: auto;
+                margin-right: auto;
+                display: block;
 
+            }
+            .image-container{
+                margin: auto !important;
             }
 
             #item_data_box {
@@ -346,6 +352,10 @@
                 border-color: #7d8285;
                 color: white;
             }
+            .item-title{
+                max-width: 770px;
+            }
+
             @media screen and (max-width: 1200px) {
                 .btn_1, .btn_2{
                     font-size: 13px;
@@ -474,19 +484,27 @@
         </nav>
 
         <div class="container">
-            <h1>Page Heading&nbsp;<small>Secondary Text</small></h1>
+            <br>
+            <br>
+            <h3 class="item-title">{{data.item_title}}</h3>
+          
             <div class="row">
-                <div class="col-md-8"><img class="img-fluid" src="http://placehold.it/750x500" alt="image"></div>
+                <div class="col-md-8 image-container"><img class="img-fluid" src="{{ data.item_image }}" alt="image"></div>
+                
                 <div class="col-md-4">
-                    <h3 class="my-3">Project Description</h3>
-                    <p>Pommy ipsum darling red telephone box on the beat, pezzy little well chuffed. Earwig ey up chuck odds and sods gutted pork dripping the lakes, done up like a kipper double dutch nigh working class for sooth slap-head, rambunctious off the hook marmite gutted.<br></p>
-                    <h3 class="my-3">Project Details</h3>
+                    <!-- <h3 class="my-3">Project Description</h3>
+                    <p>Pommy ipsum darling red telephone box on the beat, pezzy little well chuffed.<br></p> -->
+                    <br>
+                    <h5 class="my-3"> Specification:</h5>
                     <ul>
-                        <li>Item 1</li>
-                        <li>Item 2</li>
-                        <li>Item 3</li>
-                        <li>Item 4</li>
+                        {% for att_name, att_value in data.item_specs.items() %}
+                            {% if 'class=' not in att_value and att_name not in ['External Product ID', 'Item EAN'] %}
+                                <li>{{ att_name }}: {{ att_value }}</li>
+                            {% endif %}
+                        {% endfor %}
                     </ul>
+                
+                 
                 </div>
             </div>
             <h3 class="my-4">Related Projects</h3>
@@ -528,7 +546,7 @@
             $('.selected_country').each(function() {
                 this.href = window.location.origin + window.location.pathname.replace(/.(\w+)/, '/' + this.name);
             });
-
+            
         </script>
     </body>
 </html>

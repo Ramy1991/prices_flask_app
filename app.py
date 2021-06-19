@@ -1,8 +1,8 @@
 from flask import Flask, request, render_template, redirect
-from scripts_py import py_get_data
+from scripts_py import py_get_data, db_search, product_page, country_lang
 from scripts_py import search_online
-from scripts_py import db_search
-from scripts_py import country_lang
+# from scripts_py import
+# from scripts_py import country_lang
 from flask_compress import Compress
 import json
 
@@ -17,6 +17,7 @@ def redirect_home():
     return redirect("/eg-en/", code=302)  # to be edit to redirect for country as per region
 
 
+# home
 @app.route('/<string:country>-<string:lang>/')
 @app.route('/<string:country>-<string:lang>/home')
 @app.route('/<string:country>-<string:lang>/home/')
@@ -27,6 +28,7 @@ def index(country, lang):
         return '404'
 
 
+# user page
 @app.route('/<string:country>-<string:lang>/user/<string:name>')
 def user(name, country, lang):
     if country_lang.validate_country_lang(country, lang):
@@ -35,6 +37,7 @@ def user(name, country, lang):
         return '404'
 
 
+# search page
 @app.route('/<string:country>-<string:lang>/search', methods=['GET', 'POST'])
 @app.route('/<string:country>-<string:lang>/search/', methods=['GET', 'POST'])
 def search(country, lang):
@@ -48,6 +51,7 @@ def search(country, lang):
         return '404'
 
 
+# search page
 @app.route('/<string:country>-<string:lang>/search/<search_value>/', defaults={'page_num': 1})
 @app.route('/<string:country>-<string:lang>/search/<search_value>/<int:page_num>')
 def search_data(search_value, country, lang, page_num):
@@ -64,13 +68,16 @@ def search_data(search_value, country, lang, page_num):
         return '404'
 
 
+# product_page
 @app.route('/<string:country>-<string:lang>/p/<uid>')
 @app.route('/<string:country>-<string:lang>/p/<item_title>/<uid>')
-def product_page(country, lang, uid):
+def product_info(country, lang, uid):
     if country_lang.validate_country_lang(country, lang):
-        return render_template('product_page.html', data='', country=country, lang=lang)
+        product_data = product_page.ProductPage(country, lang, uid).db_connection()
+        return render_template('product_page.html', data=json.loads(product_data), country=country, lang=lang)
 
 
+# search online for items
 @app.route('/get_item_data', methods=['GET', 'POST'])
 def get_item_data():
     if request.method == 'POST':

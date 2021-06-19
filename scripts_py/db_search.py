@@ -142,20 +142,20 @@ class DBSearch(object):
                     }
                 item_dict_search = {
                     item[2]: {  # item_uid
-                        "website_name": item[0],  #
-                        "item_uid": item[1],
-                        "unique_product_code": item[2],  #
-                        "item_title": item[3],
-                        "brand_en": item[4],  #
-                        "item_image": item[5].split('\n')[0],
-                        "item_type_en": item[6],  #
-                        "sub_category_en": item[7],  #
-                        "item_upc": item[8],  #
-                        "link_en": item[9],  #
-                        "item_url": item[10],
-                        "rating": item[11],  #
-                        "number_of_reviews": item[12],  #
-                        "item_price": '{:,.2f}'.format(float(item[13].replace('"', ''))),
+                        'website_name': item[0],  #
+                        'item_uid': item[1],
+                        'unique_product_code': item[2],  #
+                        'item_title': item[3],
+                        'brand_en': item[4],  #
+                        'item_image': item[5].split('\n')[0],
+                        'item_type_en': item[6],  #
+                        'sub_category_en': item[7],  #
+                        'item_upc': item[8],  #
+                        'link_en': item[9],  #
+                        'item_url': item[10],
+                        'rating': item[11],  #
+                        'number_of_reviews': item[12],  #
+                        'item_price': '{:,.2f}'.format(float(item[13].replace('"', ''))),
 
                     }
                 }
