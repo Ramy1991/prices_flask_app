@@ -96,6 +96,210 @@ supported_search_website_xp = {
 
 }
 
+country_alpha2_currency = {
+    'AS': {
+        'currency': 'USD',
+        'country_mane': 'AMERICAN SAMOA'
+    },
+    'AD': {
+        'currency': 'EUR',
+        'country_mane': 'ANDORRA '
+    },
+    'AT': {
+        'currency': 'EUR',
+        'country_mane': 'AUSTRIA'
+    },
+    'BE': {
+        'currency': 'EUR',
+        'country_mane': 'BELGIUM'
+    },
+    'BT': {
+        'currency': 'INR',
+        'country_mane': 'BHUTAN'
+    },
+    'IO': {
+        'currency': 'USD',
+        'country_mane': 'BRITISH INDIAN OCEAN TERRITORY'
+    },
+    'CA': {
+        'currency': 'CAD',
+        'country_mane': 'CANADA'
+    },
+    'EC': {
+        'currency': 'USD',
+        'country_mane': 'ECUADOR'
+    },
+    'EG': {
+        'currency': 'EGP',
+        'country_mane': 'EGYPT'
+    },
+    'SV': {
+        'currency': 'USD',
+        'country_mane': 'EL SALVADOR'
+    },
+    'FI': {
+        'currency': 'EUR',
+        'country_mane': 'FINLAND '
+    },
+    'FR': {
+        'currency': 'EUR',
+        'country_mane': 'FRANCE'
+    },
+    'GF': {
+        'currency': 'EUR',
+        'country_mane': 'FRENCH GUIANA '
+    },
+    'TF': {
+        'currency': 'EUR',
+        'country_mane': 'FRENCH SOUTHERN TERRITORIES'
+    },
+    'DE': {
+        'currency': 'EUR',
+        'country_mane': 'GERMANY'
+    },
+    'GR': {
+        'currency': 'EUR',
+        'country_mane': 'GREECE'
+    },
+    'GP': {
+        'currency': 'EUR',
+        'country_mane': 'GUADELOUPE'
+    },
+    'GU': {
+        'currency': 'USD',
+        'country_mane': 'GUAM'
+    },
+    'HT': {
+        'currency': 'USD',
+        'country_mane': 'HAITI'
+    },
+    'VA': {
+        'currency': 'EUR',
+        'country_mane': 'HOLY SEE (VATICAN CITY STATE)'
+    },
+    'IN': {
+        'currency': 'INR',
+        'country_mane': 'INDIA'
+    },
+    'IE': {
+        'currency': 'EUR',
+        'country_mane': 'IRELAND'
+    },
+    'IT': {
+        'currency': 'EUR',
+        'country_mane': 'ITALY'
+    },
+    'LU': {
+        'currency': 'EUR',
+        'country_mane': 'LUXEMBOURG'
+    },
+    'MH': {
+        'currency': 'USD',
+        'country_mane': 'MARSHALL ISLANDS'
+    },
+    'MQ': {
+        'currency': 'EUR',
+        'country_mane': 'MARTINIQUE'
+    },
+    'YT': {
+        'currency': 'EUR',
+        'country_mane': 'MAYOTTE'
+    },
+    'FM': {
+        'currency': 'USD',
+        'country_mane': 'MICRONESIA, FEDERATED STATES OF'
+    },
+    'MC': {
+        'currency': 'EUR',
+        'country_mane': 'MONACO'
+    },
+    'NL': {
+        'currency': 'EUR',
+        'country_mane': 'NETHERLANDS'
+    },
+    'MP': {
+        'currency': 'USD',
+        'country_mane': 'NORTHERN MARIANA ISLANDS'
+    },
+    'PW': {
+        'currency': 'USD',
+        'country_mane': 'PALAU'
+    },
+    'PA': {
+        'currency': 'USD',
+        'country_mane': 'PANAMA'
+    },
+    'PT': {
+        'currency': 'EUR',
+        'country_mane': 'PORTUGAL'
+    },
+    'PR': {
+        'currency': 'USD',
+        'country_mane': 'PUERTO RICO'
+    },
+    'QA': {
+        'currency': 'QAR',
+        'country_mane': 'QATAR'
+    },
+    'RE': {
+        'currency': 'EUR',
+        'country_mane': 'REUNION'
+    },
+    'PM': {
+        'currency': 'EUR',
+        'country_mane': 'SAINT PIERRE AND MIQUELON'
+    },
+    'SM': {
+        'currency': 'EUR',
+        'country_mane': 'SAN MARINO'
+    },
+    'SA': {
+        'currency': 'SAR',
+        'country_mane': 'SAUDI ARABIA'
+    },
+    'CS': {
+        'currency': 'EUR',
+        'country_mane': 'SERBIA & MONTENEGRO'
+    },
+    'ES': {
+        'currency': 'EUR',
+        'country_mane': 'SPAIN'
+    },
+    'TL': {
+        'currency': 'USD',
+        'country_mane': 'TIMOR-LESTE'
+    },
+    'TC': {
+        'currency': 'USD',
+        'country_mane': 'TURKS AND CAICOS ISLANDS'
+    },
+    'AE': {
+        'currency': 'AED',
+        'country_mane': 'UNITED ARAB EMIRATES'
+    },
+    'GB': {
+        'currency': 'GBP',
+        'country_mane': 'UNITED KINGDOM'
+    },
+    'US': {
+        'currency': 'USD',
+        'country_mane': 'UNITED STATES'
+    },
+    'UM': {
+        'currency': 'USD',
+        'country_mane': 'UNITED STATES MINOR OUTLYING ISLANDS'
+    },
+    'VG': {
+        'currency': 'USD',
+        'country_mane': 'VIRGIN ISLANDS, BRITISH'
+    },
+    'VI': {
+        'currency': 'USD',
+        'country_mane': 'VIRGIN ISLANDS, U.S'
+    }
+}
+
+
 
 # validate country and land
 

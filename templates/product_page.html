@@ -159,14 +159,22 @@
             .img-fluid {
                 /* height: auto;
                 max-height: auto; */
-                margin-left: auto;
+                /* margin-left: auto;
                 margin-right: auto;
-                display: block;
+                display: block; */
 
+            }  
+            .sticky-img{
+                position: sticky;
+                top: 0px;
+                margin: auto;
+                max-width: 100% !important;
+                display: block;
+                padding: 0px;
             }
-            .image-container{
-                margin: auto !important;
-            }
+            /* .image-container{
+                max-width: auto;
+            } */
 
             #item_data_box {
                 display: flex;
@@ -352,8 +360,9 @@
                 border-color: #7d8285;
                 color: white;
             }
-            .item-title{
-                max-width: 770px;
+        
+            .buy_now{
+                width: auto !important;
             }
 
             @media screen and (max-width: 1200px) {
@@ -485,15 +494,16 @@
 
         <div class="container">
             <br>
-            <br>
-            <h3 class="item-title">{{data.item_title}}</h3>
-          
-            <div class="row">
-                <div class="col-md-8 image-container"><img class="img-fluid" src="{{ data.item_image }}" alt="image"></div>
-                
-                <div class="col-md-4">
+            <div class="row">    
+                <div class="col-md-7 image-container">
+                    <h3>{{data.item_title}}</h3>
+                    <img class="sticky-img" src="{{ data.images_url }}" alt="image">
+                </div>
+                <!-- <div class="col-md-1"></div> -->
+                <div class="col-md-5">
                     <!-- <h3 class="my-3">Project Description</h3>
                     <p>Pommy ipsum darling red telephone box on the beat, pezzy little well chuffed.<br></p> -->
+                    <br>
                     <br>
                     <h5 class="my-3"> Specification:</h5>
                     <ul>
@@ -503,14 +513,20 @@
                             {% endif %}
                         {% endfor %}
                     </ul>
-                
+                <h4> <small>Price:</small> {{ data.currency }} {{ data.price }}</h4>
+                <br>
+                <a href="{{ data.product_direct_link}}" target="_blank">
+                    <button class="btn btn_buy buy_now" type="button"><i class="typcn typcn-shopping-cart icon"></i>Buy it Now From {{ data.website_name|capitalize }}</button>
+                </a>
                  
                 </div>
             </div>
-            <h3 class="my-4">Related Projects</h3>
+            <br>
+            <br>
+            <h4 class="my-4">Compare with similar products</h4>
             <div class="row">
                 <div class="col-sm-6 col-md-3 mb-4"><img class="img-fluid" src="http://placehold.it/500x300" alt="Image"></div>
-                <div class="col-sm-6 col-md-3 mb4"><img class="img-fluid" src="http://placehold.it/500x300" alt="Image"></div>
+                <div class="col-sm-6 col-md-3 mb-4"><img class="img-fluid" src="http://placehold.it/500x300" alt="Image"></div>
                 <div class="col-sm-6 col-md-3 mb-4"><img class="img-fluid" src="http://placehold.it/500x300" alt="Image"></div>
                 <div class="col-sm-6 col-md-3 mb-4"><img class="img-fluid" src="http://placehold.it/500x300" alt="Image"></div>
             </div>

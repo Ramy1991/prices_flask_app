@@ -25,7 +25,7 @@ driver.find_element_by_xpath('/html/body/div[3]/div/div/div/form/div/div[4]/butt
 driver.get('https://mzadqatar.com/mzadqater_admin/lots/create-lot')
 
 driver.find_element_by_xpath("//*[@id='choose_category']/option[contains(text(),'Car plates')]").click()
-wb = load_workbook(filename=r"C:\Users\ramyg\Downloads\Bidding Data Sheet.xlsx")
+wb = load_workbook(filename=r"C:\Users\ramyg\Desktop\Bidding Data Sheet (1).xlsx")
 ws = wb.active
 
 last_col = ws.max_column
@@ -56,27 +56,37 @@ for row in ws.rows:
             try:
                 driver.find_element_by_xpath("//form//label[contains(text(),'{}')]//following-sibling::div"
                                              "//option[contains(text(),'{}')]".format(att_name, att_value)).click()
-                time.sleep(2)
+                time.sleep(1)
             except NoSuchElementException:
                 driver.find_element_by_xpath("//form//label[contains(text(),'{}')]//following-sibling::div"
                                              "/input | //form//label[contains(text(),'{}')]//following-sibling::div"
                                              "/textarea".format(att_name, att_name)).send_keys(att_value)
-                time.sleep(2)
+                time.sleep(1)
         elif att_name in ['Start Date', 'Start Time']:
             start_date_time.append(str(att_value).split(' ')[0])
+            wait = WebDriverWait(driver, 100000)
 
-            if len(start_date_time) == 2:
-                st_time = datetime.strptime(start_date_time[1], "%H:%M:%S").strftime("%I:%M %p")
-                st_date = datetime.strptime(start_date_time[0], '%Y-%m-%d').strftime('%m/%d/%Y')
-                print([st_date, st_time])
-                driver.find_element_by_xpath("//form//label[contains(text(),'Auction Start Time')]//following-sibling"
-                                             "::div/input").send_keys(str('-'.join([st_date, st_time])))
-                exit()
-        elif att_name in ['Expiration Date', 'Expiration Time']:
-            end_date_time.append(str(att_value).split(' ')[0])
-            if len(end_date_time) == 2:
-                driver.find_element_by_xpath("//form//label[contains(text(),'Product Expired Time')]"
-                                             "//following-sibling::div/input").send_keys(str(' '.join(end_date_time)))
-        elif att_name == 'Images URLS':
-            exit()
+            # wait.until(lambda driver: driver.current_url == 'https://mzadqatar.com/mzadqater_admin/lots/in-review-lots')
+            # time.sleep(2)
+            # wait.until(lambda driver: driver.current_url == 'https://mzadqatar.com/mzadqater_admin/lots/create-lot')
+            x = input()
+            time.sleep(2)
+            print("continue" + x)
+
+            pass
     r = r + 1
+    pass
+            # if len(start_date_time) == 2:
+            #     st_time = datetime.strptime(start_date_time[1], "%H:%M:%S").strftime("%I:%M %p")
+            #     st_date = datetime.strptime(start_date_time[0], '%Y-%m-%d').strftime('%m/%d/%Y')
+            #     print([st_date, st_time])
+            #     driver.find_element_by_xpath("//form//label[contains(text(),'Auction Start Time')]//following-sibling"
+            #                                  "::div/input").send_keys(str('00'.join([st_date, st_time])))
+            #     exit()
+        # elif att_name in ['Expiration Date', 'Expiration Time']:
+        #     end_date_time.append(str(att_value).split(' ')[0])
+        #     if len(end_date_time) == 2:
+        #         driver.find_element_by_xpath("//form//label[contains(text(),'Product Expired Time')]"
+        #                                      "//following-sibling::div/input").send_keys(str('0000'.join(end_date_time)))
+
+
