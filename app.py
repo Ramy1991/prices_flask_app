@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect
+from flask import Flask, request, render_template, redirect, session
 from scripts_py import py_get_data, db_search, product_page, country_lang
 from scripts_py import search_online
 # from scripts_py import
@@ -7,6 +7,7 @@ from flask_compress import Compress
 import json
 
 app = Flask(__name__)
+app.secret_key = '0000'
 Compress(app)
 
 
@@ -69,12 +70,23 @@ def search_data(search_value, country, lang, page_num):
 
 
 # product_page
-@app.route('/<string:country>-<string:lang>/p/<uid>')
-@app.route('/<string:country>-<string:lang>/p/<item_title>/<uid>')
+@app.route('/<string:country>-<string:lang>/p/<string:uid>')
 def product_info(country, lang, uid):
     if country_lang.validate_country_lang(country, lang):
         product_data = product_page.ProductPage(country, lang, uid).db_connection()
-        return render_template('product_page.html', data=json.loads(product_data), country=country, lang=lang)
+        session['data'] = json.loads(product_data)
+        return redirect("/eg-en/p/{}".format(session['data']['item_link']), code=302)
+
+
+@app.route('/<string:country>-<string:lang>/p/<string:cate>/<string:title>/<string:uid>')
+def product_p(country, lang, cate, title, uid):
+    if country_lang.validate_country_lang(country, lang):
+        if session.get('data'):
+            item_data = session.get('data')
+            session.pop('data', None)
+            return render_template('product_page.html', data=item_data, country=country, lang=lang)
+        else:
+            return redirect('/{}-{}/p/{}'.format(country, lang, uid), code=302)
 
 
 # search online for items

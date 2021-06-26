@@ -16,8 +16,8 @@ class ProductPage(object):
         item_query = {
             'query':
                 f"SELECT website_name, UIC, unique_product_code, title_{self.lang} as item_title, brand_{self.lang}, "
-                f"images_url, item_type_{self.lang}, sub_category_{self.lang}, "
-                f"item_upc, link_{self.lang}, product_direct_link_{self.lang} as product_direct_link "
+                f"images_url, item_type_{self.lang} as item_type, sub_category_{self.lang}, "
+                f"item_upc, link_{self.lang} as item_link, product_direct_link_{self.lang} as product_direct_link "
                 f", rating, number_of_reviews, "
                 f"JSON_EXTRACT(price_data->>'$.egp.*', "
                 f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) as price,"
@@ -55,6 +55,12 @@ class ProductPage(object):
             # add currency
             currency = {'currency': country_alpha2_currency[result['country'].upper()]['currency']}
             result.update(currency)
+            # set link
+            item_type = re.sub(r"[&\/\\#,+()$~%.'':*?<>{}!@\s\"]", '-', result['item_type'])
+            item_title = re.sub(r"[&\/\\#,+()$~%.'':*?<>{}!@\s\"]", '-', result['item_title'])
+            item_title = re.sub(r"[-]+", '-', item_title)
+            result['item_link'] = '{}/{}/{}'.format(item_type, item_title, result['UIC']).lower()
+
             self.items_results = result
             # self.items_results = {  # item_uida
             #     'website_name': result[0],  #
@@ -77,4 +83,4 @@ class ProductPage(object):
             return json.dumps(self.items_results)
 
 
-print(ProductPage('eg', 'en', 'A365d591e0').db_connection())
+# print(ProductPage('eg', 'en', 'A365d591e0').db_connection())
