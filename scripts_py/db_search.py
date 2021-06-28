@@ -66,7 +66,7 @@ class DBSearch(object):
                        f"JSON_EXTRACT(price_data->>'$.egp.*', "
                        f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) "
                        f"FROM main_schema.products WHERE item_type_en = '{self.item_type}' AND "
-                       f"MATCH(title_en) against('+{self.search_value}' IN NATURAL LANGUAGE MODE ) "
+                       f"MATCH(title_{self.lang}) against('+{self.search_value}' IN NATURAL LANGUAGE MODE ) "
                        f"AND JSON_EXTRACT(price_data->>'$.egp.*', "
                        f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) != 'None'"
                        f"AND sold_out = 0 AND country = '{self.country}' LIMIT {self.offset}, {self.item_per_page};",
@@ -87,7 +87,7 @@ class DBSearch(object):
                        f"JSON_EXTRACT(price_data->>'$.egp.*', "
                        f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) "
                        f"FROM main_schema.products WHERE "
-                       f"MATCH(title_en) against('+{self.search_value}' IN NATURAL LANGUAGE MODE ) "
+                       f"MATCH(title_{self.lang}) against('+{self.search_value}' IN NATURAL LANGUAGE MODE ) "
                        f"AND JSON_EXTRACT(price_data->>'$.egp.*', "
                        f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) != 'None'"
                        f"AND sold_out = 0 AND country = '{self.country}' LIMIT {self.offset}, {self.item_per_page};"

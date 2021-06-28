@@ -364,6 +364,24 @@
             .buy_now{
                 width: auto !important;
             }
+            .item-title{
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+            }
+            .currency{
+                float: none;
+                top: -.2em;
+                position: relative;
+                color: black;
+                font-weight:400;
+                right: -.1em;
+            }
+            .item-price{
+                font-weight: 500;
+            }
 
             @media screen and (max-width: 1200px) {
                 .btn_1, .btn_2{
@@ -491,15 +509,17 @@
             </div>
 
         </nav>
-
+      
         <div class="container">
             <br>
+            {% if 'Error item not found' not in data %}
             <div class="row">   
             
                 <div class="col-md-7 image-container">
                     <br>
-                    <h3>{{data.item_title}}</h3>
-                    <img class="sticky-img" src="{{ data.images_url }}" alt="image">
+                    <h3>{{data.item_data.item_title}}</h3>
+                   
+                    <img class="sticky-img" src="{{ data.item_data.images_url }}" alt="image">
                 </div>
                 
                 <div class="col-md-5">
@@ -509,16 +529,16 @@
                     <br>
                     <h5 class="my-3"> Specification:</h5>
                     <ul>
-                        {% for att_name, att_value in data.item_specs.items() %}
+                        {% for att_name, att_value in data.item_data.item_specs.items() %}
                             {% if 'class=' not in att_value and att_name not in ['External Product ID', 'Item EAN'] %}
                                 <li>{{ att_name }}: {{ att_value }}</li>
                             {% endif %}
                         {% endfor %}
                     </ul>
-                <h4> <small>Price:</small> {{ data.currency }} {{ data.price }}</h4>
+                <h4 class="item-price"> <small>Price:</small> <span class="currency" style="font-size: medium; top: -.3em;">{{ data.item_data.currency }} </span>  {{ data.item_data.price }}</h4>
                 <br>
                 <a href="{{ data.product_direct_link}}" target="_blank">
-                    <button class="btn btn_buy buy_now" type="button"><i class="typcn typcn-shopping-cart icon"></i>Buy it Now From {{ data.website_name|capitalize }}</button>
+                    <button class="btn btn_buy buy_now" type="button"><i class="typcn typcn-shopping-cart icon"></i>Buy it Now From {{ data.item_data.website_name|capitalize }}</button>
                 </a>
                  
                 </div>
@@ -526,12 +546,50 @@
             <br>
             <br>
             <h4 class="my-4">Compare with similar products</h4>
-            <div class="row">
-                <div class="col-sm-6 col-md-3 mb-4"><img class="img-fluid" src="http://placehold.it/500x300" alt="Image"></div>
-                <div class="col-sm-6 col-md-3 mb-4"><img class="img-fluid" src="http://placehold.it/500x300" alt="Image"></div>
-                <div class="col-sm-6 col-md-3 mb-4"><img class="img-fluid" src="http://placehold.it/500x300" alt="Image"></div>
-                <div class="col-sm-6 col-md-3 mb-4"><img class="img-fluid" src="http://placehold.it/500x300" alt="Image"></div>
+            <div class="row" style=""> 
+                {% for item in data.similar_items %}
+                    <!-- <p>{{item}}</p> -->
+                    <div class="col-sm-6 col-md-3 mb-4">
+                        {% set image_link = data.item_data.images_url.split('\n')[0] %}
+                        <img class="img-fluid" src="{{ image_link }}" alt="Image">
+                        <p class="item-title">{{item.item_title }}</p>
+                        <p class="item-price"> <span class="currency" >{{ data.item_data.currency }} </span> {{ '{:,.2f}'.format(item.price|replace('"', '')|float)  }}</p>
+                        <div class="botton_group" style="padding-top: 16px;">
+                            <a href="{{ item.item_url }}" target="_blank">
+                                <button class="btn btn_buy" type="button"><i class="typcn typcn-shopping-cart icon"></i>Buy Now</button>
+                            </a>
+                            <div class="btn_change_link"><a class="link rep_item" role="button" data-toggle="modal" href="#myModal">Change Item</a></div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-sm-6 col-md-3 item" id="{{ item.item_uid }}">
+                        <a href="#">
+                            <div class="image_box"><img class="img-fluid" src="{{ item.images_url }}" /></div>
+                        </a>
+                        <div>
+                            <h3 class="name name2">
+                                <br />
+                                <p style="font-size: 15px; font-weight: 600; color: #333;">{{ item.item_title }}</p>
+                            </h3>
+                        </div>
+                        <p class="description">{{ item.item_price }}</p>
+                        <div class="botton_group" style="padding-top: 16px;">
+                            <a href="{{ item.item_url }}" target="_blank">
+                                <button class="btn btn_buy" type="button"><i class="typcn typcn-shopping-cart icon"></i>Buy Now</button>
+                            </a>
+                            <div class="btn_change_link"><a class="link rep_item" role="button" data-toggle="modal" href="#myModal">Change Item</a></div>
+                        </div>
+                    </div>   -->
+                {% endfor %}
+     
+                
+       
             </div>
+            {% else %}
+                <div class="text-center" style="padding-top: 100px;">
+                    <img class="img-fluid" src="{{url_for('static', filename='img/not_found.png')}} " alt="not found">
+                    <h4 style="padding-top: 50px;">There is no results for this item</h4>
+                </div>
+            {% endif %}
         </div>
    
    

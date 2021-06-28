@@ -75,7 +75,10 @@ def product_info(country, lang, uid):
     if country_lang.validate_country_lang(country, lang):
         product_data = product_page.ProductPage(country, lang, uid).db_connection()
         session['data'] = json.loads(product_data)
-        return redirect("/eg-en/p/{}".format(session['data']['item_link']), code=302)
+        if session.get('data').get('item_data'):
+            return redirect("/eg-en/p/{}".format(session.get('data')['item_data']['item_link']), code=302)
+        else:
+            return render_template('product_page.html', data=session['data'], country=country, lang=lang)
 
 
 @app.route('/<string:country>-<string:lang>/p/<string:cate>/<string:title>/<string:uid>')
