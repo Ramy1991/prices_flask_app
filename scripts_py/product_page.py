@@ -12,7 +12,7 @@ class ProductPage(object):
         self.items_results = {}
         self.search_value = search_value
 
-    def query(self, query, item_uid):
+    def query(self, query, item_uid, item_type):
         item_query = {
             'query_item':
                 f"SELECT website_name, UIC, unique_product_code, title_{self.lang} as item_title, brand_{self.lang}, "
@@ -29,11 +29,11 @@ class ProductPage(object):
                 f"item_upc, link_{self.lang} as item_link, product_direct_link_{self.lang} as product_direct_link "
                 f", rating, number_of_reviews, "
                 f"JSON_EXTRACT(price_data->>'$.egp.*', "
-                f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) as price, "
-                f"item_specs_{self.lang} as item_specs, country "
+                f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) as price, country "
                 f"FROM main_schema.products WHERE "
                 f"MATCH(title_{self.lang}) against('+{self.search_value}' IN NATURAL LANGUAGE MODE ) "
-                f"AND country = '{self.country}' AND UIC != '{item_uid}' LIMIT 4;"
+                f"AND country = '{self.country}' AND UIC != '{item_uid}' AND  "
+                f"item_type_{self.lang} = '{item_type}' LIMIT 4;"
 
         }
         return item_query.get(query)
@@ -56,7 +56,7 @@ class ProductPage(object):
                 print(err)
         else:
             cursor = conn.cursor(dictionary=True)
-            cursor.execute(self.query('query_item', ''))  # execute query
+            cursor.execute(self.query('query_item', '', ''))  # execute query
             item_result = cursor.fetchone()
             if item_result:
                 # reformat price
@@ -69,23 +69,26 @@ class ProductPage(object):
                 currency = {'currency': country_alpha2_currency[item_result['country'].upper()]['currency']}
                 item_result.update(currency)
                 # set link
-                item_type = re.sub(r"[&\/\\#,+()$~%.'':*?<>{}!@\s\"]", '-', item_result['item_type'])
+
                 item_title = re.sub(r"[&\/\\#,+()$~%.'':*?<>{}!@\s\"]", '-', item_result['item_title'])
                 item_title = re.sub(r"[-]+", '-', item_title)
+                item_type = re.sub(r"[&\/\\#,+()$~%.'':*?<>{}!@\s\"]", '-', item_result['item_type'])
+                item_type = re.sub(r"[-]+", '-', item_type)
                 item_result['item_link'] = '{}/{}/{}'.format(item_type, item_title, item_result['UIC']).lower()
 
                 self.items_results = item_result
 
                 # get similar items
                 self.search_value = item_result.get('item_title')
-                cursor.execute(self.query('matching_items_query', item_result.get('UIC')))
+                print(self.query('matching_items_query', item_result.get('UIC'), item_result['item_type']))
+                cursor.execute(self.query('matching_items_query', item_result.get('UIC'), item_result['item_type']))
                 similar_items = cursor.fetchall()
 
                 self.items_results = {'item_data': item_result, 'similar_items': similar_items}
-                print(similar_items)
+
                 return json.dumps(self.items_results)
             else:
                 return json.dumps({'Error item not found': self.search_value})
 
 
-print(ProductPage('eg', 'en', 'A365d591e0').db_connection())
+# print(ProductPage('eg', 'en', 'A7babcd46e').db_connection())

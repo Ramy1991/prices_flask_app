@@ -155,7 +155,7 @@ class DBSearch(object):
                         'item_url': item[10],
                         'rating': item[11],  #
                         'number_of_reviews': item[12],  #
-                        'item_price': '{:,.2f}'.format(float(item[13].replace('"', ''))),
+                        'item_price': item[13],
 
                     }
                 }

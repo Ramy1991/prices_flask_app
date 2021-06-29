@@ -113,6 +113,10 @@
                 max-height: 225px;
                 /* padding: 28px; */
                 min-height: 235px;
+                align-items: center;
+                justify-content: center;
+                display: flex;
+
             }
             .a_del_item {
                 float: left;
@@ -346,6 +350,29 @@
                 border-color: #7d8285;
                 color: white;
             }
+            .item-title{
+                padding-top: 10px;
+                
+            }
+            .item-title p{
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+            }
+            .item-price{
+                font-weight: 500;
+                color: black !important;
+            }
+            .currency{
+                float: none;
+                top: -.2em;
+                position: relative;
+                color: black;
+                font-weight:400;
+                right: -.1em;
+            }
             @media screen and (max-width: 1200px) {
                 .btn_1, .btn_2{
                     font-size: 13px;
@@ -523,21 +550,18 @@
                           
                             {% for upc, item in items.items() %}
                                 <div class="col-sm-6 col-md-3 item" id="{{ item.item_uid }}">
-                                    <a href="#">
+                                    <a href="/{{ country }}-{{ lang }}/p/{{item.item_uid}}">
                                         <div class="image_box"><img class="img-fluid" src="{{ item.item_image }}" /></div>
-                                    </a>
-                                    <div>
-                                        <h3 class="name name2">
-                                            <br />
+                                        <div class="item-title" >
                                             <p style="font-size: 15px; font-weight: 600; color: #333;">{{ item.item_title }}</p>
-                                        </h3>
-                                    </div>
-                                    <p class="description">{{ item.item_price }}</p>
+                                        </div>
+                                    </a>
+                                    <div>  <p class="item-price"><span class="currency" >EGP </span> {{ '{:,.2f}'.format(item.item_price|replace('"', '')|float)  }}</p> </div>
                                     <div class="botton_group" style="padding-top: 16px;">
                                         <a href="{{ item.item_url }}" target="_blank">
                                             <button class="btn btn_buy" type="button"><i class="typcn typcn-shopping-cart icon"></i>Buy Now</button>
                                         </a>
-                                        <div class="btn_change_link"><a class="link rep_item" role="button" data-toggle="modal" href="#myModal">Change Item</a></div>
+                                        <div class="btn_change_link"><a class="link rep_item" role="button" data-toggle="modal" href="#myModal">Track Price</a></div>
                                     </div>
                                 </div>        
                             {% endfor %}
