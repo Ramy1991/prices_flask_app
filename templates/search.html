@@ -546,25 +546,26 @@
                 <div class="row articles" id="products-articles" style=""> 
                     <div class="lds-dual-ring" id="loading_main_page"></div> 
                     {% if data%}
-                        {% for websites , items in data.0.items() %}
-                          
-                            {% for upc, item in items.items() %}
-                                <div class="col-sm-6 col-md-3 item" id="{{ item.item_uid }}">
-                                    <a href="/{{ country }}-{{ lang }}/p/{{item.item_uid}}">
-                                        <div class="image_box"><img class="img-fluid" src="{{ item.item_image }}" /></div>
+                        {% for item in data %}
+                      
+                
+                                <div class="col-sm-6 col-md-3 item" id="{{ item.UIC }}">
+                                    <a href="/{{ country }}-{{ lang }}/p/{{item.UIC}}">
+                                        {% set image_link = item.images_url.split('\n')[0] %}
+                                        <div class="image_box"><img class="img-fluid" src="{{ image_link }}" /></div>
                                         <div class="item-title" >
                                             <p style="font-size: 15px; font-weight: 600; color: #333;">{{ item.item_title }}</p>
                                         </div>
                                     </a>
                                     <div>  <p class="item-price"><span class="currency" >EGP </span> {{ '{:,.2f}'.format(item.item_price|replace('"', '')|float)  }}</p> </div>
                                     <div class="botton_group" style="padding-top: 16px;">
-                                        <a href="{{ item.item_url }}" target="_blank">
+                                        <a href="{{ item.product_direct_link }}" target="_blank">
                                             <button class="btn btn_buy" type="button"><i class="typcn typcn-shopping-cart icon"></i>Buy Now</button>
                                         </a>
                                         <div class="btn_change_link"><a class="link rep_item" role="button" data-toggle="modal" href="#myModal">Track Price</a></div>
                                     </div>
                                 </div>        
-                            {% endfor %}
+                       
                         {% endfor %}
                     {% endif %}  
                 </div>

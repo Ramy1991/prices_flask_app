@@ -60,32 +60,32 @@ class DBSearch(object):
                        f"MATCH(search_key_s) against('+\"{self.search_value}\"' IN BOOLEAN MODE) "
                        f"order by search_order ASC limit 1",
             # search by keyword after get item tybe from first query
-            'query_1': f"SELECT  website_name, UIC, unique_product_code, title_{self.lang}, brand_{self.lang}, "
-                       f"images_url, item_type_{self.lang}, sub_category_{self.lang}, "
-                       f"item_upc, link_{self.lang}, product_direct_link_{self.lang}, rating, number_of_reviews, "
-                       f"JSON_EXTRACT(price_data->>'$.egp.*', "
-                       f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) "
+            'query_1': f"SELECT  website_name, UIC, unique_product_code, title_{self.lang} as item_title, "
+                       f"brand_{self.lang}, images_url, item_type_{self.lang}, sub_category_{self.lang}, "
+                       f"item_upc, link_{self.lang}, product_direct_link_{self.lang} as product_direct_link, "
+                       f"rating, number_of_reviews, JSON_EXTRACT(price_data->>'$.egp.*', "
+                       f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) as item_price "
                        f"FROM main_schema.products WHERE item_type_en = '{self.item_type}' AND "
                        f"MATCH(title_{self.lang}) against('+{self.search_value}' IN NATURAL LANGUAGE MODE ) "
                        f"AND JSON_EXTRACT(price_data->>'$.egp.*', "
                        f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) != 'None'"
                        f"AND sold_out = 0 AND country = '{self.country}' LIMIT {self.offset}, {self.item_per_page};",
             # if item tybe found but search query not in the titles
-            'query_2': f"SELECT  website_name, UIC, unique_product_code, title_{self.lang}, brand_{self.lang}, "
-                       f"images_url, item_type_{self.lang}, sub_category_{self.lang}, "
-                       f"item_upc, link_{self.lang}, product_direct_link_{self.lang}, rating, number_of_reviews, "
-                       f"JSON_EXTRACT(price_data->>'$.egp.*', "
-                       f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) "
+            'query_2': f"SELECT  website_name, UIC, unique_product_code, title_{self.lang} as item_title, "
+                       f"brand_{self.lang}, images_url, item_type_{self.lang}, sub_category_{self.lang}, "
+                       f"item_upc, link_{self.lang}, product_direct_link_{self.lang} as product_direct_link, "
+                       f"rating, number_of_reviews, JSON_EXTRACT(price_data->>'$.egp.*', "
+                       f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) as item_price "
                        f"FROM main_schema.products WHERE item_type_en = '{self.item_type}' "
                        f"AND JSON_EXTRACT(price_data->>'$.egp.*', "
                        f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) != 'None'"
                        f"AND sold_out = 0 AND country = '{self.country}' LIMIT {self.offset}, {self.item_per_page};",
             # search in entire database if no results in search_mapping table
-            'query_3': f"SELECT  website_name, UIC, unique_product_code, title_{self.lang}, brand_{self.lang}, "
-                       f"images_url, item_type_{self.lang}, sub_category_{self.lang}, "
-                       f"item_upc, link_{self.lang}, product_direct_link_{self.lang}, rating, number_of_reviews, "
-                       f"JSON_EXTRACT(price_data->>'$.egp.*', "
-                       f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) "
+            'query_3': f"SELECT  website_name, UIC, unique_product_code, title_{self.lang} as item_title, "
+                       f"brand_{self.lang}, images_url, item_type_{self.lang}, sub_category_{self.lang}, "
+                       f"item_upc, link_{self.lang}, product_direct_link_{self.lang} as product_direct_link, "
+                       f"rating, number_of_reviews, JSON_EXTRACT(price_data->>'$.egp.*', "
+                       f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) as item_price "
                        f"FROM main_schema.products WHERE "
                        f"MATCH(title_{self.lang}) against('+{self.search_value}' IN NATURAL LANGUAGE MODE ) "
                        f"AND JSON_EXTRACT(price_data->>'$.egp.*', "
@@ -126,41 +126,43 @@ class DBSearch(object):
                 result = cursor.fetchall()
             self.pagination(result[0][0])
             # print(self.search_query(query_to_execute))
+            cursor = conn.cursor(dictionary=True)
             cursor.execute(self.search_query(query_to_execute))
             result = cursor.fetchall()
+            # print('ttt' + str(result))
 
             # print(result)
             # if not result:
             #     cursor.execute(self.search_query('2'))
             #     result = cursor.fetchall()
-            items_dict_search = {}
-            for item in result:
-                if item[0] not in items_dict_search:
-                    items_dict_search = {
-                        item[0]: {  # store
-                        }
-                    }
-                item_dict_search = {
-                    item[2]: {  # item_uid
-                        'website_name': item[0],  #
-                        'item_uid': item[1],
-                        'unique_product_code': item[2],  #
-                        'item_title': item[3],
-                        'brand_en': item[4],  #
-                        'item_image': item[5].split('\n')[0],
-                        'item_type_en': item[6],  #
-                        'sub_category_en': item[7],  #
-                        'item_upc': item[8],  #
-                        'link_en': item[9],  #
-                        'item_url': item[10],
-                        'rating': item[11],  #
-                        'number_of_reviews': item[12],  #
-                        'item_price': item[13],
-
-                    }
-                }
-                items_dict_search[item[0]].update(item_dict_search)
-            self.items_dict_search = json.dumps([items_dict_search])
+            # items_dict_search = {}
+            # for item in result:
+            #     if item[0] not in items_dict_search:
+            #         items_dict_search = {
+            #             item[0]: {  # store
+            #             }
+            #         }
+            #     item_dict_search = {
+            #         item[2]: {  # item_uid
+            #             'website_name': item[0],  #
+            #             'item_uid': item[1],
+            #             'unique_product_code': item[2],  #
+            #             'item_title': item[3],
+            #             'brand_en': item[4],  #
+            #             'item_image': item[5].split('\n')[0],
+            #             'item_type_en': item[6],  #
+            #             'sub_category_en': item[7],  #
+            #             'item_upc': item[8],  #
+            #             'link_en': item[9],  #
+            #             'item_url': item[10],
+            #             'rating': item[11],  #
+            #             'number_of_reviews': item[12],  #
+            #             'item_price': item[13],
+            #
+            #         }
+            #     }
+            #     items_dict_search[item[0]].update(item_dict_search)
+            self.items_dict_search = json.dumps(result)
             return [self.items_dict_search, self.num_of_pages]
 
 
