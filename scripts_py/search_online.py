@@ -75,20 +75,25 @@ def main(links):
             price_xp = supported_search_website_xp.get(website_check(url)).get('price_xp')
             uid_xp = supported_search_website_xp.get(website_check(url)).get('uid_xp')
             url_xp = supported_search_website_xp.get(website_check(url)).get('url_xp')
+            cate_xp = supported_search_website_xp.get(website_check(url)).get('cate_xp')
             tree = html.fromstring(data)
             if website_check(url) == 'noon.com':
                 data = await response.text()
                 json_text = re.findall(r'.hits..(.*)..searchEngine.', data)
                 json_items = json.loads(''.join(json_text))
+                item_categories = []
                 item_titles = []
                 item_images = []
                 item_uid = []
                 item_prices = []
                 item_urls = []
+                item_brand = []
 
                 for json_item in json_items:
+                    item_brand.append(json_item.get('brand'))
                     item_urls.append(main_url.format(json_item.get('sku')))
                     item_uid.append(json_item.get('sku'))
+                    item_categories.append(''.join(list(tree.xpath(cate_xp))))
                     item_titles.append(json_item.get('name'))
                     if type(json_item.get('sale_price')) != int:
                         item_prices.append(json_item.get('price'))
@@ -102,12 +107,18 @@ def main(links):
                 item_uid = list(tree.xpath(uid_xp))
                 item_prices = list(tree.xpath(price_xp))
                 item_urls = list(tree.xpath(url_xp))
+                item_categories = list(tree.xpath(cate_xp))
+                item_brand = list(tree.xpath(cate_xp))
 
+            if len(item_categories) != len(item_titles):
+                item_categories = list(''.join(tree.xpath(cate_xp)) for i in range(len(item_titles)))
+                item_brand = list('none' for i in range(len(item_titles)))
             items_dict = {
                 website_check(url): {
                 }
             }
-            for uid, title, image, price, i_url in zip(item_uid, item_titles, item_images, item_prices, item_urls):
+            for uid, title, image, price, i_url, cate, brand in zip(item_uid, item_titles, item_images, item_prices,
+                                                                    item_urls, item_categories, item_brand):
                 uid = uid.split(",")
                 try:
                     price = ''.join(re.findall(r'(\d+)', price))
@@ -120,9 +131,11 @@ def main(links):
                     uid[0]: {
                         "item_title": title,
                         "item_image": image,
-                        "item_price": price,
+                        "item_price": int(price),
                         "item_url": i_url,
-                        "item_uid": uid[0]
+                        "item_uid": uid[0],
+                        "item_cate": cate,
+                        "item_brand": brand
                     }
                 }
                 items_dict[website_check(url)].update(item_dict)
@@ -180,7 +193,7 @@ def create_url(search_value, country, lang):
     return urls
 
 
-# print(main(create_url('laptop', 'eg', 'en')))
+print(main(create_url('iphone', 'eg', 'en')))
 
 # links = create_url('ramy', 'Egypt')
 

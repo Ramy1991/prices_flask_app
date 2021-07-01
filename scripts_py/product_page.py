@@ -80,7 +80,7 @@ class ProductPage(object):
 
                 # get similar items
                 self.search_value = item_result.get('item_title')
-                print(self.query('matching_items_query', item_result.get('UIC'), item_result['item_type']))
+
                 cursor.execute(self.query('matching_items_query', item_result.get('UIC'), item_result['item_type']))
                 similar_items = cursor.fetchall()
 

@@ -63,35 +63,40 @@ supported_search_website_xp = {
         'uid_xp': "//div[contains(@class,'s-result-item') and @data-asin[string-length()>0]]//span[@class='a-price-whole'][string-length(text()) > 0]/ancestor::div[8 and 9]/@data-asin",
         'url_xp': "//div[contains(@class,'s-result-item') and @data-asin[string-length()>0]]//span[@class='a-price-whole'][string-length(text()) > 0]/ancestor::div[8]//h2/a/@href",
         'drop_down_size_XP': "//ul[@class='a-nostyle a-list-link']//li//text()",
-        'item_size': "//*[@id='dropdown_selected_size_name']/span/span/span//text()"
+        'item_size': "//*[@id='dropdown_selected_size_name']/span/span/span//text()",
+        'cate_xp': "//*[@id='departments']/ul/li[1]//a/span[1]//text()"
     },
     'btech.com': {
         'image_xp': "//*[@class='product-item-view ']//a//div//img/@src",
         'price_xp': "//span[@data-price-type='finalPrice']/@data-price-amount",
         'title_xp': "//*[@class='product-item-view ']//a//div/div[1]/h2//text()",
-        'uid_xp': "///*[@class='product-item-view ']/a/div/div/@data-product-id",
-        'url_xp': "//*[@class='product-item-view ']/a/@href"
+        'uid_xp': "//*[@class='product-item-view ']/a/div/div/@data-product-id",
+        'url_xp': "//*[@class='product-item-view ']/a/@href",
+        'cate_xp': "//*[@class='product-item-view ']/a/div/div/@data-product-id"
     },
     'jumia.com': {
         'image_xp': "//div[@class='img-c']/img[1]/@data-src",
         'price_xp': "//div[@class='prc']/text()",
         'title_xp': "//h3[@class='name']/text()",
         'uid_xp': "//a[@class='core']/@data-id",
-        'url_xp': "//a[@class='core']/@href"
+        'url_xp': "//a[@class='core']/@href",
+        'cate_xp': "//a[@class='core']/@data-category"
     },
     'noon.com': {
         'image_xp': "//div[@class='lazyload-wrapper']//img/@src",
         'price_xp': "//span[@class='currency']//following-sibling::strong//text()",
         'title_xp': "//*[@class='productContainer']//div/@title",
         'uid_xp': "//*[@class='productContainer']/a/@id",
-        'url_xp': "//*[@class='productContainer']/a/@href"
+        'url_xp': "//*[@class='productContainer']/a/@href",
+        'cate_xp': "//ul[@class='level01']/li/div/button[@class='categoryLink'][1]/@id"
     },
     'souq.com': {
         'image_xp': "//img[contains(@class,'imageUrl')]/@data-src | //div[@class='img-bucket']/a/@data-img",
         'price_xp': "//h3[contains(@class, 'itemPrice')]//text() | //span[contains(@class, 'itemPrice')]//text()",
         'title_xp': "//h1[contains(@class, 'itemTitle')]//text() | //h6[contains(@class, 'itemTitle')]/a//text()",
         'uid_xp': "//*[@id='content-body']//div/@data-ean",
-        'url_xp': "//a[contains(@class,'img-bucket img-link itemLink')]/@href | //div[@class='img-bucket']/a/@href"
+        'url_xp': "//a[contains(@class,'img-bucket img-link itemLink')]/@href | //div[@class='img-bucket']/a/@href",
+        'cate_xp': "//*[@id='id_type_item-accordion']/div/ul/li[1]/@data-refinement"
     }
 
 }
@@ -298,8 +303,6 @@ country_alpha2_currency = {
         'country_mane': 'VIRGIN ISLANDS, U.S'
     }
 }
-
-
 
 # validate country and land
 
