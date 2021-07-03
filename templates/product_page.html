@@ -182,6 +182,7 @@
                 align-items: center;
                 justify-content: center;
                 display: flex;
+                height: 75%;
             }
 
             #item_data_box {
@@ -522,15 +523,16 @@
             <br>
             {% if 'Error item not found' not in data %}
             <div>
-                <h3>{{data.item_data.item_title}}</h3>
-            </div>
-            <div class="row">   
-               
-                <div class="col-md-7 image-container">
-                    <br>
-                    <img class="sticky-img" src="{{ data.item_data.images_url }}" alt="image">
-                </div>
                 
+            </div>
+            <div class="row">  
+                <div class="col-md-7">
+                    <h3>{{data.item_data.item_title}}</h3>
+                    <div class="image-container">
+                        
+                        <img class="sticky-img" src="{{ data.item_data.images_url }}" alt="image">
+                    </div>
+                </div> 
                 <div class="col-md-5">
                     <!-- <h3 class="my-3">Project Description</h3>
                     <p>Pommy ipsum darling red telephone box on the beat, pezzy little well chuffed.<br></p> -->

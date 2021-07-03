@@ -5,7 +5,7 @@ from scripts_py.supported_website import country_alpha2_currency
 import re
 
 
-class ProductPage(object):
+class ProductPage:
     def __init__(self, country, lang, search_value):
         self.country = country
         self.lang = lang
@@ -17,20 +17,21 @@ class ProductPage(object):
             'query_item':
                 f"SELECT website_name, UIC, unique_product_code, title_{self.lang} as item_title, brand_{self.lang}, "
                 f"images_url, item_type_{self.lang} as item_type, sub_category_{self.lang}, "
-                f"item_upc, link_{self.lang} as item_link, product_direct_link_{self.lang} as product_direct_link "
+                f"item_upc, product_direct_link_{self.lang} as product_direct_link "
                 f", rating, number_of_reviews, "
                 f"JSON_EXTRACT(price_data->>'$.egp.*', "
                 f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) as price,"
                 f" item_specs_{self.lang} as item_specs, country "
-                f"FROM main_schema.products WHERE UIC = '{self.search_value}' AND country = '{self.country}';",
+                f"FROM main_schema.products_{self.country} WHERE UIC = '{self.search_value}' "
+                f"AND country = '{self.country}';",
             'matching_items_query':
                 f"SELECT website_name, UIC, unique_product_code, title_{self.lang} as item_title, brand_{self.lang}, "
                 f"images_url, item_type_{self.lang} as item_type, sub_category_{self.lang}, "
-                f"item_upc, link_{self.lang} as item_link, product_direct_link_{self.lang} as product_direct_link "
+                f"item_upc, product_direct_link_{self.lang} as product_direct_link "
                 f", rating, number_of_reviews, "
                 f"JSON_EXTRACT(price_data->>'$.egp.*', "
                 f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) as price, country "
-                f"FROM main_schema.products WHERE "
+                f"FROM main_schema.products_{self.country} WHERE "
                 f"MATCH(title_{self.lang}) against('+{self.search_value}' IN NATURAL LANGUAGE MODE ) "
                 f"AND country = '{self.country}' AND UIC != '{item_uid}' AND  "
                 f"item_type_{self.lang} = '{item_type}' LIMIT 4;"
@@ -40,7 +41,7 @@ class ProductPage(object):
 
     def trim_item_specs_json(self, specs):
         trim_specs = specs.replace('class="fi-x"', "class='fi-x'").replace('class="clearfix"', "class='clearfix'") \
-            .replace('class="fi-check"', "class='fi-check'")
+            .replace('class="fi-check"', "class='fi-check'").replace('""', '"')
         return trim_specs
 
     def db_connection(self):
@@ -91,4 +92,4 @@ class ProductPage(object):
                 return json.dumps({'Error item not found': self.search_value})
 
 
-# print(ProductPage('eg', 'en', 'A7babcd46e').db_connection())
+# print(ProductPage('eg', 'en', 'A6f98a11fe').db_connection())

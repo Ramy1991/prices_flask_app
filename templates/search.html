@@ -756,41 +756,8 @@
                                 </div>';
                     return  product_template;
             }
-            // item_data = '{{ data|tojson|safe }}';
-            // if (item_data != ''){
-            //     $("#products-articles" ).html('<div class="lds-dual-ring" id="loading_main_page"></div>');
-            //     $("#loading_main_page").css('display','');
-            //     item_data = JSON.parse(item_data.replace("\"[","[").replace("]\"","]"));
-            //     if(jQuery.isEmptyObject(item_data[0]) == true){
-            //         default_query();
-            //     // results not found
-            //     }else{
-            //         var items_html_search = [];
-            //         var i = [];
-            //         var item_num = 0;
-            //         // console.log(item_data.length)
-            //         console.log(item_data[0]['souq.com'])
-            //         $.each(item_data, function(key, values){ // website num
-                        
-            //             $.each(values, function(source, items) {//items
-                           
-            //                 $.each(items, function(source, item) { //item
-            //                     // console.log(source)
-            //                     items_html_search.push(html_item(item, item.item_price, ""));
-            //                     i.push("1");
-            //                     item_num  = item_num + 1;
-            //                     if (i.length === item_num){
-            //                         // console.log(item_num)
-            //                         $("#loading_main_page").css('display','none');
-            //                         // $("#products-articles" ).html(items_html_search.join(''));
-            //                     }
-            //                 });
-            //             });
-            //         });
-            //     }
-            // } else {
-            //     default_query();
-            // }
+            // search for new products
+            
             $(".search_btn, .page-link").on("click", function(e){
                 $("#products-articles" ).html('<div class="lds-dual-ring" id="loading_main_page"></div>');
                 $('.pagination').css('display','none')

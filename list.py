@@ -12,8 +12,16 @@
 #     # Get a list of `likely` options
 #     print(spell.candidates(word))
 
-from autocorrect import Speller
+# from autocorrect import Speller
+#
+# spell = Speller(lang='en')
+#
+# print(spell('episde'))
 
-spell = Speller(lang='en')
+class SearchOnlineForItems:
+    def test(self, text):
+        return text
 
-print(spell('episde'))
+
+d = SearchOnlineForItems()
+print(d.test('sda'))

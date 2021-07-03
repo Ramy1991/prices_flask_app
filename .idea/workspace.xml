@@ -2,10 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d02a3c0c-040f-4e28-a4b9-3436481c1fa1" name="Default Changelist" comment="1.2.2">
+      <change afterPath="$PROJECT_DIR$/SSH Vultr/digitalocean_2.ppk" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/list.py" beforeDir="false" afterPath="$PROJECT_DIR$/list.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts_py/db_search.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts_py/db_search.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts_py/product_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts_py/product_page.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts_py/search_online.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts_py/search_online.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts_py/supported_website.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts_py/supported_website.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/product_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/product_page.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +70,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="db_search" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="list" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="prices_flask" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -75,11 +78,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/scripts_py" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scripts_py/db_search.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/list.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -155,9 +158,9 @@
       <list>
         <item itemvalue="Python.search_online" />
         <item itemvalue="Python.app" />
-        <item itemvalue="Python.db_search" />
-        <item itemvalue="Python.test2 (1)" />
+        <item itemvalue="Python.list" />
         <item itemvalue="Python.product_page" />
+        <item itemvalue="Python.test2 (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -169,13 +172,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1615332018162</updated>
-    </task>
-    <task id="LOCAL-00035" summary="Flask_APP v1.1.3">
-      <created>1619279108562</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1619279108562</updated>
     </task>
     <task id="LOCAL-00036" summary="Flask_APP v1.1.3">
       <created>1619283729965</created>
@@ -513,7 +509,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625087385928</updated>
     </task>
-    <option name="localTasksCounter" value="84" />
+    <task id="LOCAL-00084" summary="1.2.2">
+      <created>1625106664740</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1625106664741</updated>
+    </task>
+    <option name="localTasksCounter" value="85" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
