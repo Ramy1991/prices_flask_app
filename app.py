@@ -61,8 +61,7 @@ def search_data(search_value, country, lang, page_num):
         pages_count = data[1]
         items = data[0]
         return render_template('search.html', data=json.loads(items), search_val=search_value, country=country,
-                               lang=lang,
-                               pages_count=pages_count, page_num=page_num)
+                               lang=lang, pages_count=pages_count, page_num=page_num)
     elif country_lang.validate_country_lang(country, lang):
         return render_template('search.html', data='', country=country, lang=lang)
     else:
@@ -104,5 +103,5 @@ def get_item_data():
 
 
 if __name__ == "__main__":
-    # app.run(host="0.0.0.0")
-    app.run(debug=True, port=5000)
+    app.run(host="0.0.0.0")
+    # app.run(debug=True, port=5000)

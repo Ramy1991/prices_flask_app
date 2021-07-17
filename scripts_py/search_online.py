@@ -179,8 +179,8 @@ class SearchOnlineForItems:
         return self.items_json
 
 
-d = SearchOnlineForItems('iphone', 'eg', 'en').main()
-print(d)
+# d = SearchOnlineForItems('iphone', 'eg', 'en').main()
+# print(d)
 
 #
 # def validate_json(self, json_values):

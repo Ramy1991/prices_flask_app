@@ -88,7 +88,7 @@ supported_search_website_xp = {
         'title_xp': "//*[@class='productContainer']//div/@title",
         'uid_xp': "//*[@class='productContainer']/a/@id",
         'url_xp': "//*[@class='productContainer']/a/@href",
-        'cate_xp': "//ul[@class='level01']/li/div/button[@class='categoryLink'][1]/@id"
+        'cate_xp': "//ul[@class='level01']/li/div/button[@class='categoryLink'][1]/@id | //div[@data-qa='Category']//ul/li[1]/div/span//text()"
     },
     'souq.com': {
         'image_xp': "//img[contains(@class,'imageUrl')]/@data-src | //div[@class='img-bucket']/a/@data-img",

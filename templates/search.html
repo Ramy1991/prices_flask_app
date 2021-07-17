@@ -685,9 +685,10 @@
             // $('.side_bar').click(function(){
             //     $('#mySidenav').toggleClass('active_bar');
             // });
+
+
             // change country and laguage
-    
-            
+
             if ('{{lang}}' == 'ar'){
                 $('.lang').text('English');
                 $('.lang').attr('href', window.location.origin + window.location.pathname.replace(/.(\w+-\w+)/, '/{{country}}-en'));
@@ -771,7 +772,7 @@
                 window.location = window.location.origin;
             });
 
-            // add class for pagination
+            // add class for pagination mobile View Update
             function mobileViewUpdate(){
                 var width = $(window).width();  
                 if (width <= 500) {
@@ -783,8 +784,15 @@
             $(window).on("load resize", mobileViewUpdate);
             // $(window).on("resize", mobileViewUpdate);
             
-    
-            
+            // $.ajax({
+            //     url: "http://127.0.0.1:5000/",
+            //     method: "POST",
+            //     data: {search_val: '{{ search_val }}', country: '{{ country }}', lang: '{{ lang }}'},
+            //     crossDomain: true
+            // }).done(function(response){
+            //     console.log(response);
+            // });
+                
             // function get_ip(){
             //     var get_county = $.getJSON('http://ip-api.com/json?callback=?', function(data1) {
             //     }).done(function(){

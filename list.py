@@ -18,10 +18,19 @@
 #
 # print(spell('episde'))
 
-class SearchOnlineForItems:
-    def test(self, text):
-        return text
+# class SearchOnlineForItems:
+#     def test(self, text):
+#         return text
+#
+#
+# d = SearchOnlineForItems()
+# print(d.test('sda'))
 
+import requests
 
-d = SearchOnlineForItems()
-print(d.test('sda'))
+url = 'http://127.0.0.1:5000/'
+myobj = {'data': 'somevalue'}
+
+x = requests.post(url, data=myobj)
+
+print(x.text)
