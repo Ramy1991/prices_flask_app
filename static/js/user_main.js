@@ -75,16 +75,18 @@
                         }).done(function(data){
                             if (data.trim() === "dummy_website"){
                                 console.log(data);
-                                $('.botton-d, .add-item').prop('disabled', false);
+                                // $('.botton-d, .add-item').prop('disabled', false);
                                 $('.btn-d, .add-item').addClass('disabled');
-                                $('#loading_add_item').css('display','none');
-                                $('#add_item_panel, .err_load_data').css('display','');
+                                // $('#loading_add_item').css('display','none');
+                                $('#add_item_panel, .err_load_data').css('display','block');
                             }else if(data.trim().includes("missing_data")){
-                                console.log(data)
-                                $('.botton-d').prop('disabled', false);
-                                $('.btn-d, .add-item').removeClass('disabled');
-                                $('#loading_add_item').css('display','none');
-                                $('#add_item_panel, .err_load_data').css('display','');
+                                console.log(data);
+                                // $('.botton-d, .add-item').prop('disabled', false);
+                                // $('.btn-d, .add-item').removeClass('disabled');
+                                // $('#loading_add_item').css('display','none');
+                                $('.err_load_data').html('* Error Loading Data');
+                                $('#add_item_panel, .err_load_data').css('display','block');
+                                console.log('hello');
                             }else if(!data.trim().includes("item_uid")){
                                 $('#item-link').val('');
                                 get_size_url(data, item_url);
@@ -105,12 +107,12 @@
                                     alert(err);
                                 }finally{
                                     $('#myModal').modal('hide');
-                                    $('#loading_add_item').css('display','none');
                                     $('#add_item_panel').css('display','');
                                     $('#item-link, #price_note').val('');
                                 }
                             }
-                            $('.botton-d').prop('disabled', false);
+                            $('#loading_add_item').css('display','none');
+                            $('.botton-d, .add-item').prop('disabled', false);
                             $('.btn-d, .add-item').removeClass('disabled');
 
                             close_pop();

@@ -24,7 +24,7 @@ import mouse
 # mouse.click('left')
 
 
-executable_path = r'C:\Users\ramyg\Downloads\chromedriver.exe'
+executable_path = r'c:\Users\ramyg\Downloads\chromedriver_win32 (2)\chromedriver.exe'
 os.environ['webdriver.chrome.driver'] = executable_path
 chrome_options = Options()
 chrome_options.add_argument('--disable-blink-features=AutomationControlled')
@@ -32,6 +32,10 @@ chrome_options.add_argument('start-maximized')
 chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
 
 chrome_options.add_experimental_option('useAutomationExtension', False)
+
+
+# chrome_options.add_argument('headless')
+
 driver = webdriver.Chrome(options=chrome_options, executable_path=executable_path)
 driver.get('http://shops.syaanh.com/login')
 

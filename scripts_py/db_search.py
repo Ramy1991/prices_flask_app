@@ -31,7 +31,7 @@ class DBSearch(object):
             # search by keyword after get item tybe from first query
             'query_1': f"SELECT  count(*)"
                        f"FROM main_schema.products_{self.country} WHERE item_type_en like '%{self.item_type}%' AND "
-                       f"MATCH(title_en) against('+{self.search_value}' IN NATURAL LANGUAGE MODE ) "
+                       f"MATCH(title_en, title_{self.lang}) against('+{self.search_value}' IN NATURAL LANGUAGE MODE ) "
                        f"AND JSON_EXTRACT(price_data->>'$.egp.*', "
                        f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) != 'None'"
                        f"AND sold_out = 0 AND country like '%{self.country}%';",
@@ -44,7 +44,7 @@ class DBSearch(object):
             # search in entire database if no results in search_mapping table
             'query_3': f"SELECT  count(*)"
                        f"FROM main_schema.products_{self.country} WHERE "
-                       f"MATCH(title_en) against('+{self.search_value}' IN NATURAL LANGUAGE MODE ) "
+                       f"MATCH(title_en, title_{self.lang}) against('+{self.search_value}' IN NATURAL LANGUAGE MODE ) "
                        f"AND JSON_EXTRACT(price_data->>'$.egp.*', "
                        f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) != 'None'"
                        f"AND sold_out = 0 AND country like '%{self.country}%';"
@@ -65,7 +65,7 @@ class DBSearch(object):
                        f"rating, number_of_reviews, JSON_EXTRACT(price_data->>'$.egp.*', "
                        f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) as item_price "
                        f"FROM main_schema.products_{self.country} WHERE item_type_en = '{self.item_type}' AND "
-                       f"MATCH(title_{self.lang}) against('+{self.search_value}' IN NATURAL LANGUAGE MODE ) "
+                       f"MATCH(title_en, title_{self.lang}) against('+{self.search_value}' IN NATURAL LANGUAGE MODE ) "
                        f"AND JSON_EXTRACT(price_data->>'$.egp.*', "
                        f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) != 'None'"
                        f"AND sold_out = 0 AND country = '{self.country}' LIMIT {self.offset}, {self.item_per_page};",
@@ -86,7 +86,7 @@ class DBSearch(object):
                        f"rating, number_of_reviews, JSON_EXTRACT(price_data->>'$.egp.*', "
                        f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) as item_price "
                        f"FROM main_schema.products_{self.country} WHERE "
-                       f"MATCH(title_{self.lang}) against('+{self.search_value}' IN NATURAL LANGUAGE MODE ) "
+                       f"MATCH(title_en, title_{self.lang}) against('+{self.search_value}' IN NATURAL LANGUAGE MODE ) "
                        f"AND JSON_EXTRACT(price_data->>'$.egp.*', "
                        f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) != 'None'"
                        f"AND sold_out = 0 AND country = '{self.country}' LIMIT {self.offset}, {self.item_per_page};"
@@ -124,6 +124,7 @@ class DBSearch(object):
                 cursor.execute(self.pagination_queries('query_3'))
                 result = cursor.fetchall()
             self.pagination(result[0][0])
+            # print(self.search_query(query_to_execute))
             # print(self.search_query(query_to_execute))
             cursor = conn.cursor(dictionary=True)
             cursor.execute(self.search_query(query_to_execute))
@@ -165,4 +166,7 @@ class DBSearch(object):
             return [self.items_dict_search, self.num_of_pages]
 
 
-# print(DBSearch('laptop', 'eg', 'en', 3).db_connection())
+
+
+
+# print(DBSearch('laptop', 'eg', 'ar', 1).db_connection())

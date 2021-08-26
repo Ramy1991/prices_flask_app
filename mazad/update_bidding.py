@@ -25,7 +25,7 @@ driver.find_element_by_xpath('/html/body/div[3]/div/div/div/form/div/div[4]/butt
 driver.get('https://mzadqatar.com/mzadqater_admin/lots/create-lot')
 
 driver.find_element_by_xpath("//*[@id='choose_category']/option[contains(text(),'Car plates')]").click()
-wb = load_workbook(filename=r"C:\Users\ramyg\Desktop\Bidding Data Sheet (1).xlsx")
+wb = load_workbook(filename=r"C:\Users\ramyg\Downloads\Bidding Data Sheet (2).xlsx")
 ws = wb.active
 
 last_col = ws.max_column

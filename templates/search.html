@@ -529,7 +529,7 @@
         </div>
         <div class="article-list">
             <div class="container">
-                <form action="/eg-en/search/" method="POST">
+                <form action="/{{ country }}-{{ lang }}/search/" method="POST">
                 <div class="input-group mb-3">
 
                     <input type="text" class="form-control input_search" value="" name="search_val" id="search_val" placeholder="What are you looking for?" aria-label="Search" aria-describedby="basic-addon2" required>
@@ -784,14 +784,14 @@
             $(window).on("load resize", mobileViewUpdate);
             // $(window).on("resize", mobileViewUpdate);
             
-            // $.ajax({
-            //     url: "http://127.0.0.1:5000/",
-            //     method: "POST",
-            //     data: {search_val: '{{ search_val }}', country: '{{ country }}', lang: '{{ lang }}'},
-            //     crossDomain: true
-            // }).done(function(response){
-            //     console.log(response);
-            // });
+            $.ajax({
+                url: "https://prices-assist.herokuapp.com/search_items_online",
+                method: "POST",
+                data: {search_val: '{{ search_val }}', country: '{{ country }}', lang: '{{ lang }}'},
+                crossDomain: true
+            }).done(function(response){
+                console.log(response);
+            });
                 
             // function get_ip(){
             //     var get_county = $.getJSON('http://ip-api.com/json?callback=?', function(data1) {
