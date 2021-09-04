@@ -143,10 +143,14 @@ def count_live_sessions():
     if live_requests:
         def generate():
             yield str(live_requests)
-
         return app.response_class(stream_with_context(generate()))
     else:
         return 'test'
+
+
+@app.route('/about', methods=['GET'])
+def about():
+    return render_template('about.html')
 
 
 if __name__ == "__main__":

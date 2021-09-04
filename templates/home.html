@@ -349,6 +349,13 @@
             .country-container{
                 list-style: none;
             }
+            .navbar-group{
+                display: flex;
+                align-items: center;
+            }
+            .nav-link{
+                font-size: 17px !important;
+            }
 
             @media screen and (max-width: 1200px) {
                 .btn_1, .btn_2{
@@ -456,22 +463,24 @@
         </div>
         <nav class="navbar navbar-light navbar-expand-md navigation-clean-button">
             <div class="container">
-
-                <span style="font-size:30px;cursor:pointer" class="side_bar" onclick="openNav()">&#9776</span>
-                <a class="navbar-brand" href="#" style="color: rgb(255,255,255); padding-left: 10px;">Price Tracking</a>
-                <div class="navbar-collapse " id="navcol-1" style="color: rgb(255, 252, 252);">
+                <div class="navbar-group ">
+                    <span style="font-size:30px;cursor:pointer" class="side_bar" onclick="openNav()">&#9776</span>
+                    <a class="navbar-brand" href="#" style="color: rgb(255,255,255); padding-left: 10px;"><span>Price Tracking</span></a>
+                </div>     
+                <div class=" " id="navcol-1" style="color: rgb(255, 252, 252);">
                     <ul class="nav navbar-nav mr-auto sidenav" id="mySidenav" >
                         <a href="javascript:void(0)" class="closebtn side_bar" onclick="closeNav()">&times;</a>
-                        <a class="nav-link active menu_item" href="#"  style="padding-top: 40px;">First Item</a>
-                        <a class="nav-link " href="#">Second Item</a>
-                        <a class="nav-link " href="#">Second Item</a>
-                        <a class="nav-link " href="#">Second Item</a>
+                        <a class="nav-link " href="/{{ country }}-{{ lang }}/"  style="padding-top: 40px;">Home</a>
+                        <a class="nav-link my-account" href="javascript:void(0)">My Account</a>
+                        <a class="nav-link " href="/{{ country }}-{{ lang }}/search">Search For Products</a>
+                        <a class="nav-link " href="#">About Us</a>
                     </ul>
+                    <span class="navbar-text actions">
+                        <a class="login btn-header" href="#" style="color: rgb(227,232,237);" name="sign_in">Log In</a>
+                        <a class="btn btn-light action-button btn-header" role="button" href="#" style="background-color: #f0c14b;color: #232f3e;" name="sign_up">Sign Up</a>
+                    </span>
                 </div>
-                  <span class="navbar-text actions">
-                    <a class="login btn-header" href="#" style="color: rgb(227,232,237);" name="sign_in">Log In</a>
-                    <a class="btn btn-light action-button btn-header" role="button" href="#" style="background-color: #f0c14b;color: #232f3e;" name="sign_up">Sign Up</a>
-                </span>
+                 
             <!-- </div> -->
             </div>
 
@@ -482,7 +491,7 @@
                 <div class="col-md-6">
                     <div class="text-col6">
                         <h1>Price Tracking !</h1>
-                        <p class="p_text">Is a Free price Tracker Service Helps to&nbsp;you save money by tracking and&nbsp;monitoring&nbsp;the prices of your desired Products With provide Price History Charts and daily Price Drop alerts.</p>
+                        <p class="p_text">Is a Free price Tracker Service helps you to&nbsp;save money by tracking and&nbsp;monitoring&nbsp;the prices of your desired Products With providing the Price History Charts and daily Price Drop alerts.</p>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -646,6 +655,8 @@
         $('.selected_country').each(function() {
             this.href = window.location.origin + '/' + this.name + '-{{lang}}';
         });
+
+    
     </script>
 
     <script src=" {{url_for('static', filename='js/main.js')}} "></script>

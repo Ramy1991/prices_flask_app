@@ -19,8 +19,8 @@ class ProductPage:
                 f"images_url, item_type_{self.lang} as item_type, sub_category_{self.lang}, "
                 f"item_upc, product_direct_link_{self.lang} as product_direct_link "
                 f", rating, number_of_reviews, "
-                f"JSON_EXTRACT(price_data->>'$.egp.*', "
-                f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) as price,"
+                f"JSON_EXTRACT(JSON_EXTRACT(price_data, '$.egp.*'), "
+                f"CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.egp.*'))-1,'].price')) as price,"
                 f" item_specs_{self.lang} as item_specs, country "
                 f"FROM main_schema.products_{self.country} WHERE UIC = '{self.search_value}' "
                 f"AND country = '{self.country}';",
@@ -29,8 +29,8 @@ class ProductPage:
                 f"images_url, item_type_{self.lang} as item_type, sub_category_{self.lang}, "
                 f"item_upc, product_direct_link_{self.lang} as product_direct_link "
                 f", rating, number_of_reviews, "
-                f"JSON_EXTRACT(price_data->>'$.egp.*', "
-                f"CONCAT('$[',JSON_LENGTH(price_data->>'$.egp.*.price')-1,'].price')) as price, country "
+                f"JSON_EXTRACT(JSON_EXTRACT(price_data, '$.egp.*'), "
+                f"CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.egp.*'))-1,'].price')) as price, country "
                 f"FROM main_schema.products_{self.country} WHERE "
                 f"MATCH(title_{self.lang}) against('+{self.search_value}' IN NATURAL LANGUAGE MODE ) "
                 f"AND country = '{self.country}' AND UIC != '{item_uid}' AND  "
@@ -47,7 +47,7 @@ class ProductPage:
     def db_connection(self):
         try:
             conn = mysql.connector.connect(user="admin", password="Api-0000",
-                                           host="134.122.93.25", port=3306, database="main_schema")
+                                           host="129.159.205.105", port=3306, database="main_schema")
         except mysql.connector.Error as err:
             if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
                 print("Something is wrong with the user name or password")

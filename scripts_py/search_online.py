@@ -188,11 +188,11 @@ class GetItemsData:
         return self.items_data
 
 
-# get_urls_category_page = SearchOnlineForItems('iphone', 'eg', 'en').main()
-#
-# data = GetItemsData(get_urls_category_page, 'en', 'ar').extract_product_data()
-#
-# print(data)
+get_urls_category_page = SearchOnlineForItems('iphone', 'eg', 'en').main()
+
+data = GetItemsData(get_urls_category_page, 'en', 'ar').extract_product_data()
+
+print(data)
 
 # def run_crawler(self):
 #     with ThreadPoolExecutor(max_workers=30) as executor:

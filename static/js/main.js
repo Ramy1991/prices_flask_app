@@ -202,7 +202,13 @@ var firebaseConfig = {
                 } 
             });
         }
-        
+
+        $('.my-account').click(function(e){
+            if(onAuthStateChanged() == undefined){
+                $('body,html').animate({ scrollTop: $('body').height() }, 1200);
+            }
+        });
+    
         $('#reset-password').submit(function(e){
             e.preventDefault();
             var emailAddress = $("#email-address").val();
@@ -225,6 +231,10 @@ var firebaseConfig = {
             $('#email-sent').html('');
         });
 
+        
+       
+        
+
         // var page_lang =  window.location.href.split('/')[3].split('-')[1]
         // var page_lang = {{lang}};
        
@@ -239,6 +249,9 @@ var firebaseConfig = {
         //     //  window.location = window.location + this.name + "-" + 
     
         // });
+
+    
+        
 
             function openNav(){
                 document.getElementById("mySidenav").style.left = "0";
