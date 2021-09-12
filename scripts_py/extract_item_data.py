@@ -58,13 +58,21 @@ class Websites(object):
 
     def noon(self):
         item_uid_ = json.loads(self.item_uid)
-        self.item_price = str(
-            item_uid_['props']['pageProps']['catalog']['product']['variants'][0]['offers'][0]['sale_price'])
-        if self.item_price == 'None':
+        item_data = item_uid_['props']['pageProps']['catalog']['product']['variants'][0]['offers']
+        if item_data:
             self.item_price = str(
-                item_uid_['props']['pageProps']['catalog']['product']['variants'][0]['offers'][0]['price'])
-        self.item_uid = item_uid_['props']['pageProps']['catalog']['product']['variants'][0]['offers'][0][
-            'sku_config']
+                item_uid_['props']['pageProps']['catalog']['product']['variants'][0]['offers'][0]['sale_price'])
+            if self.item_price == 'None':
+                self.item_price = str(
+                    item_uid_['props']['pageProps']['catalog']['product']['variants'][0]['offers'][0]['price'])
+        else:
+            try:
+                self.item_price = re.search(r'(\d+\.\d+)|(\d+)', self.item_price).group(1)
+            except Exception:
+                self.item_price = ''
+
+        self.item_uid = item_uid_['props']['pageProps']['catalog']['product']['sku']
+
         self.tree = ''
         return self.__dict__
 
@@ -119,6 +127,8 @@ class Websites(object):
         else:
             self.tree = ''
             return self.__dict__
+        # self.tree = ''
+        # return self.__dict__
 
     def extract_data(self):
         title_xp = supported_website_xp.get(website_check(self.item_url)).get('title_xp')

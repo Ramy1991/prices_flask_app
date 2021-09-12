@@ -21,12 +21,14 @@ class SearchOnlineForItems:
                 'en': {
                     'https://www.noon.com/egypt-en/search?q={}': 'https://www.noon.com/egypt-en/{}/p',
                     'https://egypt.souq.com/eg-en/{}/s/?as=1': 'https://egypt.souq.com/eg-en/{}/s/',
+                    'https://www.amazon.eg/s?k={}&ref=nb_sb_noss_2': 'https://www.amazon.eg/dp/{}/?language=en_AE',
                     'https://www.jumia.com.eg/catalog/?q={}': 'https://www.jumia.com.eg',
                     'https://btech.com/en/catalogsearch/result/?q={}': 'https://btech.com/en/'
                 },
                 'ar': {
                     'https://www.noon.com/egypt-ar/search?q={}': 'https://www.noon.com/egypt-ar/{}/p',
                     'https://egypt.souq.com/eg-ar/{}/s/?as=1': 'https://egypt.souq.com/eg-ar/{}/s/',
+                    'https://www.amazon.eg/s?k={}&ref=nb_sb_noss_2': 'https://www.amazon.eg/dp/{}/?language=ar_AE',
                     'https://www.jumia.com.eg/ar/catalog/?q={}': 'https://www.jumia.com.eg/ar',
                     'https://btech.com/ar/catalogsearch/result/?q={}': 'https://btech.com/ar/'
                 }
@@ -96,6 +98,8 @@ class SearchOnlineForItems:
             # get url for jumia
             if self.website_get_xp(category_url) == 'jumia.com':
                 item_url = ''.join([product_url, item_url])
+            elif 'amazon.' in self.website_get_xp(category_url):
+                item_url = product_url.format(''.join(uid))
 
             #  check current lang to get other lang url
             if self.lang == 'en':
@@ -188,7 +192,8 @@ class GetItemsData:
         return self.items_data
 
 
-get_urls_category_page = SearchOnlineForItems('iphone', 'eg', 'en').main()
+get_urls_category_page = SearchOnlineForItems('laptops', 'eg', 'en').main()
+
 
 data = GetItemsData(get_urls_category_page, 'en', 'ar').extract_product_data()
 

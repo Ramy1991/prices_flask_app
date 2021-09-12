@@ -24,7 +24,7 @@ import mouse
 # mouse.click('left')
 
 
-executable_path = r'c:\Users\ramyg\Downloads\chromedriver_win32 (2)\chromedriver.exe'
+executable_path = r'C:\Users\ramyg\Downloads\chromedriver_win32\chromedriver.exe'
 os.environ['webdriver.chrome.driver'] = executable_path
 chrome_options = Options()
 chrome_options.add_argument('--disable-blink-features=AutomationControlled')

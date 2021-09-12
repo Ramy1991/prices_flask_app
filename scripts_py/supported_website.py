@@ -1,13 +1,15 @@
 supported_website_xp = {
     # //*[@id='imageBlockThumbs']/span/div/img/@src
     # //*[@id='landingImage']/@src
+    # //*[@id='imgTagWrapperId']/img/@data-old-hires
+    #  //*[@id='imgBlkFront']/@data-a-dynamic-image
     'amazon.': {
-        'image_xp': "//*[@id='imgTagWrapperId']/img/@data-old-hires | //*[@id='imgBlkFront']/@data-a-dynamic-image | //div[@id='ebooks-main-image-container']/div/div/img/@src | //div[@id='audibleimageblock_feature_div']//img/@src",
+        'image_xp': "//*[@id='altImages']//li[4]//img/@src | //*[@id='imageBlockThumbs']//div/img/@src | //div[@id='ebooks-main-image-container']/div/div/img/@src | //div[@id='audibleimageblock_feature_div']//img/@src",
         'price_xp': "//*[@id='priceblock_ourprice']/text() | //*[@id='priceblock_dealprice']/text() | //*[@id='buyNewSection']/h5/div/div[2]/div/span[2]/text() | //*[@id='cerberus-data-metrics']/@data-asin-price | //span[@class='a-color-base']/span//text() | //*[@id='newBuyBoxPrice']/text() | //*[@id='rentPrice']/text()",
         'title_xp': "//*[@id='productTitle']/text()",
-        'uid_xp': "//*[@id='cerberus-data-metrics']/@data-asin | //*[contains(text(),'ISBN-10')]/ancestor::li[1]/text() | //input[@id='ASIN']/@value",
+        'uid_xp': "//*[@id='cerberus-data-metrics']/@data-asin | //*[contains(text(),'ISBN-10')]/ancestor::li[1]/text() | //input[@id='ASIN']/@value | //form[@id='buyOneClick']/input[@name='ASIN.0']/@value",
         'url_xp': "//link[@rel='canonical']/@href",
-        'drop_down_size_XP': "//ul[@class='a-nostyle a-list-link']//li//text()",
+        'drop_down_size_XP': "//*[@id='variation_size_name']//select//option[position()>1]//text()",
         'item_size': "//*[@id='dropdown_selected_size_name']/span/span/span//text()"
     },
     'btech.com': {
@@ -26,7 +28,7 @@ supported_website_xp = {
     },
     'noon.com': {
         'image_xp': "//*[@property='og:image']/@content",
-        'price_xp': "//script[@id='__NEXT_DATA__']/text()",
+        'price_xp': "//*[@class='priceNow']//text()",
         'title_xp': "//*[@id='content']/div/div/div[3]/div/div[1]/div[2]/div[1]/h1/text() | //*[@id='__next']/div/section/div/div[1]/div/div[2]/div[1]/div[2]/h1/text()",
         'uid_xp': "//script[@id='__NEXT_DATA__']/text()",
         'url_xp': "//*[@rel='canonical']/@href"
@@ -43,7 +45,7 @@ supported_website_xp = {
 
 # country
 def currency(url):
-    countries = {"amazon.com": "USD", "amazon.ae": "AED", "amazon.it": "EUR", "amazon.fr": "EUR",
+    countries = {"amazon.com": "USD", "amazon.ae": "AED", "amazon.eg": "EGP", "amazon.it": "EUR", "amazon.fr": "EUR",
                  "amazon.de": "EUR", "amazon.es": "EUR", "amazon.co.uk": "£", "amazon.com.br": "R$",
                  "amazon.ca": "CDN", "amazon.com.mx": "$", "amazon.in": "₹", "amazon.co.jp": "￥",
                  "amazon.sg": "S$", "amazon.com.tr": "₺", "amazon.com.au": "$", "souq.com/eg-": "EGP",
@@ -61,7 +63,7 @@ supported_search_website_xp = {
         'price_xp': "//div[contains(@class,'s-result-item') and @data-asin[string-length()>0]]//span[@class='a-price-whole'][string-length(text()) > 0]/ancestor::div[8 and 9]//span[@class='a-price-whole']/text()",
         'title_xp': "//div[contains(@class,'s-result-item') and @data-asin[string-length()>0]]//span[@class='a-price-whole'][string-length(text()) > 0]/ancestor::div[8]//h2/a/span//text()",
         'uid_xp': "//div[contains(@class,'s-result-item') and @data-asin[string-length()>0]]//span[@class='a-price-whole'][string-length(text()) > 0]/ancestor::div[8 and 9]/@data-asin",
-        'url_xp': "//div[contains(@class,'s-result-item') and @data-asin[string-length()>0]]//span[@class='a-price-whole'][string-length(text()) > 0]/ancestor::div[8]//h2/a/@href",
+        'url_xp': "//div[contains(@class,'s-result-item') and @data-asin[string-length()>0]]//span[@class='a-price-whole'][string-length(text()) > 0]/ancestor::div[8 and 9]/a[contains(@class,'a-link-normal')]/@href",
         'drop_down_size_XP': "//ul[@class='a-nostyle a-list-link']//li//text()",
         'item_size': "//*[@id='dropdown_selected_size_name']/span/span/span//text()",
         'cate_xp': "//*[@id='departments']/ul/li[1]//a/span[1]//text()"
