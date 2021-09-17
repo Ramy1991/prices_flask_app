@@ -46,7 +46,9 @@ class FETCH:
                 "item_uid": item_object.get('item_uid'),
                 f"item_url_{lang}": url.replace('https://data-pw.000webhostapp.com/?my_data=', ''),
                 f"response_data_{lang}": item_html,
-                "item_website": item_object.get('item_website')
+                "item_website": item_object.get('item_website'),
+                "country": item_object.get('country'),
+                "search_value": item_object.get('search_value')
             }
         }
         if self.response.get(item_object.get('item_uid')):

@@ -43,16 +43,18 @@ def validate_json(json_values):
 
 
 class Websites(object):
-    def __init__(self, _url, _currency, html_page):
+    def __init__(self, i_url, i_currency, country, html_page):
         self.item_title = ''
         self.item_image = ''
-        self.item_url = _url
+        self.item_url = i_url
         self.item_price = ''
         self.item_uid = ''
-        self.currency = _currency.strip()
+        self.product_type = ''
+        self.currency = i_currency.strip()
         self.date = str(date.today().strftime("%d-%m-%Y"))
         self.time = datetime.now().strftime("%H:%M:%S")
-        self.item_website = re.search(r':\/\/(.*?)\/', _url.strip()).group(1)
+        self.item_website = re.search(r':\/\/(.*?)\/', i_url.strip()).group(1)
+        self.country = country
         self.tree = html.fromstring(html_page)
         self.item_sizes = ''
 
@@ -82,10 +84,11 @@ class Websites(object):
 
     def jumia(self):
         self.item_uid = self.item_uid.replace(':', '').strip()
-        if self.item_price.strip():
-            item_price = self.item_price.replace(r'window.__STORE__=', '')
+        if ''.join(self.item_price).strip():
+            item_price = ''.join(self.item_price).replace(r'window.__STORE__=', '')
             self.item_price = json.loads(item_price.replace(r';', '').strip())['simples'][0]['prices']['rawPrice']
         self.tree = ''
+
         return self.__dict__
 
     def souq(self):
@@ -135,13 +138,21 @@ class Websites(object):
         image_xp = supported_website_xp.get(website_check(self.item_url)).get('image_xp')
         price_xp = supported_website_xp.get(website_check(self.item_url)).get('price_xp')
         uid_xp = supported_website_xp.get(website_check(self.item_url)).get('uid_xp')
+        product_type_xp = supported_website_xp.get(website_check(self.item_url)).get('product_type_xp')
 
-        self.item_title = ''.join(list(dict.fromkeys(self.tree.xpath(title_xp))))
-        self.item_image = ''.join(list(dict.fromkeys(self.tree.xpath(image_xp))))
+        self.item_title = ''.join(list(dict.fromkeys(self.tree.xpath(title_xp)))).strip()
+        self.item_image = ''.join(list(dict.fromkeys(self.tree.xpath(image_xp)))).strip()
         # self.item_image = ''
-        item_price = ''.join(list(dict.fromkeys(self.tree.xpath(price_xp))))
-        self.item_uid = ''.join(list(dict.fromkeys(self.tree.xpath(uid_xp))))
-        self.item_price = re.sub(r'\s+', ' ', item_price)
+        item_price = ''.join(list(dict.fromkeys(self.tree.xpath(price_xp)))).strip()
+        self.item_uid = ''.join(list(dict.fromkeys(self.tree.xpath(uid_xp)))).strip()
+        self.item_price = re.sub(r'\s+', ' ', item_price).strip()
+
+        product_type = list(
+            dict.fromkeys(
+                [re.sub(r'\n+|\s+', ' ', item).strip() for item in self.tree.xpath(product_type_xp)]
+            )
+        )
+        self.product_type = ' @ '.join(list(filter(None, product_type)))
 
         if self.item_title and self.item_image and self.item_price and self.item_uid:
             #  website validation
@@ -178,7 +189,7 @@ def upload_image(item_obj):
 
 
 # get item data for single item
-def main(url):
+def main(url, country):
     header = {
         "User-Agent": user_agent(),
         "Accept": "*/*",
@@ -190,19 +201,19 @@ def main(url):
     with ThreadPoolExecutor(max_workers=20) as executor:
         request_1 = executor.submit(lambda: requests.get(url, headers=header))
         html_page = request_1.result().content
-        websites_ob = Websites(url, currency(url), html_page)
+        websites_ob = Websites(url, currency(url), country, html_page)
         return upload_image(websites_ob.extract_data())
 
 
-def check_url(url):
+def check_url(url, country):
     if website_check(url):
-        return main(url)
+        return main(url, country)
     else:
         return "dummy_website"
 
 
-urll = 'https://egypt.souq.com/eg-ar/%D8%AA%D9%8A-%D8%A8%D9%8A-%D9%84%D9%8A%D9%86%D9%83-%D8%B1%D8%A7%D9%88%D8%AA%D8%B1-%D9%84%D8%A7%D8%B3%D9%84%D9%83%D9%8A-archer-c7-%D8%A8%D9%86%D8%B7%D8%A7%D9%82-%D8%AC%D9%8A%D8%AC%D8%A7%D8%A8%D8%AA-%D8%AB%D9%86%D8%A7%D8%A6%D9%8A-ac1750-6987615/i/'
-# print(check_url(urll))
+urll = 'https://www.amazon.eg/dp/B08WJN75WZ?ref_=Oct_DLandingS_D_17a26d6d_NA'
+# print(check_url(urll, ""))
 
 # item_data = check_url(urll)
 # print(item_data)

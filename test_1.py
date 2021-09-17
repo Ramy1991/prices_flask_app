@@ -170,6 +170,7 @@ for prefix, event, value in data:
                                " Item_Specs_en, Item_Specs_ar, Images_URL, Product_Direct_Link_EN, Product_Direct_Link_AR,"\
                                " Item_UPC, Sold_Out, link_en, link_ar, item_date) " \
                                "VALUES {}".format(items_to_set)
+
                 my_item = {'query': query_string}
                 # print(query_string)
                 print(str(len(query_string)) + '-' + str(n))

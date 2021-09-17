@@ -111,9 +111,13 @@ class SearchOnlineForItems:
                 f"item_url_{self.lang}": item_url,
                 f"item_url_{lang}": self.get_urls_for_en_ar(item_url),
                 "item_uid": uid[0],
-                "item_website": self.website_get_xp(category_url)
+                "item_website": self.website_get_xp(category_url),
+                "country": self.country,
+                "search_value": self.search_value
             }
+
             self.items_json.append(uid[0])
+        # print(self.items_json)
 
     def get_urls_for_en_ar(self, item_url):
         if self.lang == 'en':
@@ -169,31 +173,39 @@ class GetItemsData:
             for lang in self.languages:
                 url = item.get(f'item_url_{lang}')
                 item_uid = item.get('item_uid')
+                country = item.get('country')
                 item_obj = ''
                 if lang == 'en':
-                    websites_ob = Websites(url, currency(url), item.get(f'response_data_{lang}'))
+                    websites_ob = Websites(url, currency(url), country, item.get(f'response_data_{lang}'))
                     item_obj = {
                         item_uid: json.loads(websites_ob.extract_data())
                     }
                 elif lang == 'ar':
                     title_xp = supported_website_xp.get(self.website_get_xp(url)).get('title_xp')
+                    product_type_ar_xp = supported_website_xp.get(self.website_get_xp(url)).get('product_type_xp')
                     html_page = item.get(f'response_data_{lang}')
                     tree = html.fromstring(html_page)
+                    product_type = list(
+                        dict.fromkeys(
+                            [re.sub(r'\n+|\s+', ' ', item).strip() for item in tree.xpath(product_type_ar_xp)]
+                        )
+                    )
                     item_obj = {
                         item_uid: {
-                            'item_title_ar': ''.join(list(dict.fromkeys(tree.xpath(title_xp))))
+                            'item_title_ar': ''.join(list(dict.fromkeys(tree.xpath(title_xp)))).strip(),
+                            'product_type_ar': ' @ '.join(list(filter(None, product_type))).strip()
                         }
                     }
                 if self.items_data.get(item_uid):
                     self.items_data[item_uid].update(item_obj.get(item_uid))
                 else:
                     self.items_data.update(item_obj)
-        self.items_data = FETCH(list(self.items_data.values()), 'images', ['img']).start()
+        #             to be active to upload images !!!! Important
+        # self.items_data = FETCH(list(self.items_data.values()), 'images', ['img']).start()
         return self.items_data
 
 
-get_urls_category_page = SearchOnlineForItems('laptops', 'eg', 'en').main()
-
+get_urls_category_page = SearchOnlineForItems('shirts', 'eg', 'en').main()
 
 data = GetItemsData(get_urls_category_page, 'en', 'ar').extract_product_data()
 

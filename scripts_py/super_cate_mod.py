@@ -384,7 +384,7 @@ def super_care_func(item_type_arg):
                        "Eggs": "Food & Beverages@المواد الغذائية والمشروبات",
                        "Meats & Chicken": "Food & Beverages@المواد الغذائية والمشروبات",
                        "Sea Food": "Food & Beverages@المواد الغذائية والمشروبات",
-                       "Protective Gear": "Sporting Goods & Fitness@مستلزمات الرياضية واللياقة البدنية"}
+                       "Protective Gear": T-Shirts@مستلزمات الرياضية واللياقة البدنية"}
     return super_care_dict.get(item_type_arg)
 
 

@@ -27,6 +27,27 @@ driver.switch_to.window(driver.window_handles[0])
 driver.execute_script("window.open('about:blank', 'tab2');")
 driver.switch_to.window("tab2")
 c_skus = []
+
+
+def cate(url, target_cate):
+    driver.get(url)
+    time.sleep(2)
+    # click category tap
+    driver.find_element_by_xpath('//li/a[contains(text(),"Categories")]').click()
+    time.sleep(1)
+    # add dropdown cate
+    driver.find_element_by_xpath('//*[@id="category"]/div[1]/table/thead/tr/th[2]/div').click()
+    time.sleep(1)
+    # click dropdown
+    driver.find_element_by_xpath('//*[@id="category"]/div/table/tbody//tr[last()]//span//button').click()
+    time.sleep(1)
+    # select cate
+    driver.find_element_by_xpath(f'//*[@id="ui-id-1"]//li/div[contains(text(),"{target_cate}")]').click()
+    time.sleep(1)
+    # save
+    driver.find_element_by_xpath('//nav//button[contains(text(),"Save")]').click()
+
+
 for row in ws.rows:
     id = ws['a' + str(i)].value
     retail = ws['b' + str(i)].value

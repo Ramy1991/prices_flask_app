@@ -2,13 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d02a3c0c-040f-4e28-a4b9-3436481c1fa1" name="Default Changelist" comment="1.2.2">
-      <change afterPath="$PROJECT_DIR$/SSH Vultr/oracle_db_2.ppk" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts_py/upload_db.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mazad/test2.py" beforeDir="false" afterPath="$PROJECT_DIR$/mazad/test2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mazad/price_update.py" beforeDir="false" afterPath="$PROJECT_DIR$/mazad/price_update.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts_py/extract_item_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts_py/extract_item_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts_py/fetch_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts_py/fetch_data.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts_py/search_online.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts_py/search_online.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts_py/super_cate_mod.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts_py/super_cate_mod.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts_py/supported_website.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts_py/supported_website.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts_py/upload_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts_py/upload_db.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_1.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_1.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,8 +53,8 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../venv_8" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager" selected="Python.test2">
-    <configuration name="app" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.search_online">
+    <configuration name="extract_item_data" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="prices_flask" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -60,11 +62,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/scripts_py" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/app.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scripts_py/extract_item_data.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -115,27 +117,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="test spped" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="prices_flask" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/mazad" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/mazad/test spped.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="test2" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="prices_flask" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -157,13 +138,34 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="upload_db" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="prices_flask" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/scripts_py" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scripts_py/upload_db.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.test2" />
         <item itemvalue="Python.search_online" />
+        <item itemvalue="Python.test2" />
+        <item itemvalue="Python.extract_item_data" />
+        <item itemvalue="Python.upload_db" />
         <item itemvalue="Python.product_page" />
-        <item itemvalue="Python.app" />
-        <item itemvalue="Python.test spped" />
       </list>
     </recent_temporary>
   </component>
@@ -175,13 +177,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1615332018162</updated>
-    </task>
-    <task id="LOCAL-00040" summary="test">
-      <created>1619999627320</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1619999627320</updated>
     </task>
     <task id="LOCAL-00041" summary="test">
       <created>1619999676778</created>
@@ -519,7 +514,14 @@
       <option name="project" value="LOCAL" />
       <updated>1630755233850</updated>
     </task>
-    <option name="localTasksCounter" value="89" />
+    <task id="LOCAL-00089" summary="1.2.2">
+      <created>1631477498989</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1631477498991</updated>
+    </task>
+    <option name="localTasksCounter" value="90" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
