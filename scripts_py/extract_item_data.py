@@ -57,6 +57,7 @@ class Websites(object):
         self.country = country
         self.tree = html.fromstring(html_page)
         self.item_sizes = ''
+        self.brand = ''
 
     def noon(self):
         item_uid_ = json.loads(self.item_uid)
@@ -74,6 +75,7 @@ class Websites(object):
                 self.item_price = ''
 
         self.item_uid = item_uid_['props']['pageProps']['catalog']['product']['sku']
+        self.brand = item_uid_['props']['pageProps']['catalog']['product']['brand']
 
         self.tree = ''
         return self.__dict__
@@ -83,7 +85,7 @@ class Websites(object):
         return self.__dict__
 
     def jumia(self):
-        self.item_uid = self.item_uid.replace(':', '').strip()
+        # self.item_uid = self.item_uid.replace(':', '').strip()
         if ''.join(self.item_price).strip():
             item_price = ''.join(self.item_price).replace(r'window.__STORE__=', '')
             self.item_price = json.loads(item_price.replace(r';', '').strip())['simples'][0]['prices']['rawPrice']
@@ -101,7 +103,9 @@ class Websites(object):
             self.item_image = re.search(r'{.(.*?)\":', item_image.strip()).group(1)
         except AttributeError:
             pass
-
+        self.brand = self.brand.replace('Brand: ', '')
+        self.item_price = re.search(r'(\d+.)', self.item_price) .group(1)
+        # Check Sizes
         item_size_xp = supported_website_xp.get(website_check(self.item_url)).get('item_size')
         item_size = ''.join(self.tree.xpath(item_size_xp)).strip()
         if item_size:
@@ -139,13 +143,14 @@ class Websites(object):
         price_xp = supported_website_xp.get(website_check(self.item_url)).get('price_xp')
         uid_xp = supported_website_xp.get(website_check(self.item_url)).get('uid_xp')
         product_type_xp = supported_website_xp.get(website_check(self.item_url)).get('product_type_xp')
+        brand_xp = supported_website_xp.get(website_check(self.item_url)).get('brand_xp')
 
         self.item_title = ''.join(list(dict.fromkeys(self.tree.xpath(title_xp)))).strip()
         self.item_image = ''.join(list(dict.fromkeys(self.tree.xpath(image_xp)))).strip()
-        # self.item_image = ''
         item_price = ''.join(list(dict.fromkeys(self.tree.xpath(price_xp)))).strip()
         self.item_uid = ''.join(list(dict.fromkeys(self.tree.xpath(uid_xp)))).strip()
-        self.item_price = re.sub(r'\s+', ' ', item_price).strip()
+        self.item_price = re.sub(r'\s+', '', item_price).strip()
+        self.brand = ''.join(list(dict.fromkeys(self.tree.xpath(brand_xp)))).strip()
 
         product_type = list(
             dict.fromkeys(
@@ -212,7 +217,7 @@ def check_url(url, country):
         return "dummy_website"
 
 
-urll = 'https://www.amazon.eg/dp/B08WJN75WZ?ref_=Oct_DLandingS_D_17a26d6d_NA'
+urll = 'https://www.noon.com/saudi-en/iphone-12-pro-max-with-facetime-256gb-pacific-blue-5g-middle-east-version/N41044065A/p?o=e303d0e22498f10b'
 # print(check_url(urll, ""))
 
 # item_data = check_url(urll)

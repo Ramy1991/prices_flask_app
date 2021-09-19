@@ -25,29 +25,29 @@ class DBSearch(object):
     def pagination_queries(self, q_mum):
         queries = {
             # search for item tybe by search_key in db
-            'query_0': f"SELECT item_type_en FROM main_schema.search_mapping WHERE "
-                       f"MATCH(search_key_s) against('+\"{self.search_value}\"' IN BOOLEAN MODE) "
-                       f"order by search_order ASC limit 1",
+            'query_0': f"""SELECT item_type_en FROM main_schema.search_mapping WHERE 
+                       MATCH(search_key_s) against('+\"{self.search_value}\"' IN BOOLEAN MODE) 
+                       order by search_order ASC limit 1""",
             # search by keyword after get item tybe from first query
-            'query_1': f"SELECT  count(*)"
-                       f"FROM main_schema.products_{self.country} WHERE item_type_en like '%{self.item_type}%' AND "
-                       f"MATCH(title_en, title_{self.lang}) against('+{self.search_value}' IN NATURAL LANGUAGE MODE ) "
-                       f"AND JSON_EXTRACT(JSON_EXTRACT(price_data, '$.egp.*'), "
-                       f"CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.egp.*'))-1,'].price')) != 'None'"
-                       f"AND sold_out = 0 AND country like '%{self.country}%';",
+            'query_1': f"""SELECT  count(*) 
+                       FROM main_schema.products_{self.country} WHERE item_type_en like '%{self.item_type}%' AND 
+                       MATCH(title_en, title_{self.lang}) against('+{self.search_value}' IN NATURAL LANGUAGE MODE ) 
+                       AND JSON_EXTRACT(JSON_EXTRACT(price_data, '$.egp.*'), 
+                       CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.egp.*'))-1,'].price')) != 'None'
+                       AND sold_out = 0 AND country like '%{self.country}%';""",
             # if item tybe found but search query not in the titles
-            'query_2': f"SELECT  count(*)"
-                       f"FROM main_schema.products_{self.country} WHERE item_type_en like '%{self.item_type}%' "
-                       f"AND JSON_EXTRACT(JSON_EXTRACT(price_data, '$.egp.*'), "
-                       f"CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.egp.*'))-1,'].price')) != 'None'"
-                       f"AND sold_out = 0 AND country like '%{self.country}%';",
+            'query_2': f"""SELECT  count(*) 
+                       FROM main_schema.products_{self.country} WHERE item_type_en like '%{self.item_type}%' 
+                       AND JSON_EXTRACT(JSON_EXTRACT(price_data, '$.egp.*'), 
+                       CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.egp.*'))-1,'].price')) != 'None' 
+                       AND sold_out = 0 AND country like '%{self.country}%';""",
             # search in entire database if no results in search_mapping table
-            'query_3': f"SELECT  count(*)"
-                       f"FROM main_schema.products_{self.country} WHERE "
-                       f"MATCH(title_en, title_{self.lang}) against('+{self.search_value}' IN NATURAL LANGUAGE MODE ) "
-                       f"AND JSON_EXTRACT(JSON_EXTRACT(price_data, '$.egp.*'), "
-                       f"CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.egp.*'))-1,'].price')) != 'None'"
-                       f"AND sold_out = 0 AND country like '%{self.country}%';"
+            'query_3': f"""SELECT  count(*) 
+                       FROM main_schema.products_{self.country} WHERE 
+                       MATCH(title_en, title_{self.lang}) against('+{self.search_value}' IN NATURAL LANGUAGE MODE )  
+                       AND JSON_EXTRACT(JSON_EXTRACT(price_data, '$.egp.*'), 
+                       CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.egp.*'))-1,'].price')) != 'None' 
+                       AND sold_out = 0 AND country like '%{self.country}%';"""
         }
         return queries.get(q_mum)
 

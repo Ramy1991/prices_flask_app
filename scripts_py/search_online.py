@@ -165,7 +165,7 @@ class GetItemsData:
 
     def get_product_data(self):
         response_data = FETCH(self.items_object, 'product_page', self.languages).start()
-        # print(self.languages)
+        # print(self.items_object)
         return response_data
 
     def extract_product_data(self):
@@ -180,9 +180,13 @@ class GetItemsData:
                     item_obj = {
                         item_uid: json.loads(websites_ob.extract_data())
                     }
+                    # ADD SEARCH VALUE ITEM OBJ
+
                 elif lang == 'ar':
                     title_xp = supported_website_xp.get(self.website_get_xp(url)).get('title_xp')
                     product_type_ar_xp = supported_website_xp.get(self.website_get_xp(url)).get('product_type_xp')
+                    brand_xp = supported_website_xp.get(self.website_get_xp(url)).get('brand_xp')
+
                     html_page = item.get(f'response_data_{lang}')
                     tree = html.fromstring(html_page)
                     product_type = list(
@@ -193,7 +197,11 @@ class GetItemsData:
                     item_obj = {
                         item_uid: {
                             'item_title_ar': ''.join(list(dict.fromkeys(tree.xpath(title_xp)))).strip(),
-                            'product_type_ar': ' @ '.join(list(filter(None, product_type))).strip()
+                            'product_type_ar': ' @ '.join(list(filter(None, product_type))).strip(),
+                            'item_url_ar': url,
+                            'brand_ar': ''.join(list(dict.fromkeys(tree.xpath(brand_xp)))).replace('Brand: ', '').strip(),
+                            # ADD SEARCH VALUE ITEM OBJECT
+                            'search_value': self.items_object[0].get('search_value')
                         }
                     }
                 if self.items_data.get(item_uid):
