@@ -3165,13 +3165,12 @@ class UploadDB:
                             %s, %s, %s, %s, %s, %s, %s, %s, %s);"""
 
         if len(self.new_product) != 0:
-            self.execute_query(insert_query, self.new_product)
-        elif len(self.products_to_update) != 0:
-            self.execute_query(update_query, self.products_to_update)
+            return self.execute_query(insert_query, self.new_product)
+        if len(self.products_to_update) != 0:
+            return self.execute_query(update_query, self.products_to_update)
 
 
-ex = UploadDB(data).extract_json()
-print(ex)
+ex = UploadDB(data).main()
 
 # h = blake2b(digest_size=2)
 # tes = 'ramy'
