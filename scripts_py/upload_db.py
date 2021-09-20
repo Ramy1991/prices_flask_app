@@ -4,13 +4,14 @@ import json
 import uuid
 from hashlib import blake2b
 import langid
+from datetime import datetime, date
 
 data = {
     "AM423MW0Y209WNAFAMZ": {
         "item_title": "American Eagle Graphic T-Shirt - Burgundy",
         "item_image": "https://eg.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/57/200612/1.jpg?4544",
         "item_url": "https://www.jumia.com.eg/american-eagle-graphic-t-shirt-burgundy-21600275.html",
-        "item_price": "165.00",
+        "item_price": "164.00",
         "item_uid": "AM423MW0Y209WNAFAMZ",
         "product_type": "Sports Wear @ Shirts & Tees",
         "currency": "EGP",
@@ -3026,20 +3027,23 @@ data = {
 class UploadDB:
     def __init__(self, json_data):
         self.json_items = json_data
+        self.new_product = []
+        self.existed_products = {}
+        self.products_to_update = []
 
     def db_connection(self):
         try:
-            conn = mysql.connector.connect(user="admin", password="Api-0000",
-                                           host="129.159.205.105", port=3306, database="main_schema")
+            conn = mysql.connector.connect(user="admin", password="PTS-0000",
+                                           host="129.159.205.97", port=3306, database="main_schema")
         except mysql.connector.Error as err:
             if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
                 print("Something is wrong with the user name or password")
             elif err.errno == errorcode.ER_BAD_DB_ERROR:
                 print("Database does not exist")
             else:
-                print(err)
+                print(f"ERROR {err}")
         else:
-            cursor = conn.cursor()
+            return conn
 
     def UID_Generator(self, unique_product_code):
         text_hash = blake2b(digest_size=2)
@@ -3049,21 +3053,26 @@ class UploadDB:
     def search_key_lang(self):
         search_value = list(self.json_items.values())[0].get('search_value')
         search_key_lang = langid.classify(search_value)[0]
-        if search_key_lang[0] == 'en':
+        if search_key_lang == 'en':
             return 'search_key'
-        elif search_key_lang[0] == 'ar':
+        elif search_key_lang == 'ar':
             return 'search_key_ar'
 
+    def check_duplicate(self):
+        SIC_list = tuple(self.json_items.keys())
+        check_query = f"""SELECT source_identifier_code, JSON_EXTRACT(JSON_EXTRACT(price_data, '$.EGP.*'), 
+        CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.EGP.*'))-1,'].price')) as price 
+        FROM main_schema.products_eg WHERE source_identifier_code in {SIC_list};"""
+        # ', '.join(map(str, rows))
+        connection = self.db_connection()
+        cursor = connection.cursor(dictionary=True)
+
+        cursor.execute(check_query)
+
+        self.existed_products = {item.get('source_identifier_code'): item for item in cursor.fetchall()}
+
     def extract_json(self):
-        query = f"""INSERT INTO products_eg (source_identifier_code, website_name, UIC, country, price_data, 
-                product_category_en, product_category_ar, product_type_en, product_type_ar, 
-                {self.search_key_lang()}, title_en, title_ar, brand_en, brand_ar, item_specs_en, item_specs_ar, 
-                images_url, product_direct_link_en, product_direct_link_ar, item_upc, sold_out, rating, 
-                number_of_reviews, item_date) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 
-                %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
-        items_list = []
-        search_key = ''
-        for item_id, item in self.json_items.items():
+        for SIC, item in self.json_items.items():
             price_dict = {
                 item.get('currency'): {
                     f'{item.get("date")} {item.get("time")}': {
@@ -3073,36 +3082,92 @@ class UploadDB:
                     }
                 }
             }
+            print(f"{self.existed_products.get(SIC).get('price')}: {float(item.get('item_price'))}")
+            if not self.existed_products.get(SIC):
+                item_list = [
+                    SIC,
+                    item.get('item_website'),
+                    self.UID_Generator(SIC),
+                    item.get('country'),
+                    json.dumps(price_dict),
+                    item.get('product_type'),
+                    item.get('product_type_ar'),
+                    item.get('product_type').split(' @ ')[-1],
+                    item.get('product_type_ar').split(' @ ')[-1],
+                    item.get('search_value'),
+                    item.get('item_title'),
+                    item.get('item_title_ar'),
+                    item.get('brand'),
+                    item.get('brand_ar'),
+                    '',
+                    '',
+                    item.get('item_image'),
+                    item.get('item_url'),
+                    item.get('item_url_ar'),
+                    '',
+                    0 if item.get('item_price') else 1,
+                    0,
+                    0,
+                    str(date.today().strftime("%y-%m-%d"))
+                ]
+                self.new_product.append(tuple(item_list))
+            elif float(self.existed_products.get(SIC).get('price')) != float(item.get('item_price')):
+                item_list = [
+                    json.dumps(price_dict),
+                    item.get('search_value'),
+                    item.get('product_type'),
+                    item.get('product_type_ar'),
+                    item.get('product_type').split(' @ ')[-1],
+                    item.get('product_type_ar').split(' @ ')[-1],
+                    item.get('search_value'),
+                    item.get('item_title'),
+                    item.get('item_title_ar'),
+                    item.get('brand'),
+                    item.get('brand_ar'),
+                    item.get('item_image'),
+                    item.get('item_url'),
+                    item.get('item_url_ar'),
+                    0 if item.get('item_price') else 1,
+                    str(date.today().strftime("%y-%m-%d")),
+                    SIC
+                ]
+                self.products_to_update.append(item_list)
 
-            item_list = [
-                item_id,
-                item.get('item_website'),
-                self.UID_Generator(item_id),
-                item.get('country'),
-                json.dumps(price_dict),
-                item.get('product_type'),
-                item.get('product_type_ar'),
-                item.get('product_type').split(' @ ')[-1],
-                item.get('product_type_ar').split(' @ ')[-1],
-                item.get('search_value'),
-                item.get('item_title'),
-                item.get('item_title_ar'),
-                item.get('brand'),
-                item.get('brand_ar'),
-                '',
-                '',
-                item.get('item_image'),
-                item.get('item_url'),
-                item.get('item_url_ar'),
-                '',
-                0 if item.get('item_price') else 1,
-                '',
-                '',
-                item.get("date")
-            ]
+    def execute_query(self, query, values):
+        connection = self.db_connection()
+        cursor = connection.cursor()
+        cursor.execute(query)
+        try:
+            cursor.executemany(query, values)
+            connection.commit()
+            return f'{len(values)} Record Updated Successfully'
+        except Exception as err:
+            return err
 
-            items_list.append(tuple(item_list))
-        return items_list
+    def main(self):
+        # check Duplicate before Upload
+        self.check_duplicate()
+        # group item based on new products and the products need to update
+        self.extract_json()
+        # check for list of that needs to add or update
+        insert_query = f"""INSERT INTO products_eg (source_identifier_code, website_name, UIC, country, price_data, 
+                            product_category_en, product_category_ar, product_type_en, product_type_ar, 
+                            {self.search_key_lang()}, title_en, title_ar, brand_en, brand_ar, item_specs_en, 
+                            item_specs_ar, images_url, product_direct_link_en, product_direct_link_ar, item_upc, 
+                            sold_out, rating, number_of_reviews, item_date) VALUES 
+                            (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 
+                            %s, %s, %s);"""
+        update_query = f"""INSERT INTO products_eg (source_identifier_code, website_name, UIC, country, price_data, 
+                            product_category_en, product_category_ar, product_type_en, product_type_ar, 
+                            {self.search_key_lang()}, title_en, title_ar, brand_en, brand_ar, item_specs_en, item_specs_ar, 
+                            images_url, product_direct_link_en, product_direct_link_ar, item_upc, sold_out, rating, 
+                            number_of_reviews, item_date) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 
+                            %s, %s, %s, %s, %s, %s, %s, %s, %s);"""
+
+        if len(self.new_product) != 0:
+            self.execute_query(insert_query, self.new_product)
+        elif len(self.products_to_update) != 0:
+            self.execute_query(update_query, self.products_to_update)
 
 
 ex = UploadDB(data).extract_json()

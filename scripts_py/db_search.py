@@ -55,41 +55,41 @@ class DBSearch(object):
 
         queries = {
             # search for item tybe by search_key in db
-            'query_0': f"SELECT item_type_en FROM main_schema.search_mapping WHERE "
-                       f"MATCH(search_key_s) against('+\"{self.search_value}\"' IN BOOLEAN MODE) "
-                       f"order by search_order ASC limit 1",
+            'query_0': f"""SELECT item_type_en FROM main_schema.search_mapping WHERE 
+                       MATCH(search_key_s) against('+\"{self.search_value}\"' IN BOOLEAN MODE) 
+                       order by search_order ASC limit 1""",
             # search by keyword after get item tybe from first query
-            'query_1': f"SELECT  website_name, UIC, unique_product_code, title_{self.lang} as item_title, "
-                       f"brand_{self.lang}, images_url, item_type_{self.lang}, sub_category_{self.lang}, "
-                       f"item_upc, product_direct_link_{self.lang} as product_direct_link, "
-                       f"rating, number_of_reviews, JSON_EXTRACT(JSON_EXTRACT(price_data, '$.egp.*'), "
-                       f"CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.egp.*'))-1,'].price')) as item_price "
-                       f"FROM main_schema.products_{self.country} WHERE item_type_en = '{self.item_type}' AND "
-                       f"MATCH(title_en, title_{self.lang}) against('+{self.search_value}' IN NATURAL LANGUAGE MODE ) "
-                       f"AND JSON_EXTRACT(JSON_EXTRACT(price_data, '$.egp.*'), "
-                       f"CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.egp.*'))-1,'].price')) != 'None'"
-                       f"AND sold_out = 0 AND country = '{self.country}' LIMIT {self.offset}, {self.item_per_page};",
+            'query_1': f"""SELECT  website_name, UIC, unique_product_code, title_{self.lang} as item_title, 
+                       brand_{self.lang}, images_url, item_type_{self.lang}, sub_category_{self.lang}, 
+                       item_upc, product_direct_link_{self.lang} as product_direct_link, 
+                       rating, number_of_reviews, JSON_EXTRACT(JSON_EXTRACT(price_data, '$.egp.*'), 
+                       CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.egp.*'))-1,'].price')) as item_price 
+                       FROM main_schema.products_{self.country} WHERE item_type_en = '{self.item_type}' AND 
+                       MATCH(title_en, title_{self.lang}) against('+{self.search_value}' IN NATURAL LANGUAGE MODE ) 
+                       AND JSON_EXTRACT(JSON_EXTRACT(price_data, '$.egp.*'), 
+                       CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.egp.*'))-1,'].price')) != 'None' 
+                       AND sold_out = 0 AND country = '{self.country}' LIMIT {self.offset}, {self.item_per_page};""",
             # if item tybe found but search query not in the titles
-            'query_2': f"SELECT  website_name, UIC, unique_product_code, title_{self.lang} as item_title, "
-                       f"brand_{self.lang}, images_url, item_type_{self.lang}, sub_category_{self.lang}, "
-                       f"item_upc, product_direct_link_{self.lang} as product_direct_link, "
-                       f"rating, number_of_reviews, JSON_EXTRACT(JSON_EXTRACT(price_data, '$.egp.*'), "
-                       f"CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.egp.*'))-1,'].price')) as item_price "
-                       f"FROM main_schema.products_{self.country} WHERE item_type_en = '{self.item_type}' "
-                       f"AND JSON_EXTRACT(JSON_EXTRACT(price_data, '$.egp.*'), "
-                       f"CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.egp.*'))-1,'].price')) != 'None'"
-                       f"AND sold_out = 0 AND country = '{self.country}' LIMIT {self.offset}, {self.item_per_page};",
+            'query_2': f"""SELECT  website_name, UIC, unique_product_code, title_{self.lang} as item_title, 
+                       brand_{self.lang}, images_url, item_type_{self.lang}, sub_category_{self.lang}, 
+                       item_upc, product_direct_link_{self.lang} as product_direct_link, 
+                       rating, number_of_reviews, JSON_EXTRACT(JSON_EXTRACT(price_data, '$.egp.*'), 
+                       CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.egp.*'))-1,'].price')) as item_price 
+                       FROM main_schema.products_{self.country} WHERE item_type_en = '{self.item_type}' 
+                       AND JSON_EXTRACT(JSON_EXTRACT(price_data, '$.egp.*'), 
+                       CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.egp.*'))-1,'].price')) != 'None' 
+                       AND sold_out = 0 AND country = '{self.country}' LIMIT {self.offset}, {self.item_per_page};""",
             # search in entire database if no results in search_mapping table
-            'query_3': f"SELECT  website_name, UIC, unique_product_code, title_{self.lang} as item_title, "
-                       f"brand_{self.lang}, images_url, item_type_{self.lang}, sub_category_{self.lang}, "
-                       f"item_upc, product_direct_link_{self.lang} as product_direct_link, "
-                       f"rating, number_of_reviews, JSON_EXTRACT(JSON_EXTRACT(price_data, '$.egp.*'), "
-                       f"CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.egp.*'))-1,'].price')) as item_price "
-                       f"FROM main_schema.products_{self.country} WHERE "
-                       f"MATCH(title_en, title_{self.lang}) against('+{self.search_value}' IN NATURAL LANGUAGE MODE ) "
-                       f"AND JSON_EXTRACT(JSON_EXTRACT(price_data, '$.egp.*'), "
-                       f"CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.egp.*'))-1,'].price')) != 'None'"
-                       f"AND sold_out = 0 AND country = '{self.country}' LIMIT {self.offset}, {self.item_per_page};"
+            'query_3': f"""SELECT  website_name, UIC, unique_product_code, title_{self.lang} as item_title, 
+                       brand_{self.lang}, images_url, item_type_{self.lang}, sub_category_{self.lang}, 
+                       item_upc, product_direct_link_{self.lang} as product_direct_link, 
+                       rating, number_of_reviews, JSON_EXTRACT(JSON_EXTRACT(price_data, '$.egp.*'), 
+                       CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.egp.*'))-1,'].price')) as item_price 
+                       FROM main_schema.products_{self.country} WHERE 
+                       MATCH(title_en, title_{self.lang}) against('+{self.search_value}' IN NATURAL LANGUAGE MODE ) 
+                       AND JSON_EXTRACT(JSON_EXTRACT(price_data, '$.egp.*'), 
+                       CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.egp.*'))-1,'].price')) != 'None' 
+                       AND sold_out = 0 AND country = '{self.country}' LIMIT {self.offset}, {self.item_per_page};"""
 
         }
 

@@ -51,7 +51,7 @@ class Websites(object):
         self.item_uid = ''
         self.product_type = ''
         self.currency = i_currency.strip()
-        self.date = str(date.today().strftime("%d-%m-%Y"))
+        self.date = str(date.today().strftime("%y-%m-%d"))
         self.time = datetime.now().strftime("%H:%M:%S")
         self.item_website = re.search(r':\/\/(.*?)\/', i_url.strip()).group(1)
         self.country = country
