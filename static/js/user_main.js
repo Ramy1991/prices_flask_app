@@ -251,7 +251,7 @@
                     "item_uid": item_data.item_uid,
                     "item_url": item_data.item_url,
                     "created_date": item_data.date,
-                    "item_website": item_data.website,
+                    "item_website": item_data.item_website,
                     "pool": 1,
                     "users_tracking_num": 1,
                     "item_price":   {[item_data.currency]: {
@@ -280,9 +280,12 @@
                     firebase.database().ref('users/' + auth + '/tracking_items').update({
                         [item_data.item_uid]: {
                         'currancy':item_data.currency,
-                        'url': item_data.website,
+                        'url': item_data.item_website,
                         'target_price': price_target,
-                        'item_uid': item_data.item_uid}
+                        'item_uid': item_data.item_uid,
+                        'product_url': item_data.item_url
+                    }
+
                     }).then(function(){
                         firebase.database().ref('users/' + auth ).child('num_of_t_items').transaction(function(counter){
                             return counter + 1;

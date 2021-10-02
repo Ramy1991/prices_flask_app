@@ -3073,74 +3073,79 @@ class UploadDB:
 
     def extract_json(self):
         for SIC, item in self.json_items.items():
-            price_dict = {
-                item.get('currency'): {
-                    f'{item.get("date")} {item.get("time")}': {
-                        'date_time': f'{item.get("date")} {item.get("time")}',
-                        'price': float(item.get('item_price')),
-                        'currency': item.get('currency')
+            if 'missing_data' not in item.values():
+                item_price = item.get('item_price').replace(',', '.')
+                price_dict = {
+                    item.get('currency'): {
+                        f'{item.get("date")}_{item.get("time")}': {
+                            'date_time': f'{item.get("date")} {item.get("time")}',
+                            'price': float(item_price),
+                            'currency': item.get('currency')
+                        }
                     }
                 }
-            }
-            print(f"{self.existed_products.get(SIC).get('price')}: {float(item.get('item_price'))}")
-            if not self.existed_products.get(SIC):
-                item_list = [
-                    SIC,
-                    item.get('item_website'),
-                    self.UID_Generator(SIC),
-                    item.get('country'),
-                    json.dumps(price_dict),
-                    item.get('product_type'),
-                    item.get('product_type_ar'),
-                    item.get('product_type').split(' @ ')[-1],
-                    item.get('product_type_ar').split(' @ ')[-1],
-                    item.get('search_value'),
-                    item.get('item_title'),
-                    item.get('item_title_ar'),
-                    item.get('brand'),
-                    item.get('brand_ar'),
-                    '',
-                    '',
-                    item.get('item_image'),
-                    item.get('item_url'),
-                    item.get('item_url_ar'),
-                    '',
-                    0 if item.get('item_price') else 1,
-                    0,
-                    0,
-                    str(date.today().strftime("%y-%m-%d"))
-                ]
-                self.new_product.append(tuple(item_list))
-            elif float(self.existed_products.get(SIC).get('price')) != float(item.get('item_price')):
-                item_list = [
-                    json.dumps(price_dict),
-                    item.get('search_value'),
-                    item.get('product_type'),
-                    item.get('product_type_ar'),
-                    item.get('product_type').split(' @ ')[-1],
-                    item.get('product_type_ar').split(' @ ')[-1],
-                    item.get('search_value'),
-                    item.get('item_title'),
-                    item.get('item_title_ar'),
-                    item.get('brand'),
-                    item.get('brand_ar'),
-                    item.get('item_image'),
-                    item.get('item_url'),
-                    item.get('item_url_ar'),
-                    0 if item.get('item_price') else 1,
-                    str(date.today().strftime("%y-%m-%d")),
-                    SIC
-                ]
-                self.products_to_update.append(item_list)
+                # print(f"{self.existed_products.get(SIC).get('price')}: {float(item.get('item_price'))}")
+                if not self.existed_products.get(SIC):
+                    item_list = [
+                        SIC,
+                        item.get('item_website'),
+                        self.UID_Generator(SIC),
+                        item.get('country'),
+                        json.dumps(price_dict),
+                        item.get('product_type'),
+                        item.get('product_type_ar'),
+                        item.get('product_type').split(' @ ')[-1],
+                        item.get('product_type_ar').split(' @ ')[-1],
+                        item.get('search_value'),
+                        item.get('item_title'),
+                        item.get('item_title_ar'),
+                        item.get('brand'),
+                        item.get('brand_ar'),
+                        '',
+                        '',
+                        item.get('item_image'),
+                        item.get('item_url'),
+                        item.get('item_url_ar'),
+                        '',
+                        0 if item_price else 1,
+                        0,
+                        0,
+                        str(date.today().strftime("%y-%m-%d"))
+                    ]
+                    self.new_product.append(tuple(item_list))
+                elif float(self.existed_products.get(SIC).get('price').replace('"', '')) != float(item_price):
+                    item_list = [
+                        f'$.EGP."{item.get("date")}_{item.get("time")}"',
+                        float(item_price),
+                        item.get('currency'),
+                        f'{item.get("date")}_{item.get("time")}',
+                        # json.dumps(price_dict),
+                        item.get('search_value'),
+                        item.get('product_type'),
+                        item.get('product_type_ar'),
+                        item.get('product_type').split(' @ ')[-1],
+                        item.get('product_type_ar').split(' @ ')[-1],
+                        item.get('item_title'),
+                        item.get('item_title_ar'),
+                        item.get('brand'),
+                        item.get('brand_ar'),
+                        item.get('item_image'),
+                        item.get('item_url'),
+                        item.get('item_url_ar'),
+                        0 if item_price else 1,
+                        str(date.today().strftime("%y-%m-%d")),
+                        SIC
+                    ]
+                    self.products_to_update.append(tuple(item_list))
 
     def execute_query(self, query, values):
         connection = self.db_connection()
         cursor = connection.cursor()
-        cursor.execute(query)
+
         try:
             cursor.executemany(query, values)
             connection.commit()
-            return f'{len(values)} Record Updated Successfully'
+            return len(values)
         except Exception as err:
             return err
 
@@ -3157,20 +3162,25 @@ class UploadDB:
                             sold_out, rating, number_of_reviews, item_date) VALUES 
                             (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 
                             %s, %s, %s);"""
-        update_query = f"""INSERT INTO products_eg (source_identifier_code, website_name, UIC, country, price_data, 
-                            product_category_en, product_category_ar, product_type_en, product_type_ar, 
-                            {self.search_key_lang()}, title_en, title_ar, brand_en, brand_ar, item_specs_en, item_specs_ar, 
-                            images_url, product_direct_link_en, product_direct_link_ar, item_upc, sold_out, rating, 
-                            number_of_reviews, item_date) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 
-                            %s, %s, %s, %s, %s, %s, %s, %s, %s);"""
-
+        update_query = f"""UPDATE main_schema.products_eg SET 
+                            `price_data` = JSON_INSERT(`price_data`, %s,
+                                JSON_OBJECT("price", %s, "currency", %s, "date_time", %s)
+                        ), {self.search_key_lang()} = CONCAT(search_key,' # ', %s), product_category_en = %s, 
+                        product_category_ar = %s, product_type_en = %s, product_type_ar = %s, title_en = %s, 
+                        title_ar = %s, brand_en = %s, brand_ar = %s, images_url = %s, product_direct_link_en = %s, 
+                        product_direct_link_ar = %s, sold_out = %s, item_date = %s 
+                        WHERE source_identifier_code = %s ;"""
+        results_add = ''
+        results_update = ''
         if len(self.new_product) != 0:
-            return self.execute_query(insert_query, self.new_product)
+            results_add = self.execute_query(insert_query, self.new_product)
         if len(self.products_to_update) != 0:
-            return self.execute_query(update_query, self.products_to_update)
+            results_update = self.execute_query(update_query, self.products_to_update)
 
+        return f'Added: {results_add}__ Updated: {results_update}'
 
-ex = UploadDB(data).main()
+# ex = UploadDB(data).main()
+# print(ex)
 
 # h = blake2b(digest_size=2)
 # tes = 'ramy'

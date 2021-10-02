@@ -34,10 +34,10 @@ def validate_json(json_values):
         value = re.sub(r'\s+', '', value)
         if not value:
             missing_data[key] = 'missing_data'
-        elif key == 'item_url':
-            continue
+        # elif key == 'item_url':
+        #     continue
         else:
-            missing_data[key] = 'found'
+            missing_data[key] = value
     else:
         return missing_data
 
@@ -99,12 +99,12 @@ class Websites(object):
 
     def amazon(self):
         try:
-            item_image = re.sub(r'._(.*?)_.jpg', '._UL1500_.jpg', self.item_image)
+            item_image = re.sub(r'._(.*?)_.jpg', '._AC_SL1500_.jpg', self.item_image)
             self.item_image = re.search(r'{.(.*?)\":', item_image.strip()).group(1)
         except AttributeError:
             pass
         self.brand = self.brand.replace('Brand: ', '')
-        self.item_price = re.search(r'(\d+.)', self.item_price) .group(1)
+        self.item_price = re.search(r'(\d+.\d+)|(\d+)', self.item_price).group(1)
         # Check Sizes
         item_size_xp = supported_website_xp.get(website_check(self.item_url)).get('item_size')
         item_size = ''.join(self.tree.xpath(item_size_xp)).strip()
@@ -217,8 +217,8 @@ def check_url(url, country):
         return "dummy_website"
 
 
-urll = 'https://www.noon.com/saudi-en/iphone-12-pro-max-with-facetime-256gb-pacific-blue-5g-middle-east-version/N41044065A/p?o=e303d0e22498f10b'
-# print(check_url(urll, ""))
+urll = 'https://www.amazon.eg/-/en/Braun-Watts-TexStyle-Steam-Purple/dp/B01MEGN8Z0/?_encoding=UTF8&pd_rd_w=EaHsL&pf_rd_p=0be01fa6-94be-41b6-bd1c-cca02e432c74&pf_rd_r=8W5HGAM27XWCBKNC5YBS&pd_rd_r=0b803d68-1b1d-414a-8351-b797d2f752d4&pd_rd_wg=oIKts&ref_=pd_gw_unk'
+print(check_url(urll, ""))
 
 # item_data = check_url(urll)
 # print(item_data)

@@ -4,6 +4,7 @@ import json
 from scripts_py.extract_item_data import Websites
 from scripts_py.supported_website import supported_website_xp, currency, supported_search_website_xp
 from scripts_py.fetch_data import FETCH
+from scripts_py.upload_db import UploadDB
 
 
 class SearchOnlineForItems:
@@ -213,11 +214,13 @@ class GetItemsData:
         return self.items_data
 
 
-get_urls_category_page = SearchOnlineForItems('shirts', 'eg', 'en').main()
+get_urls_category_page = SearchOnlineForItems('iphone', 'eg', 'en').main()
 
 data = GetItemsData(get_urls_category_page, 'en', 'ar').extract_product_data()
 
-print(data)
+add_data_db = UploadDB(data).main()
+
+print(add_data_db)
 
 # def run_crawler(self):
 #     with ThreadPoolExecutor(max_workers=30) as executor:
