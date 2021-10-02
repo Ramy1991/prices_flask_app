@@ -99,12 +99,14 @@ class Websites(object):
 
     def amazon(self):
         try:
-            item_image = re.sub(r'._(.*?)_.jpg', '._AC_SL1500_.jpg', self.item_image)
-            self.item_image = re.search(r'{.(.*?)\":', item_image.strip()).group(1)
+            self.item_image = re.sub(r'._(.*)_.jpg', '._AC_SL1500_.jpg', self.item_image)
+            # self.item_image = re.search(r'{.(.*?)\":', item_image.strip()).group(1)
         except AttributeError:
             pass
         self.brand = self.brand.replace('Brand: ', '')
-        self.item_price = re.search(r'(\d+.\d+)|(\d+)', self.item_price).group(1)
+        print(self.item_price)
+        self.item_price = re.search(r'(\d+.\d+)|(\d+)', self.item_price).group(0)
+
         # Check Sizes
         item_size_xp = supported_website_xp.get(website_check(self.item_url)).get('item_size')
         item_size = ''.join(self.tree.xpath(item_size_xp)).strip()
@@ -150,6 +152,7 @@ class Websites(object):
         item_price = ''.join(list(dict.fromkeys(self.tree.xpath(price_xp)))).strip()
         self.item_uid = ''.join(list(dict.fromkeys(self.tree.xpath(uid_xp)))).strip()
         self.item_price = re.sub(r'\s+', '', item_price).strip()
+        print(item_price)
         self.brand = ''.join(list(dict.fromkeys(self.tree.xpath(brand_xp)))).strip()
 
         product_type = list(
@@ -207,7 +210,7 @@ def main(url, country):
         request_1 = executor.submit(lambda: requests.get(url, headers=header))
         html_page = request_1.result().content
         websites_ob = Websites(url, currency(url), country, html_page)
-        return upload_image(websites_ob.extract_data())
+        return json.dumps(list(upload_image(websites_ob.extract_data()).values())[0])
 
 
 def check_url(url, country):
@@ -217,8 +220,8 @@ def check_url(url, country):
         return "dummy_website"
 
 
-urll = 'https://www.amazon.eg/-/en/Braun-Watts-TexStyle-Steam-Purple/dp/B01MEGN8Z0/?_encoding=UTF8&pd_rd_w=EaHsL&pf_rd_p=0be01fa6-94be-41b6-bd1c-cca02e432c74&pf_rd_r=8W5HGAM27XWCBKNC5YBS&pd_rd_r=0b803d68-1b1d-414a-8351-b797d2f752d4&pd_rd_wg=oIKts&ref_=pd_gw_unk'
-print(check_url(urll, ""))
+# urll = 'https://www.amazon.eg/-/en/LIPTON-TBS-TESLA-P2N1-36X200G/dp/B0854HDBYB/ref=pd_bxgy_img_2/260-5917133-0349350?pd_rd_w=m435n&pf_rd_p=3d0a2552-0f77-40a5-a260-e0ee201c2553&pf_rd_r=34765ASACNRS2ME9XNH9&pd_rd_r=5d815655-3d83-441e-a8c4-09e52de00c70&pd_rd_wg=FV664&pd_rd_i=B0854HDBYB&psc=1'
+# print(check_url(urll, ""))
 
 # item_data = check_url(urll)
 # print(item_data)

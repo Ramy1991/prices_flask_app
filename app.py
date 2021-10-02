@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template, redirect, session, stream_with_context
-from scripts_py import extract_item_data, db_search, product_page, country_lang
+from scripts_py import extract_item_data, db_search, product_page, country_lang, fetch_data
 from scripts_py import search_online
 # from scripts_py import
 # from scripts_py import country_lang
@@ -131,21 +131,23 @@ def get_item_data():
         else:
             live_requests += 1
         item_url = request.form.get("name")
-        responses = extract_item_data.check_url(item_url)
+        # data = {'B01MEGN8Z0': {'item_title': 'Braun 1700 Watts TexStyle 3 Steam Iron, White/Purple - TS 320, ', 'item_image': 'https://storage.googleapis.com/bright-lattice-260000.appspot.com/product_images/B01MEGN8Z0.jpg', 'item_url': 'https://www.amazon.eg/-/en/Braun-Watts-TexStyle-Steam-Purple/dp/B01MEGN8Z0/?_encoding=UTF8&pd_rd_w=EaHsL&pf_rd_p=0be01fa6-94be-41b6-bd1c-cca02e432c74&pf_rd_r=8W5HGAM27XWCBKNC5YBS&pd_rd_r=0b803d68-1b1d-414a-8351-b797d2f752d4&pd_rd_wg=oIKts&ref_=pd_gw_unk', 'item_price': '499.00', 'item_uid': 'B01MEGN8Z0', 'product_type': 'Irons', 'currency': 'EGP', 'date': '21-10-02', 'time': '10:46:57', 'item_website': 'www.amazon.eg', 'country': '', 'tree': '', 'item_sizes': '', 'brand': 'Braun'}}
+        responses = extract_item_data.check_url(item_url, '')
+
         live_requests -= 1
         return responses
     else:
-        return ''
-
-
-@app.route('/count_live_requests', methods=['GET', 'POST'])
-def count_live_sessions():
-    if live_requests:
-        def generate():
-            yield str(live_requests)
-        return app.response_class(stream_with_context(generate()))
-    else:
         return 'test'
+
+
+# @app.route('/count_live_requests', methods=['GET', 'POST'])
+# def count_live_sessions():
+#     if live_requests:
+#         def generate():
+#             yield str(live_requests)
+#         return app.response_class(stream_with_context(generate()))
+#     else:
+#         return 'test'
 
 
 @app.route('/about', methods=['GET'])

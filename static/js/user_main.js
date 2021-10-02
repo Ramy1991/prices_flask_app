@@ -73,7 +73,8 @@
                             url: '/get_item_data',
                             data: {name: item_url}
                         }).done(function(data){
-                            if (data.trim() === "dummy_website"){
+                            console.log(data)
+                            if (data.trim().includes("dummy_website")){
                                 console.log(data);
                                 // $('.botton-d, .add-item').prop('disabled', false);
                                 $('.btn-d, .add-item').addClass('disabled');
@@ -92,8 +93,9 @@
                                 get_size_url(data, item_url);
                             }else{
                                 try {
-                                    var item_data = JSON.parse(data);
                                     console.log(data)
+                                    var item_data = JSON.parse(data);
+                                    
                                     if(e.target.id){
                                         $.when(
                                             remove_item(user.uid, e.target.id)
