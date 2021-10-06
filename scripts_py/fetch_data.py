@@ -90,6 +90,9 @@ class FETCH:
                 url = item_obj.get('item_url_en')
             elif lang == 'ar':
                 url = item_obj.get('item_url_ar')
+            else:
+                url = item_obj.get('product_url')
+
 
         # if noon website us third party host to get content 000webhost
         if 'noon.com' in url:
@@ -136,10 +139,14 @@ class FETCH:
             return f"An error ocurred in session: {err}"
 
     def start(self):
-        # loop = asyncio.get_event_loop()
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        loop.run_until_complete(self.main(self.items_list))
+        try:
+            loop = asyncio.get_event_loop()
+            loop.run_until_complete(self.main(self.items_list))
+        except Exception:
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            loop.run_until_complete(self.main(self.items_list))
+
 
         # check failed requests
         if self.error_requests:

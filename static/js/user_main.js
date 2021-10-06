@@ -285,7 +285,7 @@
                         'url': item_data.item_website,
                         'target_price': price_target,
                         'item_uid': item_data.item_uid,
-                        'product_url': item_data.item_url
+                        'item_url': item_data.item_url
                     }
 
                     }).then(function(){

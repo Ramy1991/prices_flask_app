@@ -104,7 +104,6 @@ class Websites(object):
         except AttributeError:
             pass
         self.brand = self.brand.replace('Brand: ', '')
-        print(self.item_price)
         self.item_price = re.search(r'(\d+.\d+)|(\d+)', self.item_price).group(0)
 
         # Check Sizes
@@ -152,7 +151,6 @@ class Websites(object):
         item_price = ''.join(list(dict.fromkeys(self.tree.xpath(price_xp)))).strip()
         self.item_uid = ''.join(list(dict.fromkeys(self.tree.xpath(uid_xp)))).strip()
         self.item_price = re.sub(r'\s+', '', item_price).strip()
-        print(item_price)
         self.brand = ''.join(list(dict.fromkeys(self.tree.xpath(brand_xp)))).strip()
 
         product_type = list(
