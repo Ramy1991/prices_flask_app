@@ -2,12 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d02a3c0c-040f-4e28-a4b9-3436481c1fa1" name="Default Changelist" comment="1.2.2">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts_py/check_prices_online.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts_py/check_prices_online.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts_py/extract_item_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts_py/extract_item_data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts_py/fetch_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts_py/fetch_data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts_py/search_online.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts_py/search_online.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/user_main.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/user_main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Download_images.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/phli.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_1.py" beforeDir="false" afterPath="$PROJECT_DIR$/upload_date_to_db.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
