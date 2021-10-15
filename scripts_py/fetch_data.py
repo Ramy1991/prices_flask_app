@@ -85,18 +85,19 @@ class FETCH:
             # print(item_obj)
             url = item_obj.get('item_image')
             # print(url)
+        elif self.scape_type == 'firebase':
+            url = item_obj.get('item_url')
         else:
             if lang == 'en':
                 url = item_obj.get('item_url_en')
             elif lang == 'ar':
                 url = item_obj.get('item_url_ar')
-            else:
-                url = item_obj.get('product_url')
+
 
 
         # if noon website us third party host to get content 000webhost
-        if 'noon.com' in url:
-            url = f'https://data-pw.000webhostapp.com/?my_data={url}'
+        # if 'noon.com' in url:
+        #     url = f'https://data-pw.000webhostapp.com/?my_data={url}'
         try:
             response = await session.request(method='GET', url=url, headers=self.header())
             response.raise_for_status()
@@ -164,5 +165,6 @@ class FETCH:
 #     "item_url": "https://egypt.souq.com/eg-ar/%D8%AA%D9%8A-%D8%A8%D9%8A-%D9%84%D9%8A%D9%86%D9%83-%D8%B1%D8%A7%D9%88%D8%AA%D8%B1-%D9%84%D8%A7%D8%B3%D9%84%D9%83%D9%8A-archer-c7-%D8%A8%D9%86%D8%B7%D8%A7%D9%82-%D8%AC%D9%8A%D8%AC%D8%A7%D8%A8%D8%AA-%D8%AB%D9%86%D8%A7%D8%A6%D9%8A-ac1750-6987615/i/",
 #     "item_price": " 1,459.00 ", "item_uid": "2724290184193", "currency": "EGP", "date": "20-08-2021",
 #     "time": "12:16:31", "item_website": "egypt.souq.com", "tree": "", "item_sizes": ""}]
+#
 # data = FETCH(da, 'images', ['img']).start()
 # print(data)

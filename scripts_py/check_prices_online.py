@@ -29,19 +29,30 @@ class GetTrackedProducts:
                 val.get('email'): val.get('tracking_items')
             }
             self.users_data.update(users)
+        print(self.tracking_products)
         return self.tracking_products
 
     def get_product_prices(self):
-        response = FETCH(list(self.extract_data_firebase().values()), 'product_page', 'e').start()
+        print(len(self.extract_data_firebase().values()))
+        response = FETCH(list(self.extract_data_firebase().values()), 'product_page', 'ea').start()
+        # print(response.items())
         for sku, item in response.items():
+            print(sku)
             url = item.get(f'item_url_e')
             websites_ob = extract_item_data.Websites(url, '', '', item.get(f'response_data_e'))
             new_product_data = json.loads(websites_ob.extract_data())
             # compare old price with new price
-            SIC = new_product_data.get('item_uid')
+            sic = new_product_data.get('item_uid')
             new_price = new_product_data.get('item_price')
-            old_data = db.reference("/p_p_data").child(SIC).get()
-            print(old_data.get('item_price').get('EGP').values())
+            # Get the recent update for the price
+            old_data = db.reference("/p_p_data").child(sic).get()
+            old_data_recent = list(old_data.get('item_price').get('EGP').values())[-1]
+            # print(new_price)
+            print(new_price)
+            # print(self.users_data)
+
+            # need to test the last updated price if exported from db
+            #  B07G88JZ8L
 
 
 GetTrackedProducts().get_product_prices()
