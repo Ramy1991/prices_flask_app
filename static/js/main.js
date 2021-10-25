@@ -1,14 +1,14 @@
 $( document ).ready(function() {
-var firebaseConfig = {
-            apiKey: "AIzaSyCQYdl0vf8gKnayNRM18dbfMpYIQxzi0LI",
-            authDomain: "bright-lattice-260000.firebaseapp.com",
-            databaseURL: "https://bright-lattice-260000.firebaseio.com",
-            projectId: "bright-lattice-260000",
-            // storageBucket: "bright-lattice-260000.appspot.com",
-            // messagingSenderId: "1014243229877",
-            // appId: "1:1014243229877:web:71f55e2379e3c05a8bfefc",
-            // measurementId: "G-275CEDTFV7"
-        };
+    const firebaseConfig = {
+        apiKey: "AIzaSyCQYdl0vf8gKnayNRM18dbfMpYIQxzi0LI",
+        authDomain: "bright-lattice-260000.firebaseapp.com",
+        databaseURL: "https://bright-lattice-260000.firebaseio.com",
+        projectId: "bright-lattice-260000",
+        storageBucket: "bright-lattice-260000.appspot.com",
+        messagingSenderId: "1014243229877",
+        appId: "1:1014243229877:web:71f55e2379e3c05a8bfefc",
+        measurementId: "G-275CEDTFV7"
+      };
         firebase.initializeApp(firebaseConfig);
         var db = firebase.firestore();
         firebase.auth().useDeviceLanguage();
@@ -239,7 +239,7 @@ var firebaseConfig = {
         // var page_lang = {{lang}};
        
 
-        });
+});
 
         // $(".dropdown-menu li a").click(function(){
         //      // $(this).parents(".dropdown").find('.btn').html($(this).text() );

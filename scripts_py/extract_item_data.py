@@ -51,7 +51,7 @@ class Websites(object):
         self.item_uid = ''
         self.product_type = ''
         self.currency = i_currency.strip()
-        self.date = str(date.today().strftime("%y-%m-%d"))
+        self.date = str(date.today().strftime("%d-%m-%Y"))
         self.time = datetime.now().strftime("%H:%M:%S")
         self.item_website = re.search(r':\/\/(.*?)\/', i_url.strip()).group(1)
         self.country = country
@@ -178,7 +178,8 @@ class Websites(object):
                 'item_image': self.item_image,
                 'item_price': self.item_price,
                 'item_uid': self.item_uid,
-                'item_url': self.item_url
+                'item_url': self.item_url,
+                'currency': self.currency
             }
             return json.dumps(validate_json(items))
 
@@ -218,7 +219,7 @@ def check_url(url, country):
         return "dummy_website"
 
 
-# urll = 'https://www.amazon.eg/-/en/LIPTON-TBS-TESLA-P2N1-36X200G/dp/B0854HDBYB/ref=pd_bxgy_img_2/260-5917133-0349350?pd_rd_w=m435n&pf_rd_p=3d0a2552-0f77-40a5-a260-e0ee201c2553&pf_rd_r=34765ASACNRS2ME9XNH9&pd_rd_r=5d815655-3d83-441e-a8c4-09e52de00c70&pd_rd_wg=FV664&pd_rd_i=B0854HDBYB&psc=1'
+# urll = 'https://www.noon.com/egypt-en/legion-5-15arh05h-gaming-laptop-with-15-6-inch-fhd-display-amd-ryzen-7-4800h-16gb-ram-1tb-hdd-512gb-ssd-nvidia-geforce-rtx-2060-6gb-gddr6-graphics-windows-10-phantom-black/N43330378A/p?o=bbf662e155a8353f'
 # print(check_url(urll, ""))
 
 # item_data = check_url(urll)

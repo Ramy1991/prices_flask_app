@@ -48,7 +48,8 @@ class FETCH:
                 f"response_data_{lang}": item_html,
                 "item_website": item_object.get('item_website'),
                 "country": item_object.get('country'),
-                "search_value": item_object.get('search_value')
+                "search_value": item_object.get('search_value'),
+                "currency":  item_object.get('currancy')
             }
         }
         if self.response.get(item_object.get('item_uid')):
@@ -96,8 +97,9 @@ class FETCH:
 
 
         # if noon website us third party host to get content 000webhost
-        # if 'noon.com' in url:
-        #     url = f'https://data-pw.000webhostapp.com/?my_data={url}'
+        if 'noon.com' in url:
+            url = f'https://data-pw.000webhostapp.com/?my_data={url}'
+
         try:
             response = await session.request(method='GET', url=url, headers=self.header())
             response.raise_for_status()
@@ -112,7 +114,7 @@ class FETCH:
                 item_html = item_html.replace('noon_url', '"url"')
                 self.category_page(url, item_html)
 
-            elif self.scape_type == 'product_page':
+            elif self.scape_type == 'product_page' or self.scape_type == 'firebase':
 
                 item_html = await response.text()
                 item_html = item_html.replace('noon_url', '"url"')
