@@ -15,7 +15,7 @@ const firebaseConfig = {
 
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker
-      .register("../firebase-messaging-sw.js", {scope: '/'})
+      .register("../firebase-messaging-sw.s", {scope: '/'})
       .then(registration => {
         console.log("ServiceWorker running");
       })
