@@ -16,7 +16,7 @@ const app = initializeApp(firebaseConfig);
 // Get registration token. Initially this makes a network call, once retrieved
 // subsequent calls to getToken will return from cache.
 const messaging = getMessaging();
-getToken(messaging, { vapidKey: '<YOUR_PUBLIC_VAPID_KEY_HERE>' }).then((currentToken) => {
+getToken(messaging, { vapidKey: 'BCCQ90gHgbcJsHwGMOFcA7ZleVGWn8VRvvfiQ7_kXkQjKCtbVItTZ_jWclGCWdRvWiv9wVUnVEZu6dSSwt9A13s' }).then((currentToken) => {
   if (currentToken) {
     // Send the token to your server and update the UI if necessary
     // ...
