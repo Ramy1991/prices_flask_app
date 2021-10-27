@@ -1,5 +1,5 @@
-import { getMessaging, getToken } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-messaging.js';
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js";
+import { getMessaging, getToken } from 'https://www.gstatic.com/firebasejs/8.10.0/firebase-messaging.js';
+import { initializeApp } from "https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js";
 
 
 const firebaseConfig = {

@@ -121,7 +121,7 @@ class GetTrackedProducts:
     #  B07G88JZ8L
 
 
-GetTrackedProducts().main()
+# GetTrackedProducts().main()
 
 # print(len(get_tracked_items))
 # for i in ref:

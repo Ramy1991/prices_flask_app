@@ -11,6 +11,7 @@ import requests
 import re
 from fake_useragent import UserAgent
 
+
 app = Flask(__name__)
 app.secret_key = '0000'
 Compress(app)
