@@ -12,6 +12,20 @@ const firebaseConfig = {
     appId: "1:1014243229877:web:71f55e2379e3c05a8bfefc",
     measurementId: "G-275CEDTFV7"
 };
+
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+      .register("../firebase-messaging-sw.js", {scope: '/'})
+      .then(registration => {
+        console.log("ServiceWorker running");
+      })
+      .catch(err => {
+         console.log(err);
+      })
+  }
+
+
+
 const app = initializeApp(firebaseConfig);
 // Get registration token. Initially this makes a network call, once retrieved
 // subsequent calls to getToken will return from cache.

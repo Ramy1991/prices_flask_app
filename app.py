@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, session, stream_with_context
+from flask import Flask, request, render_template, redirect, session, stream_with_context, send_file
 from scripts_py import extract_item_data, db_search, product_page, country_lang, fetch_data
 from scripts_py import search_online
 # from scripts_py import
@@ -10,7 +10,6 @@ import time
 import requests
 import re
 from fake_useragent import UserAgent
-
 
 app = Flask(__name__)
 app.secret_key = '0000'
@@ -156,7 +155,12 @@ def about():
     return render_template('about.html')
 
 
+@app.route('/firebase-messaging-sw.js', methods=['GET'])
+def FCM_sw():
+    return send_file('static/js/firebase-messaging-sw.js')
+
+
 if __name__ == "__main__":
-    app.run(host="0.0.0.0")
-    # app.run(debug=True, port=5000, ssl_context='adhoc')
+    # app.run(host="0.0.0.0")
+    app.run(debug=True, port=5000, ssl_context='adhoc')
     # app.run()
