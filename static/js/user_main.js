@@ -2,6 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.3/firebase
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js";
 import { getDatabase, ref, onValue, set, update, remove, get, child } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-database.js';
 
+
 const firebaseConfig = {
     apiKey: "AIzaSyCQYdl0vf8gKnayNRM18dbfMpYIQxzi0LI",
     authDomain: "bright-lattice-260000.firebaseapp.com",
@@ -381,22 +382,8 @@ $('.signOut').click(function(e){
 });
 
 
-        // const messaging = firebase.messaging();
 
-        // messaging.getToken({ vapidKey: 'BCCQ90gHgbcJsHwGMOFcA7ZleVGWn8VRvvfiQ7_kXkQjKCtbVItTZ_jWclGCWdRvWiv9wVUnVEZu6dSSwt9A13s' }).then((currentToken) => {
-        //     if (currentToken) {
-        //       // Send the token to your server and update the UI if necessary
-        //       console.log(currentToken);
-        //       // ...
-        //     } else {
-        //       // Show permission request UI
-        //       console.log('No registration token available. Request permission to generate one.');
-        //       // ...
-        //     }
-        // }).catch((err) => {
-        //     console.log('An error occurred while retrieving token. ', err);
-        //     // ...
-        // });
+
           
 
         // askForApproval();
