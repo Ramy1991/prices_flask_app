@@ -3,8 +3,8 @@ from datetime import datetime, date
 from concurrent.futures import ThreadPoolExecutor
 from scripts_py.supported_website import supported_website_xp, currency
 # from supported_website import supported_website_xp, currency
-import firebase_admin
-from firebase_admin import credentials, storage, exceptions
+# import firebase_admin
+# from firebase_admin import credentials, storage, exceptions
 import requests
 import re
 import json
