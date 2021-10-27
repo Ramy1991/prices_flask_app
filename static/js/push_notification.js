@@ -14,7 +14,7 @@ const firebaseConfig = {
 };
 
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register("../firebase-messaging-sw.s", {scope: '/'}).then(registration => {
+    navigator.serviceWorker.register("https://prices-app1.herokuapp.com/firebase-messaging-sw.js", {scope: '/'}).then(registration => {
         console.log("ServiceWorker running");
     }).catch(err => {
         console.log(err);
