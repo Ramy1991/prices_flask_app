@@ -30,6 +30,7 @@ const messaging = getMessaging();
 getToken(messaging, { vapidKey: 'BCCQ90gHgbcJsHwGMOFcA7ZleVGWn8VRvvfiQ7_kXkQjKCtbVItTZ_jWclGCWdRvWiv9wVUnVEZu6dSSwt9A13s' }).then((currentToken) => {
   if (currentToken) {
     // Send the token to your server and update the UI if necessary
+    console.log(currentToken);
     // ...
   } else {
     // Show permission request UI
