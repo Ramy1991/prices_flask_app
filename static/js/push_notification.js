@@ -13,13 +13,13 @@ const firebaseConfig = {
     measurementId: "G-275CEDTFV7"
 };
 
-// if ('serviceWorker' in navigator) {
-//     navigator.serviceWorker.register("../firebase-messaging-sw.js", {scope: '/'}).then(registration => {
-//         console.log("ServiceWorker running");
-//     }).catch(err => {
-//         console.log(err);
-//     })
-//   }
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register("../firebase-messaging-sw.s", {scope: '/'}).then(registration => {
+        console.log("ServiceWorker running");
+    }).catch(err => {
+        console.log(err);
+    })
+  }
 
 
 
