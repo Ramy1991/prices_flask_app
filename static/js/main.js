@@ -128,10 +128,10 @@ $( document ).ready(function() {
         }
 
         function sign_in_with_provider(provider){
-            firebase.auth().signInWithPopup(provider).then(function(result) {
+            firebase.auth().signInWithRedirect(provider).then(function(result) {
                 db.collection("users").doc(result.user.uid).get().then(function(snapshot) {
                     if(snapshot.exists){ 
-                        onAuthStateChanged(); 
+                        onAuthStateChanged();
                     }else{          
                         var user_current = firebase.auth().currentUser;
                         var pw = Math.random().toString(36).slice(-8);
@@ -230,7 +230,7 @@ $( document ).ready(function() {
             $('#email-address').css('display','block');
             $('#email-sent').html('');
         });
-
+        onAuthStateChanged();
         
        
         

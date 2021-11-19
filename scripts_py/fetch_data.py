@@ -168,5 +168,5 @@ class FETCH:
 #     "item_price": " 1,459.00 ", "item_uid": "2724290184193", "currency": "EGP", "date": "20-08-2021",
 #     "time": "12:16:31", "item_website": "egypt.souq.com", "tree": "", "item_sizes": ""}]
 #
-# data = FETCH(da, 'images', ['img']).start()
+# data = FETCH(da, 'product_page', ['en', 'ar']).start()
 # print(data)

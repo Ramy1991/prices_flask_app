@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js";
 import { getDatabase, ref, onValue, set, update, remove, get, child } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-database.js';
 
 
@@ -370,13 +370,20 @@ function close_pop(){
     });
 }
 
+
 $('.signOut').click(function(e){
     e.preventDefault();
-    firebase.auth().signOut().then(function() {
-        // Sign-out successful.
+    // firebase.auth().signOut().then(function() {
+    //     // Sign-out successful.
+    //     window.location = window.location.origin;
+    // }).catch(function(error) {
+    //     // An error happened.
+    //     alert(error.message);
+    // });
+
+    signOut(auth).then(() => {
         window.location = window.location.origin;
-    }).catch(function(error) {
-        // An error happened.
+    }).catch((error) => {
         alert(error.message);
     });
 });
