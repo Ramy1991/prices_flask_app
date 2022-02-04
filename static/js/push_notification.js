@@ -53,7 +53,7 @@ function subscribe() {
     const subscribeOptions = {
       userVisibleOnly: true,
       applicationServerKey: 
-      window.atob('AAAA7CWbgLU:APA91bECBRN1NDe9l7QBa--1pd69nNOKrIJdIm6FRXo793JsOXvfcijyc_KJlOv34DggcHeS9jX4As0r278Qne4QyQ4aXh9E9EhUhLZmJYpWMGm3vMH4LweFgP0JDtauovQivzV8nk8B')
+      utf8_to_b64('AAAA7CWbgLU:APA91bECBRN1NDe9l7QBa--1pd69nNOKrIJdIm6FRXo793JsOXvfcijyc_KJlOv34DggcHeS9jX4As0r278Qne4QyQ4aXh9E9EhUhLZmJYpWMGm3vMH4LweFgP0JDtauovQivzV8nk8B')
     };
     serviceWorkerRegistration.pushManager.subscribe(subscribeOptions)
       .then(function(subscription) {
@@ -106,6 +106,10 @@ self.addEventListener('push', function(event) {
   );
 });
 
+
+function utf8_to_b64( str ) {
+  return window.btoa(unescape(encodeURIComponent( str )));
+}
 // function urlBase64ToUint8Array(base64String) {
 //   var padding = '='.repeat((4 - base64String.length % 4) % 4);
 //   var base64 = (base64String + padding)
