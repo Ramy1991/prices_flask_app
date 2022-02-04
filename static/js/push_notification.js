@@ -53,7 +53,7 @@ function subscribe() {
     const subscribeOptions = {
       userVisibleOnly: true,
       applicationServerKey: 
-      utf8_to_b64('AAAA7CWbgLU:APA91bECBRN1NDe9l7QBa--1pd69nNOKrIJdIm6FRXo793JsOXvfcijyc_KJlOv34DggcHeS9jX4As0r278Qne4QyQ4aXh9E9EhUhLZmJYpWMGm3vMH4LweFgP0JDtauovQivzV8nk8B')
+      b64EncodeUnicode('AAAA7CWbgLU:APA91bECBRN1NDe9l7QBa--1pd69nNOKrIJdIm6FRXo793JsOXvfcijyc_KJlOv34DggcHeS9jX4As0r278Qne4QyQ4aXh9E9EhUhLZmJYpWMGm3vMH4LweFgP0JDtauovQivzV8nk8B')
     };
     serviceWorkerRegistration.pushManager.subscribe(subscribeOptions)
       .then(function(subscription) {
@@ -107,9 +107,17 @@ self.addEventListener('push', function(event) {
 });
 
 
-function utf8_to_b64( str ) {
-  return window.btoa(unescape(encodeURIComponent( str )));
+function b64EncodeUnicode(str) {
+  // first we use encodeURIComponent to get percent-encoded UTF-8,
+  // then we convert the percent encodings into raw bytes which
+  // can be fed into btoa.
+  return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
+      function toSolidBytes(match, p1) {
+          return String.fromCharCode('0x' + p1);
+  }));
 }
+
+
 // function urlBase64ToUint8Array(base64String) {
 //   var padding = '='.repeat((4 - base64String.length % 4) % 4);
 //   var base64 = (base64String + padding)
