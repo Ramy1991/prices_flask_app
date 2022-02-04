@@ -9,7 +9,7 @@ default_app = firebase_admin.initialize_app(cred_obj, {
 registration_tokens = [
     'fZrwDtJVpFnJazYQtNCVhK:APA91bGEod7CzMuqZue6X3WY6WzNBWYixzqWzOnZoJW6fQvjck_j6Em9Wv79F7WP62ChiwGTazbzyEEFQez_1QcA6km1vlCt-e7JoJRngZK2YHuqIO-09_eNI6VwEUlG7uEVUjRQgWWP',
     # ...
-    'fZrwDtJVpFnJazYQtNCVhK:APA91bGEod7CzMuqZue6X3WY6WzNBWYixzqWzOnZoJW6fQvjck_j6Em9Wv79F7WP62ChiwGTazbzyEEFQez_1QcA6km1vlCt-e7JoJRngZK2YHuqIO-09_eNI6VwEUlG7uEVUjRQgWW',
+    'fZrwDtJVpFnJazYQtNCVhK:APA91bHpifQNDRTCNA992Gt25KhpGNemzS5nZ4-TlrNfop__Q9kyYynpAH1A-UiPi1xnYgVtV5qWcfr7ok8n-8cJQD5cdssf2qu9t8n9RKTzjUYYsc1tzP-d-ZD66170somvYY6AskvR',
 ]
 
 message = messaging.MulticastMessage(

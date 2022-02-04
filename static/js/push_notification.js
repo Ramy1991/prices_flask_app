@@ -16,6 +16,7 @@ const firebaseConfig = {
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register(window.location.origin + "/firebase-messaging-sw.js", {scope: '/'}).then(registration => {
         console.log("ServiceWorker running");
+        subscribe();
     }).catch(err => {
         console.log(err);
     })
@@ -42,14 +43,55 @@ getToken(messaging, { vapidKey: 'BCCQ90gHgbcJsHwGMOFcA7ZleVGWn8VRvvfiQ7_kXkQjKCt
   // ...
 });
 
+function subscribe() {
+  // Disable the button so it can't be changed while
+  // we process the permission request
+  // var pushButton = document.querySelector('.js-push-button');
+  // pushButton.disabled = true;
+
+  navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
+    serviceWorkerRegistration.pushManager.subscribe()
+      .then(function(subscription) {
+        // The subscription was successful
+        
+        // and save it to send a push message at a later date
+        console.log(subscription);
+      })
+      .catch(function(e) {
+        if (Notification.permission === 'denied') {
+          // The user denied the notification permission which
+          // means we failed to subscribe and the user will need
+          // to manually change the notification permission to
+          // subscribe to push messages
+          console.warn('Permission for Notifications was denied');
+          // pushButton.disabled = true;
+        } else {
+          // A problem occurred with the subscription; common reasons
+          // include network errors, and lacking gcm_sender_id and/or
+          // gcm_user_visible_only in the manifest.
+          console.error('Unable to subscribe to push.', e);
+        }
+      });
+  });
+}
+
 
 self.addEventListener('push', function(event) {
   console.log('Received a push message', event);
   console.log(event);
+  console.log('Received a push message', event);
+  data = event.data.json();
   var title = data.notification.title;
   var body = data.notification.message;
   var icon = data.notification.icon;
   var notificationTag = data.notification.tag;
+
+  var notification = new self.Notification(title, {
+    body: body,
+    tag: notificationTag,
+    icon: icon
+  });
+
   event.waitUntil(
     self.registration.showNotification(title, {
       body: body,
