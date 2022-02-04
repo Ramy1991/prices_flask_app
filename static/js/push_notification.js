@@ -50,7 +50,13 @@ function subscribe() {
   // pushButton.disabled = true;
 
   navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
-    serviceWorkerRegistration.pushManager.subscribe()
+    const subscribeOptions = {
+      userVisibleOnly: true,
+      applicationServerKey: urlBase64ToUint8Array(
+        'AAAA7CWbgLU:APA91bECBRN1NDe9l7QBa--1pd69nNOKrIJdIm6FRXo793JsOXvfcijyc_KJlOv34DggcHeS9jX4As0r278Qne4QyQ4aXh9E9EhUhLZmJYpWMGm3vMH4LweFgP0JDtauovQivzV8nk8B'
+      )
+    };
+    serviceWorkerRegistration.pushManager.subscribe(subscribeOptions)
       .then(function(subscription) {
         // The subscription was successful
         
