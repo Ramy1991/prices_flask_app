@@ -43,18 +43,18 @@ getToken(messaging, { vapidKey: 'BCCQ90gHgbcJsHwGMOFcA7ZleVGWn8VRvvfiQ7_kXkQjKCt
 });
 
 
-// self.addEventListener('push', function(event) {
-//   console.log('Received a push message', event);
-
-//   var title = data.notification.title;
-//   var body = data.notification.message;
-//   var icon = data.notification.icon;
-//   var notificationTag = data.notification.tag;
-//   event.waitUntil(
-//     self.registration.showNotification(title, {
-//       body: body,
-//       icon: icon,
-//       tag: notificationTag
-//     })
-//   );
-// });
+self.addEventListener('push', function(event) {
+  console.log('Received a push message', event);
+  console.log(event);
+  var title = data.notification.title;
+  var body = data.notification.message;
+  var icon = data.notification.icon;
+  var notificationTag = data.notification.tag;
+  event.waitUntil(
+    self.registration.showNotification(title, {
+      body: body,
+      icon: icon,
+      tag: notificationTag
+    })
+  );
+});
