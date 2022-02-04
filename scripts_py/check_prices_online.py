@@ -52,36 +52,37 @@ class GetTrackedProducts:
 
             # Get the recent update for the price
             old_data = db.reference(f"/p_p_data/{sic}/item_price/{currency}").get()
+            print(new_price)
             # order price object based on time and date
-            ordered_data = OrderedDict(
-                sorted(
-                    old_data.items(),
-                    key=lambda x: datetime.strptime(x[0], '%d-%m-%Y %H:%M:%S')
-                )
-            )
-            recent_updated_price = float(list(ordered_data.values())[-1].get('price'))
+            # ordered_data = OrderedDict(
+            #     sorted(
+            #         old_data.items(),
+            #         key=lambda x: datetime.strptime(x[0], '%d-%m-%Y %H:%M:%S')
+            #     )
+            # )
+            # recent_updated_price = float(list(ordered_data.values())[-1].get('price'))
 
             # check new price is not missing or out of stock
-            if new_price != 'missing_data':
-                # check price change
-                if float(new_price) != recent_updated_price:
-                    # product to be update on "p_p_data" firebase
-                    item = {
-                        f"/{str(sic)}/item_price/{currency}/{now.strftime('%d-%m-%Y %H:%M:%S')}": {
-                            'date_time': now.strftime("%d-%m-%Y %H:%M:%S"),
-                            'price': new_price
-                        }
-                    }
-                    self.product_to_update.update(item)
-                    item_to_notify = {
-                        sic: {
-                            'date_time': now.strftime("%d-%m-%Y %H:%M:%S"),
-                            'new_price': new_price,
-                            'old_price': recent_updated_price,
-                            'currency': currency
-                        }
-                    }
-                    self.product_to_notify.update(item_to_notify)
+            # if new_price != 'missing_data':
+            #     # check price change
+            #     if float(new_price) != recent_updated_price:
+            #         # product to be update on "p_p_data" firebase
+            #         item = {
+            #             f"/{str(sic)}/item_price/{currency}/{now.strftime('%d-%m-%Y %H:%M:%S')}": {
+            #                 'date_time': now.strftime("%d-%m-%Y %H:%M:%S"),
+            #                 'price': new_price
+            #             }
+            #         }
+            #         self.product_to_update.update(item)
+            #         item_to_notify = {
+            #             sic: {
+            #                 'date_time': now.strftime("%d-%m-%Y %H:%M:%S"),
+            #                 'new_price': new_price,
+            #                 'old_price': recent_updated_price,
+            #                 'currency': currency
+            #             }
+            #         }
+            #         self.product_to_notify.update(item_to_notify)
 
     def update_changes_to_firebase(self):
         # call function to export data and generate results
@@ -121,7 +122,7 @@ class GetTrackedProducts:
     #  B07G88JZ8L
 
 
-# GetTrackedProducts().main()
+GetTrackedProducts().main()
 
 # print(len(get_tracked_items))
 # for i in ref:
