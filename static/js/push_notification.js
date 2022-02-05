@@ -52,8 +52,7 @@ function subscribe() {
   navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
     const subscribeOptions = {
       userVisibleOnly: true,
-      applicationServerKey: 
-      b64EncodeUnicode('AAAA7CWbgLU:APA91bECBRN1NDe9l7QBa--1pd69nNOKrIJdIm6FRXo793JsOXvfcijyc_KJlOv34DggcHeS9jX4As0r278Qne4QyQ4aXh9E9EhUhLZmJYpWMGm3vMH4LweFgP0JDtauovQivzV8nk8B')
+      applicationServerKey: 'QUFBQTdDV2JnTFU6QVBBOTFiRUNCUk4xTkRlOWw3UUJhLS0xcGQ2OW5OT0tySUpkSW02RlJYbzc5M0pzT1h2ZmNpanljX0tKbE92MzREZ2djSGVTOWpYNEFzMHIyNzhRbmU0UXlRNGFYaDlFOUVoVWhMWm1KWXBXTUdtM3ZNSDRMd2VGZ1AwSkR0YXVvdlFpdnpWOG5rOEI='
     };
     serviceWorkerRegistration.pushManager.subscribe(subscribeOptions)
       .then(function(subscription) {
