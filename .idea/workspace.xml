@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d02a3c0c-040f-4e28-a4b9-3436481c1fa1" name="Default Changelist" comment="1.2.3">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/js/firebase-messaging-sw.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/firebase-messaging-sw.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/push_notification.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/push_notification.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -170,27 +170,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1615332018162</updated>
-    </task>
-    <task id="LOCAL-00115" summary="1.2.2">
-      <created>1635371809119</created>
-      <option name="number" value="00115" />
-      <option name="presentableId" value="LOCAL-00115" />
-      <option name="project" value="LOCAL" />
-      <updated>1635371809119</updated>
-    </task>
-    <task id="LOCAL-00116" summary="1.2.2">
-      <created>1635372465473</created>
-      <option name="number" value="00116" />
-      <option name="presentableId" value="LOCAL-00116" />
-      <option name="project" value="LOCAL" />
-      <updated>1635372465473</updated>
-    </task>
-    <task id="LOCAL-00117" summary="1.2.2">
-      <created>1635374615930</created>
-      <option name="number" value="00117" />
-      <option name="presentableId" value="LOCAL-00117" />
-      <option name="project" value="LOCAL" />
-      <updated>1635374615930</updated>
     </task>
     <task id="LOCAL-00118" summary="1.2.2">
       <created>1637306545654</created>
@@ -514,7 +493,28 @@
       <option name="project" value="LOCAL" />
       <updated>1644097718046</updated>
     </task>
-    <option name="localTasksCounter" value="164" />
+    <task id="LOCAL-00164" summary="1.2.3">
+      <created>1644097916751</created>
+      <option name="number" value="00164" />
+      <option name="presentableId" value="LOCAL-00164" />
+      <option name="project" value="LOCAL" />
+      <updated>1644097916751</updated>
+    </task>
+    <task id="LOCAL-00165" summary="1.2.3">
+      <created>1644098052378</created>
+      <option name="number" value="00165" />
+      <option name="presentableId" value="LOCAL-00165" />
+      <option name="project" value="LOCAL" />
+      <updated>1644098052378</updated>
+    </task>
+    <task id="LOCAL-00166" summary="1.2.3">
+      <created>1644098216468</created>
+      <option name="number" value="00166" />
+      <option name="presentableId" value="LOCAL-00166" />
+      <option name="project" value="LOCAL" />
+      <updated>1644098216468</updated>
+    </task>
+    <option name="localTasksCounter" value="167" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
