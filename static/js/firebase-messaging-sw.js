@@ -20,7 +20,7 @@
 // });
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-app.js";
-import { getMessaging } from'https://www.gstatic.com/firebasejs/9.6.6/firebase-messaging.js';;
+import { getMessaging } from'https://www.gstatic.com/firebasejs/9.6.6/firebase-messaging.js';
 
 // Initialize the Firebase app in the service worker by passing in
 // your app's Firebase config object.
