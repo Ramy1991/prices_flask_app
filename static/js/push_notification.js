@@ -60,7 +60,7 @@ function subscribe() {
     // console.log(pushSubscription.getKey("auth"));
     const subscribeOptions = {
       userVisibleOnly: true,
-      applicationServerKey: convertDataURIToBinary('AAAA7CWbgLU:APA91bECBRN1NDe9l7QBa--1pd69nNOKrIJdIm6FRXo793JsOXvfcijyc_KJlOv34DggcHeS9jX4As0r278Qne4QyQ4aXh9E9EhUhLZmJYpWMGm3vMH4LweFgP0JDtauovQivzV8nk8B')
+      applicationServerKey: convertDataURIToBinary('BCCQ90gHgbcJsHwGMOFcA7ZleVGWn8VRvvfiQ7_kXkQjKCtbVItTZ_jWclGCWdRvWiv9wVUnVEZu6dSSwt9A13s')
     };
     serviceWorkerRegistration.pushManager.subscribe(subscribeOptions).then(function(subscription) {
         // The subscription was successful
