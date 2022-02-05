@@ -51,39 +51,37 @@ function subscribe() {
   // pushButton.disabled = true;
 
   navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
-    const pushSubscription = serviceWorkerRegistration.pushManager.subscribe({userVisibleOnly: true});
+    // const pushSubscription = serviceWorkerRegistration.pushManager.subscribe({userVisibleOnly: true});
     // The push subscription details needed by the application
     // server are now available, and can be sent to it using,
     // for example, an XMLHttpRequest.
-    console.log(pushSubscription);
+    // console.log(pushSubscription);
     // console.log(pushSubscription.getKey("p256dh"));
     // console.log(pushSubscription.getKey("auth"));
-    // const subscribeOptions = {
-    //   userVisibleOnly: true
-    //   // applicationServerKey: urlBase64ToUint8Array('AAAA7CWbgLU:APA91bECBRN1NDe9l7QBa--1pd69nNOKrIJdIm6FRXo793JsOXvfcijyc_KJlOv34DggcHeS9jX4As0r278Qne4QyQ4aXh9E9EhUhLZmJYpWMGm3vMH4LweFgP0JDtauovQivzV8nk8B')
-    // };
-    // serviceWorkerRegistration.pushManager.subscribe(subscribeOptions)
-    //   .then(function(subscription) {
-    //     // The subscription was successful
+    const subscribeOptions = {
+      userVisibleOnly: true,
+      applicationServerKey: base64ToArrayBuffer('AAAA7CWbgLU:APA91bECBRN1NDe9l7QBa--1pd69nNOKrIJdIm6FRXo793JsOXvfcijyc_KJlOv34DggcHeS9jX4As0r278Qne4QyQ4aXh9E9EhUhLZmJYpWMGm3vMH4LweFgP0JDtauovQivzV8nk8B')
+    };
+    serviceWorkerRegistration.pushManager.subscribe(subscribeOptions).then(function(subscription) {
+        // The subscription was successful
         
-    //     // and save it to send a push message at a later date
-    //     console.log(subscription);
-    //   })
-    //   .catch(function(e) {
-    //     if (Notification.permission === 'denied') {
-    //       // The user denied the notification permission which
-    //       // means we failed to subscribe and the user will need
-    //       // to manually change the notification permission to
-    //       // subscribe to push messages
-    //       console.warn('Permission for Notifications was denied');
-    //       // pushButton.disabled = true;
-    //     } else {
-    //       // A problem occurred with the subscription; common reasons
-    //       // include network errors, and lacking gcm_sender_id and/or
-    //       // gcm_user_visible_only in the manifest.
-    //       console.error('Unable to subscribe to push.', e);
-    //     }
-    //   });
+        // and save it to send a push message at a later date
+      console.log(subscription);
+    }).catch(function(e) {
+        if (Notification.permission === 'denied') {
+          // The user denied the notification permission which
+          // means we failed to subscribe and the user will need
+          // to manually change the notification permission to
+          // subscribe to push messages
+          console.warn('Permission for Notifications was denied');
+          // pushButton.disabled = true;
+        } else {
+          // A problem occurred with the subscription; common reasons
+          // include network errors, and lacking gcm_sender_id and/or
+          // gcm_user_visible_only in the manifest.
+          console.error('Unable to subscribe to push.', e);
+        }
+      });
   });
 }
 
@@ -114,14 +112,14 @@ self.addEventListener('push', function(event) {
 });
 
 
-function b64EncodeUnicode(str) {
-  // first we use encodeURIComponent to get percent-encoded UTF-8,
-  // then we convert the percent encodings into raw bytes which
-  // can be fed into btoa.
-  return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
-      function toSolidBytes(match, p1) {
-          return String.fromCharCode('0x' + p1);
-  }));
+function base64ToArrayBuffer(base64) {
+  var binary_string = window.atob(base64);
+  var len = binary_string.length;
+  var bytes = new Uint8Array(len);
+  for (var i = 0; i < len; i++) {
+      bytes[i] = binary_string.charCodeAt(i);
+  }
+  return bytes.buffer;
 }
 
 
