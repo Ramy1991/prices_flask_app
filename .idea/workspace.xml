@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d02a3c0c-040f-4e28-a4b9-3436481c1fa1" name="Default Changelist" comment="1.2.3">
-      <change beforePath="$PROJECT_DIR$/static/js/push_notification.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/push_notification.js" afterDir="false" />
-    </list>
+    <list default="true" id="d02a3c0c-040f-4e28-a4b9-3436481c1fa1" name="Default Changelist" comment="1.2.3" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -169,13 +167,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1615332018162</updated>
-    </task>
-    <task id="LOCAL-00091" summary="1.2.2">
-      <created>1632012022160</created>
-      <option name="number" value="00091" />
-      <option name="presentableId" value="LOCAL-00091" />
-      <option name="project" value="LOCAL" />
-      <updated>1632012022160</updated>
     </task>
     <task id="LOCAL-00092" summary="1.2.2">
       <created>1632102727812</created>
@@ -513,7 +504,14 @@
       <option name="project" value="LOCAL" />
       <updated>1644089882866</updated>
     </task>
-    <option name="localTasksCounter" value="140" />
+    <task id="LOCAL-00140" summary="1.2.3">
+      <created>1644090306458</created>
+      <option name="number" value="00140" />
+      <option name="presentableId" value="LOCAL-00140" />
+      <option name="project" value="LOCAL" />
+      <updated>1644090306458</updated>
+    </task>
+    <option name="localTasksCounter" value="141" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
