@@ -17,13 +17,13 @@ const firebaseConfig = {
 
 
 
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register(window.location.origin + "/firebase-messaging-sw.js", {scope: '/'}).then(registration => {
-        console.log("ServiceWorker running");
-    }).catch(err => {
-        console.log(err);
-    })
-  }
+// if ('serviceWorker' in navigator) {
+//     navigator.serviceWorker.register(window.location.origin + "/firebase-messaging-sw.js", {scope: '/'}).then(registration => {
+//         console.log("ServiceWorker running");
+//     }).catch(err => {
+//         console.log(err);
+//     })
+//   }
 
 
 
