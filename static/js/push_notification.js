@@ -46,8 +46,9 @@ getToken(messaging, { vapidKey: 'BCCQ90gHgbcJsHwGMOFcA7ZleVGWn8VRvvfiQ7_kXkQjKCt
   console.log('An error occurred while retrieving token. ', err);
   // ...
 });
-
-onMessage(messaging, (payload) => {
+const r_messaging = getMessaging(firebaseConfig);
+const r_messaging = getMessaging();
+onMessage(r_messaging, (payload) => {
   console.log('Message received. ', payload);
   // ...
 });
