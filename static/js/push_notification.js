@@ -1,4 +1,4 @@
-import { getMessaging, getToken, onMessage } from 'https://www.gstatic.com/firebasejs/9.6.6/firebase-messaging.js';
+import { getMessaging, getToken, onMessage, onBackgroundMessage } from 'https://www.gstatic.com/firebasejs/9.6.6/firebase-messaging.js';
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-app.js";
 
 
@@ -49,6 +49,19 @@ getToken(messaging, { vapidKey: 'BCCQ90gHgbcJsHwGMOFcA7ZleVGWn8VRvvfiQ7_kXkQjKCt
 onMessage(messaging, (payload) => {
   console.log('Message received. ', payload);
   // ...
+});
+
+onBackgroundMessage(messaging, (payload) => {
+  console.log('[firebase-messaging-sw.js] Received background message ', payload);
+  // Customize notification here
+  const notificationTitle = 'Background Message Title';
+  const notificationOptions = {
+    body: 'Background Message body.',
+    icon: '/firebase-logo.png'
+  };
+
+  self.registration.showNotification(notificationTitle,
+    notificationOptions);
 });
 
 // function subscribe() {
