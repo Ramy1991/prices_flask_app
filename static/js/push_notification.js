@@ -55,9 +55,9 @@ function subscribe() {
     // The push subscription details needed by the application
     // server are now available, and can be sent to it using,
     // for example, an XMLHttpRequest.
-    console.log(pushSubscription.endpoint);
-    console.log(pushSubscription.getKey("p256dh"));
-    console.log(pushSubscription.getKey("auth"));
+    console.log(pushSubscription);
+    // console.log(pushSubscription.getKey("p256dh"));
+    // console.log(pushSubscription.getKey("auth"));
     // const subscribeOptions = {
     //   userVisibleOnly: true
     //   // applicationServerKey: urlBase64ToUint8Array('AAAA7CWbgLU:APA91bECBRN1NDe9l7QBa--1pd69nNOKrIJdIm6FRXo793JsOXvfcijyc_KJlOv34DggcHeS9jX4As0r278Qne4QyQ4aXh9E9EhUhLZmJYpWMGm3vMH4LweFgP0JDtauovQivzV8nk8B')
