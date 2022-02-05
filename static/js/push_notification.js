@@ -51,7 +51,7 @@ function subscribe() {
   // pushButton.disabled = true;
 
   navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
-    const pushSubscription = await serviceWorkerRegistration.pushManager.subscribe();
+    const pushSubscription = serviceWorkerRegistration.pushManager.subscribe();
     // The push subscription details needed by the application
     // server are now available, and can be sent to it using,
     // for example, an XMLHttpRequest.
