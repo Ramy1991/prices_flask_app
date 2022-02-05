@@ -47,8 +47,8 @@ getToken(messaging, { vapidKey: 'BCCQ90gHgbcJsHwGMOFcA7ZleVGWn8VRvvfiQ7_kXkQjKCt
   // ...
 });
 const r_messaging = getMessaging(firebaseConfig);
-const r_messaging = getMessaging();
-onMessage(r_messaging, (payload) => {
+const messaging = getMessaging();
+onMessage(messaging, (payload) => {
   console.log('Message received. ', payload);
   // ...
 });
