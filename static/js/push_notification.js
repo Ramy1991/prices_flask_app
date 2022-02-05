@@ -123,7 +123,8 @@ function urlBase64ToUint8Array(base64String) {
       .replace(/\-/g, '+')
       .replace(/_/g, '/');
 
-  var rawData = window.atob(base64);
+  var rawData = b64EncodeUnicode( base64 );
+  // var rawData = window.atob(base64);
   var outputArray = new Uint8Array(rawData.length);
 
   for (var i = 0; i < rawData.length; ++i) {
