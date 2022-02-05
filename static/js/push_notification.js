@@ -50,11 +50,11 @@ function subscribe() {
   // pushButton.disabled = true;
 
   navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
-    const subscribeOptions = {
-      userVisibleOnly: true,
-      applicationServerKey: urlBase64ToUint8Array('AAAA7CWbgLU:APA91bECBRN1NDe9l7QBa--1pd69nNOKrIJdIm6FRXo793JsOXvfcijyc_KJlOv34DggcHeS9jX4As0r278Qne4QyQ4aXh9E9EhUhLZmJYpWMGm3vMH4LweFgP0JDtauovQivzV8nk8B')
-    };
-    serviceWorkerRegistration.pushManager.subscribe(subscribeOptions)
+    // const subscribeOptions = {
+    //   userVisibleOnly: true,
+    //   applicationServerKey: urlBase64ToUint8Array('AAAA7CWbgLU:APA91bECBRN1NDe9l7QBa--1pd69nNOKrIJdIm6FRXo793JsOXvfcijyc_KJlOv34DggcHeS9jX4As0r278Qne4QyQ4aXh9E9EhUhLZmJYpWMGm3vMH4LweFgP0JDtauovQivzV8nk8B')
+    // };
+    serviceWorkerRegistration.pushManager.subscribe()
       .then(function(subscription) {
         // The subscription was successful
         
@@ -117,18 +117,18 @@ function b64EncodeUnicode(str) {
 }
 
 
-function urlBase64ToUint8Array(base64String) {
-  var padding = '='.repeat((4 - base64String.length % 4) % 4);
-  var base64 = (base64String + padding)
-      .replace(/\-/g, '+')
-      .replace(/_/g, '/');
+// function urlBase64ToUint8Array(base64String) {
+//   var padding = '='.repeat((4 - base64String.length % 4) % 4);
+//   var base64 = (base64String + padding)
+//       .replace(/\-/g, '+')
+//       .replace(/_/g, '/');
 
-  // var rawData = b64EncodeUnicode( base64 );
-  var rawData = atob(base64);
-  var outputArray = new Uint8Array(rawData.length);
+//   // var rawData = b64EncodeUnicode( base64 );
+//   var rawData = atob(base64);
+//   var outputArray = new Uint8Array(rawData.length);
 
-  for (var i = 0; i < rawData.length; ++i) {
-      outputArray[i] = rawData.charCodeAt(i);
-  }
-  return outputArray;
-}
+//   for (var i = 0; i < rawData.length; ++i) {
+//       outputArray[i] = rawData.charCodeAt(i);
+//   }
+//   return outputArray;
+// }
