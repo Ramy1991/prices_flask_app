@@ -21,7 +21,7 @@ registration_tokens = [
 ]
 
 message = messaging.MulticastMessage(
-    data={'score': '850', 'time': '2:45'},
+    data={'title': 'Hello', 'body': 'test test test', 'image': ''},
     tokens=registration_tokens,
 )
 response = messaging.send_multicast(message)

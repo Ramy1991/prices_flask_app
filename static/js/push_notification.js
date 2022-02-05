@@ -44,6 +44,10 @@ getToken(messaging, { vapidKey: 'BCCQ90gHgbcJsHwGMOFcA7ZleVGWn8VRvvfiQ7_kXkQjKCt
 // const messaging = getMessaging();
 onMessage(messaging, (payload) => {
   console.log('Message received. ', payload);
-  // ...
+  self.registration.showNotification(payload.data.title, {
+    body: payload.data.body,
+    icon:  payload.data.image,
+  });
+
 });
 
