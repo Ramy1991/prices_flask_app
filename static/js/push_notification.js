@@ -32,6 +32,7 @@ getToken(messaging, { vapidKey: 'BCCQ90gHgbcJsHwGMOFcA7ZleVGWn8VRvvfiQ7_kXkQjKCt
   if (currentToken) {
     // Send the token to your server and update the UI if necessary
     console.log(currentToken);
+    
     // ...
   } else {
     // Show permission request UI
@@ -50,6 +51,13 @@ function subscribe() {
   // pushButton.disabled = true;
 
   navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
+    const pushSubscription = await serviceWorkerRegistration.pushManager.subscribe();
+    // The push subscription details needed by the application
+    // server are now available, and can be sent to it using,
+    // for example, an XMLHttpRequest.
+    console.log(pushSubscription.endpoint);
+    console.log(pushSubscription.getKey("p256dh"));
+    console.log(pushSubscription.getKey("auth"));
     const subscribeOptions = {
       userVisibleOnly: true
       // applicationServerKey: urlBase64ToUint8Array('AAAA7CWbgLU:APA91bECBRN1NDe9l7QBa--1pd69nNOKrIJdIm6FRXo793JsOXvfcijyc_KJlOv34DggcHeS9jX4As0r278Qne4QyQ4aXh9E9EhUhLZmJYpWMGm3vMH4LweFgP0JDtauovQivzV8nk8B')
