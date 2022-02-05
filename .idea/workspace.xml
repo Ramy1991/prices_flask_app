@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d02a3c0c-040f-4e28-a4b9-3436481c1fa1" name="Default Changelist" comment="1.2.3">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts_py/Notifications.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts_py/Notifications.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/js/push_notification.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/push_notification.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -171,13 +169,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1615332018162</updated>
-    </task>
-    <task id="LOCAL-00086" summary="1.2.2">
-      <created>1626514644204</created>
-      <option name="number" value="00086" />
-      <option name="presentableId" value="LOCAL-00086" />
-      <option name="project" value="LOCAL" />
-      <updated>1626514644205</updated>
     </task>
     <task id="LOCAL-00087" summary="1.2.2">
       <created>1629966567970</created>
@@ -515,7 +506,14 @@
       <option name="project" value="LOCAL" />
       <updated>1644017599099</updated>
     </task>
-    <option name="localTasksCounter" value="135" />
+    <task id="LOCAL-00135" summary="1.2.3">
+      <created>1644020246436</created>
+      <option name="number" value="00135" />
+      <option name="presentableId" value="LOCAL-00135" />
+      <option name="project" value="LOCAL" />
+      <updated>1644020246436</updated>
+    </task>
+    <option name="localTasksCounter" value="136" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
