@@ -160,6 +160,11 @@ def FCM_sw():
     return send_file('static/js/firebase-messaging-sw.js')
 
 
+@app.route('/manifest.json', methods=['GET'])
+def manifest():
+    return send_file('static/js/manifest.json')
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0")
 
