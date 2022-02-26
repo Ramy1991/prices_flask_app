@@ -443,18 +443,18 @@ d = [{
 
 # from concurrent.futures import ThreadPoolExecutor
 # import requests
-import timeit
-
-
+# import timeit
 #
 #
 # #
-def timer(number, repeat):
-    def wrapper(func):
-        runs = timeit.repeat(func, number=number, repeat=repeat)
-        print(sum(runs) / len(runs))
-
-    return wrapper
+# #
+# # #
+# def timer(number, repeat):
+#     def wrapper(func):
+#         runs = timeit.repeat(func, number=number, repeat=repeat)
+#         print(sum(runs) / len(runs))
+#
+#     return wrapper
 
 
 #
@@ -478,93 +478,93 @@ def timer(number, repeat):
 #         results = executor.map(get, urls)
 
 
-import aiohttp
-import asyncio
-import os
-from aiohttp import ClientSession
-import json
-import pypeln as pl
-from aiohttp import ClientSession, TCPConnector, client_exceptions
-import re
-from fake_useragent import UserAgent
-from requests.exceptions import HTTPError
-
-
-def extract_fields_from_response(response):
-    item = response.get("items", [{}])[0]
-    volume_info = item.get("volumeInfo", {})
-    title = volume_info.get("title", None)
-    subtitle = volume_info.get("subtitle", None)
-    description = volume_info.get("description", None)
-    published_date = volume_info.get("publishedDate", None)
-    return (
-        title,
-        subtitle,
-        description,
-        published_date,
-    )
-
-
-def user_agent():
-    try:
-        return re.search(r'(.*?)\)', UserAgent().random).group(1) + "MSIE 12;)"
-    except AttributeError:
-        return re.search(r'(.*?)\)', UserAgent().random).group(1) + "MSIE 12;)"
-
-
-async def get_data(lang, dict_item, session):
-    if lang == 'en':
-        url = dict_item.get('item_url_en')
-    else:
-        url = dict_item.get('item_url_ar')
-
-    header = {
-        "User-Agent": user_agent(),
-        "Accept": "*/*",
-        "Accept-Language": "*/*",
-        "Accept-Charset": "*/*",
-        "Connection": "keep-alive",
-        "Keep-Alive": "300"
-    }
-
-    try:
-        response = await session.request(method='GET', url=url, headers=header)
-        response.raise_for_status()
-        print(f"Response status en ({url}): {response.status}")
-    # except HTTPError as http_err:
-    #     print(f"HTTP error occurred: {http_err}")
-    except Exception as err:
-        print(f"An error ocurred en: {err}")
-    # try:
-    #     response_ar = await session.request(method='GET', url=url_ar)
-    #     response_ar.raise_for_status()
-    #     print(f"Response status ar ({url}): {response_ar.status}")
-
-    # except Exception as err:
-    #     print(f"An error ocurred ar: {err}")
-    response_json = await response.text()
-    return response_json
-
-
-async def main():
-    try:
-        async with ClientSession() as session:
-            print(session)
-            group1 = await asyncio.gather(*[get_data('en', dict_item, session) for dict_item in d])
-            # group2 = asyncio.gather(*[get_data('ar', dict_item, session) for dict_item in d])
-            # await asyncio.gather(group1, group2)
-    except Exception as err:
-        # await asyncio.gather(group1, group2)
-        print(f"An error ocurred in session: {err}")
-
-
-# limit = 50
-
-
-@timer(1, 2)
-def run_time():
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(main())
+# import aiohttp
+# import asyncio
+# import os
+# from aiohttp import ClientSession
+# import json
+# import pypeln as pl
+# from aiohttp import ClientSession, TCPConnector, client_exceptions
+# import re
+# from fake_useragent import UserAgent
+# from requests.exceptions import HTTPError
+#
+#
+# def extract_fields_from_response(response):
+#     item = response.get("items", [{}])[0]
+#     volume_info = item.get("volumeInfo", {})
+#     title = volume_info.get("title", None)
+#     subtitle = volume_info.get("subtitle", None)
+#     description = volume_info.get("description", None)
+#     published_date = volume_info.get("publishedDate", None)
+#     return (
+#         title,
+#         subtitle,
+#         description,
+#         published_date,
+#     )
+#
+#
+# def user_agent():
+#     try:
+#         return re.search(r'(.*?)\)', UserAgent().random).group(1) + "MSIE 12;)"
+#     except AttributeError:
+#         return re.search(r'(.*?)\)', UserAgent().random).group(1) + "MSIE 12;)"
+#
+#
+# async def get_data(lang, dict_item, session):
+#     if lang == 'en':
+#         url = dict_item.get('item_url_en')
+#     else:
+#         url = dict_item.get('item_url_ar')
+#
+#     header = {
+#         "User-Agent": user_agent(),
+#         "Accept": "*/*",
+#         "Accept-Language": "*/*",
+#         "Accept-Charset": "*/*",
+#         "Connection": "keep-alive",
+#         "Keep-Alive": "300"
+#     }
+#
+#     try:
+#         response = await session.request(method='GET', url=url, headers=header)
+#         response.raise_for_status()
+#         print(f"Response status en ({url}): {response.status}")
+#     # except HTTPError as http_err:
+#     #     print(f"HTTP error occurred: {http_err}")
+#     except Exception as err:
+#         print(f"An error ocurred en: {err}")
+#     # try:
+#     #     response_ar = await session.request(method='GET', url=url_ar)
+#     #     response_ar.raise_for_status()
+#     #     print(f"Response status ar ({url}): {response_ar.status}")
+#
+#     # except Exception as err:
+#     #     print(f"An error ocurred ar: {err}")
+#     response_json = await response.text()
+#     return response_json
+#
+#
+# async def main():
+#     try:
+#         async with ClientSession() as session:
+#             print(session)
+#             group1 = await asyncio.gather(*[get_data('en', dict_item, session) for dict_item in d])
+#             # group2 = asyncio.gather(*[get_data('ar', dict_item, session) for dict_item in d])
+#             # await asyncio.gather(group1, group2)
+#     except Exception as err:
+#         # await asyncio.gather(group1, group2)
+#         print(f"An error ocurred in session: {err}")
+#
+#
+# # limit = 50
+#
+#
+# @timer(1, 2)
+# def run_time():
+#     loop = asyncio.get_event_loop()
+#     loop.run_until_complete(main())
     # pl.task.each(
     #     run_program,
     #     d,

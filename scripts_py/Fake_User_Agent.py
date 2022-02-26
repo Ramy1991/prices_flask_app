@@ -1,8 +1,3 @@
-# import langid
-#
-# lang = langid.classify("")
-# print(lang[0])
-# ('en', -54.41310358047485)
 import random
 
 fake_useragent_list = [
@@ -265,6 +260,3 @@ class UserAgent:
 
     def random(self):
         return random.choice(self.fake_useragent)
-
-
-# print(UserAgent().random())
