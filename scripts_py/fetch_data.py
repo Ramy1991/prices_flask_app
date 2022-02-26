@@ -49,7 +49,7 @@ class FETCH:
                 "item_website": item_object.get('item_website'),
                 "country": item_object.get('country'),
                 "search_value": item_object.get('search_value'),
-                "currency":  item_object.get('currancy')
+                "currency": item_object.get('currancy')
             }
         }
         if self.response.get(item_object.get('item_uid')):
@@ -79,31 +79,30 @@ class FETCH:
     async def fetch(self, lang, item_obj, session):
         # store main data in variable
         item_object = item_obj
-
         if self.scape_type == 'category_page':
             url = ''.join(item_obj.keys())
         elif self.scape_type == 'images':
             # print(item_obj)
             url = item_obj.get('item_image')
             # print(url)
-        elif self.scape_type == 'firebase':
-            url = item_obj.get('item_url')
-        else:
+        elif self.scape_type == 'product_page':
+        #     url = item_obj.get('item_url')
+        # else:
             if lang == 'en':
                 url = item_obj.get('item_url_en')
             elif lang == 'ar':
                 url = item_obj.get('item_url_ar')
 
-
-
         # if noon website us third party host to get content 000webhost
-        if 'noon.com' in url:
-            url = f'https://data-pw.000webhostapp.com/?my_data={url}'
+        # if 'noon.com' in url:
+        #     url = f'https://data-pw.000webhostapp.com/?my_data={url}'
+        #     url = url
 
         try:
             response = await session.request(method='GET', url=url, headers=self.header())
             response.raise_for_status()
             # print(f"Response status {lang} ({url}): {response.status}")
+
 
             # fix json text adding quotes that replace in 000webhost "replace('noon_url', '"url"')"
 
@@ -136,37 +135,45 @@ class FETCH:
     async def main(self, list_items):
         try:
             async with ClientSession() as session:
+                # print(self.languages[0])
                 for lang in self.languages[0]:
                     await asyncio.gather(*[self.fetch(lang, item_obj, session) for item_obj in list_items])
         except Exception as err:
             return f"An error ocurred in session: {err}"
 
     def start(self):
-        try:
-            loop = asyncio.get_event_loop()
-            loop.run_until_complete(self.main(self.items_list))
-        except Exception:
+        if asyncio.get_event_loop().is_closed():
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
             loop.run_until_complete(self.main(self.items_list))
-
+        else:
+            loop = asyncio.get_event_loop()
+            loop.run_until_complete(self.main(self.items_list))
 
         # check failed requests
         if self.error_requests:
-            loop = asyncio.get_event_loop()
-            loop.run_until_complete(self.main(self.error_requests))
-            # print('done requests for errors')
+            if asyncio.get_event_loop().is_closed():
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
+                loop.run_until_complete(self.main(self.error_requests))
+            else:
+                loop = asyncio.get_event_loop()
+                loop.run_until_complete(self.main(self.error_requests))
+                # print('done requests for errors')
 
         return self.response
         # return f"total input: {len(self.dict_urls)} - total output: {len(self.response)} - " \
         #        f"Faild: {len(self.error_requests)}"
 
+
 # da = [{
-#     "item_title": "\u062a\u064a \u0628\u064a \u0644\u064a\u0646\u0643 - \u0631\u0627\u0648\u062a\u0631 \u0644\u0627\u0633\u0644\u0643\u064a Archer C7 \u0628\u0646\u0637\u0627\u0642 \u062c\u064a\u062c\u0627\u0628\u062a \u062b\u0646\u0627\u0626\u064a - \u202b\u202b\u202b(AC1750)",
-#     "item_image": "https://cf2.s3.souqcdn.com/item/2014/06/03/69/87/61/5/item_XXL_6987615_4821776.jpg",
-#     "item_url": "https://egypt.souq.com/eg-ar/%D8%AA%D9%8A-%D8%A8%D9%8A-%D9%84%D9%8A%D9%86%D9%83-%D8%B1%D8%A7%D9%88%D8%AA%D8%B1-%D9%84%D8%A7%D8%B3%D9%84%D9%83%D9%8A-archer-c7-%D8%A8%D9%86%D8%B7%D8%A7%D9%82-%D8%AC%D9%8A%D8%AC%D8%A7%D8%A8%D8%AA-%D8%AB%D9%86%D8%A7%D8%A6%D9%8A-ac1750-6987615/i/",
-#     "item_price": " 1,459.00 ", "item_uid": "2724290184193", "currency": "EGP", "date": "20-08-2021",
-#     "time": "12:16:31", "item_website": "egypt.souq.com", "tree": "", "item_sizes": ""}]
-#
+#       "item_url_en":"https://www.jumia.com.eg/iphone-12-pro-max-with-facetime-256gb-pacific-blue-apple-mpg757129.html",
+#       "item_url_ar":"https://www.jumia.com.eg/ar/iphone-12-pro-max-with-facetime-256gb-pacific-blue-apple-mpg757129.html",
+#       "item_uid":"AP848MP0HFYPQNAFAMZ",
+#       "item_website":"jumia.com",
+#       "country":"eg",
+#       "search_value":"iphone"
+#    }]
+# #
 # data = FETCH(da, 'product_page', ['en', 'ar']).start()
 # print(data)

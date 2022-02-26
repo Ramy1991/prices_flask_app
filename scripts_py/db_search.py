@@ -97,8 +97,8 @@ class DBSearch(object):
 
     def db_connection(self):
         try:
-            conn = mysql.connector.connect(user="admin", password="Api-0000",
-                                           host="129.159.205.105", port=3306, database="main_schema")
+            conn = mysql.connector.connect(user="admin", password="PTS-0000",
+                                           host="129.159.205.97", port=3306, database="main_schema")
         except mysql.connector.Error as err:
             if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
                 print("Something is wrong with the user name or password")
@@ -167,7 +167,4 @@ class DBSearch(object):
             return [self.items_dict_search, self.num_of_pages]
 
 
-
-
-
-# print(DBSearch('laptop', 'eg', 'ar', 1).db_connection())
+# print(DBSearch('apple', 'eg', 'ar', 1).db_connection())

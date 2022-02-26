@@ -7,7 +7,7 @@ supported_website_xp = {
     # a-autoid-4-announce
     'amazon.': {
         'image_xp': "//*[@id='altImages']/ul/li[1]//img/@src | //*[@id='imageBlockThumbs']//div/img/@src | //div[@id='ebooks-main-image-container']/div/div/img/@src | //div[@id='audibleimageblock_feature_div']//img/@src",
-        'price_xp': "//*[@id='priceblock_ourprice']/text() | //*[@id='priceblock_dealprice']/text() | //*[@id='buyNewSection']/h5/div/div[2]/div/span[2]/text() | //*[@id='cerberus-data-metrics']/@data-asin-price | //span[@class='a-color-base']/span//text() | //*[@id='newBuyBoxPrice']/text() | //*[@id='rentPrice']/text() | //span[@id='price_inside_buybox']//text()",
+        'price_xp': "//*[contains(@class,'twister-plus-buying-options-price-data')]//text() | //*[@id='attach-base-product-price']/@value | //td[@class='a-span12']//span[@class='a-offscreen']//text()",
         'title_xp': "//*[@id='productTitle']/text()",
         'uid_xp': "//*[@id='cerberus-data-metrics']/@data-asin | //*[contains(text(),'ISBN-10')]/ancestor::li[1]/text() | //input[@id='ASIN']/@value | //form[@id='buyOneClick']/input[@name='ASIN.0']/@value",
         'url_xp': "//link[@rel='canonical']/@href",

@@ -165,7 +165,7 @@ class GetItemsData:
                 return website
 
     def get_product_data(self):
-        print(self.items_object)
+        # print(self.items_object)
         response_data = FETCH(self.items_object, 'product_page', self.languages).start()
         # print(self.items_object)
         return response_data
@@ -215,13 +215,13 @@ class GetItemsData:
         return self.items_data
 
 
-# get_urls_category_page = SearchOnlineForItems('iphone', 'eg', 'en').main()
-#
-# data = GetItemsData(get_urls_category_page, 'en', 'ar').extract_product_data()
+get_urls_category_page = SearchOnlineForItems('iphone', 'eg', 'en').main()
+
+data = GetItemsData(get_urls_category_page, 'en', 'ar').extract_product_data()
 #
 # add_data_db = UploadDB(data).main()
 #
-# print(add_data_db)
+print(data)
 
 # def run_crawler(self):
 #     with ThreadPoolExecutor(max_workers=30) as executor:

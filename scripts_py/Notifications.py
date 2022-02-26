@@ -15,7 +15,7 @@ default_app = firebase_admin.initialize_app(cred_obj, {
 })
 
 registration_tokens = [
-    'fZrwDtJVpFnJazYQtNCVhK:APA91bHpifQNDRTCNA992Gt25KhpGNemzS5nZ4-TlrNfop__Q9kyYynpAH1A-UiPi1xnYgVtV5qWcfr7ok8n-8cJQD5cdssf2qu9t8n9RKTzjUYYsc1tzP-d-ZD66170somvYY6AskvR',
+    'floNi3iMF0q4kkRHizTNMR:APA91bHTFZyWcJzens3RFCCD9XpCONe_hA6MdkCJLkdnCSLkL-YFNonLQ90Z7Pj7khTJWzLu5059eHQsdHsm-tp7wGkKV5VMIpNf0OltRM1cbYMKY5d9xxxK_i6H5sk73SAXhKCZx7P4',
     # ...
     'fZrwDtJVpFnJazYQtNCVhK:APA91bHpifQNDRTCNA992Gt25KhpGNemzS5nZ4-TlrNfop__Q9kyYynpAH1A-UiPi1xnYgVtV5qWcfr7ok8n-8cJQD5cdssf2qu9t8n9RKTzjUYYsc1tzP-d-ZD66170somvYY6Askv',
 ]

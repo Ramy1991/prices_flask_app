@@ -61,27 +61,28 @@ class Websites(object):
 
     def noon(self):
         item_uid_ = json.loads(self.item_uid)
-        item_data = item_uid_['props']['pageProps']['catalog']['product']['variants'][0]['offers']
+        # print(item_uid_['props']['pageProps']['props']['catalog']['product'])
+        item_data = item_uid_['props']['pageProps']['props']['catalog']['product']['variants'][0]['offers']
         if item_data:
-            self.item_price = str(
-                item_uid_['props']['pageProps']['catalog']['product']['variants'][0]['offers'][0]['sale_price'])
+            self.item_price = str(item_data[0]['sale_price'])
             if self.item_price == 'None':
-                self.item_price = str(
-                    item_uid_['props']['pageProps']['catalog']['product']['variants'][0]['offers'][0]['price'])
+                self.item_price = str(item_data[0]['price'])
         else:
             try:
                 self.item_price = re.search(r'(\d+\.\d+)|(\d+)', self.item_price).group(1)
             except Exception:
                 self.item_price = ''
 
-        self.item_uid = item_uid_['props']['pageProps']['catalog']['product']['sku']
-        self.brand = item_uid_['props']['pageProps']['catalog']['product']['brand']
+        self.item_uid = item_data[0]['sku']
+        self.brand = item_uid_['props']['pageProps']['props']['catalog']['product']['brand']
+        self.item_image = self.item_image.replace('r:n-t_120', 'r:n-t_400')
 
         self.tree = ''
         return self.__dict__
 
     def b_tech(self):
         self.tree = ''
+        self.item_price = self.item_price.replace(',', '')
         return self.__dict__
 
     def jumia(self):
@@ -104,7 +105,11 @@ class Websites(object):
         except AttributeError:
             pass
         self.brand = self.brand.replace('Brand: ', '')
-        self.item_price = re.search(r'(\d+.\d+)|(\d+)', self.item_price).group(0)
+        try:
+            self.item_price = re.sub(r'](.*)', ']', self.item_price)
+            self.item_price = json.loads(self.item_price)[0].get('integerValue').replace(',', '')
+        except Exception:
+            self.item_price = re.search(r'(\d+.\d+)|(\d+)', self.item_price).group(0)
 
         # Check Sizes
         item_size_xp = supported_website_xp.get(website_check(self.item_url)).get('item_size')
@@ -193,6 +198,7 @@ def upload_image(item_obj):
     item_obj = [json.loads(item_obj)]
     item_obj = FETCH(item_obj, 'images', ['img']).start()
     return item_obj
+    json.dumps()
 
 
 # get item data for single item
@@ -209,7 +215,9 @@ def main(url, country):
         request_1 = executor.submit(lambda: requests.get(url, headers=header))
         html_page = request_1.result().content
         websites_ob = Websites(url, currency(url), country, html_page)
-        return json.dumps(list(upload_image(websites_ob.extract_data()).values())[0])
+        # image upload
+        # json.dumps(list(upload_image(websites_ob.extract_data()).values())[0])
+        return websites_ob.extract_data()
 
 
 def check_url(url, country):
@@ -218,9 +226,10 @@ def check_url(url, country):
     else:
         return "dummy_website"
 
-
-# urll = 'https://www.noon.com/egypt-en/legion-5-15arh05h-gaming-laptop-with-15-6-inch-fhd-display-amd-ryzen-7-4800h-16gb-ram-1tb-hdd-512gb-ssd-nvidia-geforce-rtx-2060-6gb-gddr6-graphics-windows-10-phantom-black/N43330378A/p?o=bbf662e155a8353f'
-# print(check_url(urll, ""))
+#
+# urll = 'https://www.amazon.eg/-/en/Andora-Drawstring-Elastic-Slim-Fit-Gabardine/dp/B096L7Q9W3/ref=Oct_d_otopr_27950356031?pd_rd_i=B096L7Q9W3&pd_rd_r=169b79a6-0813-46fd-9880-803d957c3af3&pd_rd_w=tZIoi&pd_rd_wg=cnnVL&pf_rd_p=d92a50a7-7850-4ca9-aa39-c8a064dea4a9&pf_rd_r=3N8CGZXP2G9NKY8B2QWT'
+# data = check_url(urll, "")
+# print(data)
 
 # item_data = check_url(urll)
 # print(item_data)

@@ -46,8 +46,8 @@ class ProductPage:
 
     def db_connection(self):
         try:
-            conn = mysql.connector.connect(user="admin", password="Api-0000",
-                                           host="129.159.205.105", port=3306, database="main_schema")
+            conn = mysql.connector.connect(user="admin", password="PTS-0000",
+                                           host="129.159.205.97", port=3306, database="main_schema")
         except mysql.connector.Error as err:
             if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
                 print("Something is wrong with the user name or password")

@@ -1,4 +1,4 @@
-Flask==1.1.2
+Flask==2.0.3
 requests==2.24.0
 lxml==4.5.2
 fake-useragent==0.1.11
