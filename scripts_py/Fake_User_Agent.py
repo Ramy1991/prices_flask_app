@@ -260,3 +260,7 @@ class UserAgent:
 
     def random(self):
         return random.choice(self.fake_useragent)
+
+
+# usage
+print(UserAgent().random)

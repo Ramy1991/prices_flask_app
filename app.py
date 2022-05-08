@@ -108,6 +108,7 @@ def product_info(country, lang, uid):
 
 
 @app.route('/<string:country>-<string:lang>/p/<string:cate>/<string:title>/<string:uid>')
+@app.route('/<string:country>-<string:lang>/p//<string:title>/<string:uid>', defaults={'cate': ''})
 def product_p(country, lang, cate, title, uid):
     if country_lang.validate_country_lang(country, lang):
         if session.get('data'):

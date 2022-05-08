@@ -61,8 +61,10 @@ class Websites(object):
 
     def noon(self):
         item_uid_ = json.loads(self.item_uid)
+
         # print(item_uid_['props']['pageProps']['props']['catalog']['product'])
         item_data = item_uid_['props']['pageProps']['props']['catalog']['product']['variants'][0]['offers']
+
         if item_data:
             self.item_price = str(item_data[0]['sale_price'])
             if self.item_price == 'None':
@@ -72,11 +74,14 @@ class Websites(object):
                 self.item_price = re.search(r'(\d+\.\d+)|(\d+)', self.item_price).group(1)
             except Exception:
                 self.item_price = ''
-
-        self.item_uid = item_data[0]['sku']
-        self.brand = item_uid_['props']['pageProps']['props']['catalog']['product']['brand']
-        self.item_image = self.item_image.replace('r:n-t_120', 'r:n-t_400')
-
+        if item_data:
+            self.item_uid = dict(item_data[0])['sku_config']
+            self.brand = item_uid_['props']['pageProps']['props']['catalog']['product']['brand']
+            self.item_image = self.item_image.replace('r:n-t_120', 'r:n-t_400')
+        else:
+            self.item_uid = ''
+            self.brand = ''
+            self.item_image = ''
         self.tree = ''
         return self.__dict__
 
@@ -99,6 +104,8 @@ class Websites(object):
         return self.__dict__
 
     def amazon(self):
+        self.item_title = self.item_title.replace('\"', "'")
+        self.brand = re.sub(r'(\s+|\\n|\\t)', ' ', self.brand)
         try:
             self.item_image = re.sub(r'._(.*)_.jpg', '._AC_SL1500_.jpg', self.item_image)
             # self.item_image = re.search(r'{.(.*?)\":', item_image.strip()).group(1)
@@ -184,7 +191,8 @@ class Websites(object):
                 'item_price': self.item_price,
                 'item_uid': self.item_uid,
                 'item_url': self.item_url,
-                'currency': self.currency
+                'currency': self.currency,
+                'country': self.country
             }
             return json.dumps(validate_json(items))
 
@@ -198,7 +206,6 @@ def upload_image(item_obj):
     item_obj = [json.loads(item_obj)]
     item_obj = FETCH(item_obj, 'images', ['img']).start()
     return item_obj
-    json.dumps()
 
 
 # get item data for single item
@@ -227,7 +234,7 @@ def check_url(url, country):
         return "dummy_website"
 
 #
-# urll = 'https://www.amazon.eg/-/en/Andora-Drawstring-Elastic-Slim-Fit-Gabardine/dp/B096L7Q9W3/ref=Oct_d_otopr_27950356031?pd_rd_i=B096L7Q9W3&pd_rd_r=169b79a6-0813-46fd-9880-803d957c3af3&pd_rd_w=tZIoi&pd_rd_wg=cnnVL&pf_rd_p=d92a50a7-7850-4ca9-aa39-c8a064dea4a9&pf_rd_r=3N8CGZXP2G9NKY8B2QWT'
+# urll = 'https://www.noon.com/egypt-en/plus-20000mah-power-bank-wireless-charging-black/N52455107A/p/?o=a2eb16deb22d5dca'
 # data = check_url(urll, "")
 # print(data)
 

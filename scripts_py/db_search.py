@@ -2,12 +2,13 @@ import mysql.connector
 from mysql.connector import errorcode
 import json
 import math
+from scripts_py.supported_website import country_alpha2_currency
 
 
 #
 class DBSearch(object):
 
-    def __init__(self, search_value, country, lang, page_num):
+    def __init__(self, search_value: str, country: str, lang: str, page_num: int):
         self.search_value = search_value
         self.country = country
         self.lang = lang
@@ -17,6 +18,7 @@ class DBSearch(object):
         self.item_per_page = 20
         self.num_of_pages = 0
         self.offset = 0
+        self.currency = country_alpha2_currency.get(self.country.upper()).get('currency')
 
     def pagination(self, all_results_len):
         self.num_of_pages = math.ceil(all_results_len / self.item_per_page)
@@ -25,28 +27,28 @@ class DBSearch(object):
     def pagination_queries(self, q_mum):
         queries = {
             # search for item tybe by search_key in db
-            'query_0': f"""SELECT item_type_en FROM main_schema.search_mapping WHERE 
+            'query_0': f"""SELECT product_type_en FROM main_schema.search_mapping WHERE 
                        MATCH(search_key_s) against('+\"{self.search_value}\"' IN BOOLEAN MODE) 
                        order by search_order ASC limit 1""",
             # search by keyword after get item tybe from first query
             'query_1': f"""SELECT  count(*) 
-                       FROM main_schema.products_{self.country} WHERE item_type_en like '%{self.item_type}%' AND 
+                       FROM main_schema.products_{self.country} WHERE product_type_en like '%{self.item_type}%' AND 
                        MATCH(title_en, title_{self.lang}) against('+{self.search_value}' IN NATURAL LANGUAGE MODE ) 
-                       AND JSON_EXTRACT(JSON_EXTRACT(price_data, '$.egp.*'), 
-                       CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.egp.*'))-1,'].price')) != 'None'
+                       AND JSON_EXTRACT(JSON_EXTRACT(price_data, '$.{self.currency}.*'), 
+                       CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.{self.currency}.*'))-1,'].price')) != 'None'
                        AND sold_out = 0 AND country like '%{self.country}%';""",
             # if item tybe found but search query not in the titles
             'query_2': f"""SELECT  count(*) 
-                       FROM main_schema.products_{self.country} WHERE item_type_en like '%{self.item_type}%' 
-                       AND JSON_EXTRACT(JSON_EXTRACT(price_data, '$.egp.*'), 
-                       CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.egp.*'))-1,'].price')) != 'None' 
+                       FROM main_schema.products_{self.country} WHERE product_type_en like '%{self.item_type}%' 
+                       AND JSON_EXTRACT(JSON_EXTRACT(price_data, '$.{self.currency}.*'), 
+                       CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.{self.currency}.*'))-1,'].price')) != 'None' 
                        AND sold_out = 0 AND country like '%{self.country}%';""",
-            # search in entire database if no results in search_mapping table
-            'query_3': f"""SELECT  count(*) 
+            # search in entire database if no results in search_mapping table by search_key
+            'query_3': f"""SELECT  count(*)
                        FROM main_schema.products_{self.country} WHERE 
-                       MATCH(title_en, title_{self.lang}) against('+{self.search_value}' IN NATURAL LANGUAGE MODE )  
-                       AND JSON_EXTRACT(JSON_EXTRACT(price_data, '$.egp.*'), 
-                       CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.egp.*'))-1,'].price')) != 'None' 
+                       MATCH(search_key) against('+{self.search_value}' IN NATURAL LANGUAGE MODE )  
+                       AND JSON_EXTRACT(JSON_EXTRACT(price_data, '$.{self.currency}.*'), 
+                       CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.{self.currency}.*'))-1,'].price')) != 'None' 
                        AND sold_out = 0 AND country like '%{self.country}%';"""
         }
         return queries.get(q_mum)
@@ -55,40 +57,40 @@ class DBSearch(object):
 
         queries = {
             # search for item tybe by search_key in db
-            'query_0': f"""SELECT item_type_en FROM main_schema.search_mapping WHERE 
+            'query_0': f"""SELECT product_type_en FROM main_schema.search_mapping WHERE 
                        MATCH(search_key_s) against('+\"{self.search_value}\"' IN BOOLEAN MODE) 
                        order by search_order ASC limit 1""",
             # search by keyword after get item tybe from first query
-            'query_1': f"""SELECT  website_name, UIC, unique_product_code, title_{self.lang} as item_title, 
-                       brand_{self.lang}, images_url, item_type_{self.lang}, sub_category_{self.lang}, 
+            'query_1': f"""SELECT  website_name, UIC, source_identifier_code, title_{self.lang} as item_title, 
+                       brand_{self.lang}, images_url, product_type_{self.lang}, product_category_{self.lang}, 
                        item_upc, product_direct_link_{self.lang} as product_direct_link, 
-                       rating, number_of_reviews, JSON_EXTRACT(JSON_EXTRACT(price_data, '$.egp.*'), 
-                       CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.egp.*'))-1,'].price')) as item_price 
-                       FROM main_schema.products_{self.country} WHERE item_type_en = '{self.item_type}' AND 
-                       MATCH(title_en, title_{self.lang}) against('+{self.search_value}' IN NATURAL LANGUAGE MODE ) 
-                       AND JSON_EXTRACT(JSON_EXTRACT(price_data, '$.egp.*'), 
-                       CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.egp.*'))-1,'].price')) != 'None' 
+                       rating, number_of_reviews, JSON_EXTRACT(JSON_EXTRACT(price_data, '$.{self.currency}.*'), 
+                       CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.{self.currency}.*'))-1,'].price')) as 
+                       item_price FROM main_schema.products_{self.country} WHERE product_type_en = '{self.item_type}' 
+                       AND MATCH(title_en, title_{self.lang}) against('+{self.search_value}' IN NATURAL LANGUAGE MODE ) 
+                       AND JSON_EXTRACT(JSON_EXTRACT(price_data, '$.{self.currency}.*'), 
+                       CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.{self.currency}.*'))-1,'].price')) != 'None' 
                        AND sold_out = 0 AND country = '{self.country}' LIMIT {self.offset}, {self.item_per_page};""",
             # if item tybe found but search query not in the titles
-            'query_2': f"""SELECT  website_name, UIC, unique_product_code, title_{self.lang} as item_title, 
-                       brand_{self.lang}, images_url, item_type_{self.lang}, sub_category_{self.lang}, 
+            'query_2': f"""SELECT  website_name, UIC, source_identifier_code, title_{self.lang} as item_title, 
+                       brand_{self.lang}, images_url, product_type_{self.lang}, product_category_{self.lang}, 
                        item_upc, product_direct_link_{self.lang} as product_direct_link, 
                        rating, number_of_reviews, JSON_EXTRACT(JSON_EXTRACT(price_data, '$.egp.*'), 
-                       CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.egp.*'))-1,'].price')) as item_price 
-                       FROM main_schema.products_{self.country} WHERE item_type_en = '{self.item_type}' 
-                       AND JSON_EXTRACT(JSON_EXTRACT(price_data, '$.egp.*'), 
-                       CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.egp.*'))-1,'].price')) != 'None' 
+                       CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.{self.currency}.*'))-1,'].price')) 
+                       as item_price FROM main_schema.products_{self.country} WHERE product_type_en = '{self.item_type}' 
+                       AND JSON_EXTRACT(JSON_EXTRACT(price_data, '$.{self.currency}.*'), 
+                       CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.{self.currency}.*'))-1,'].price')) != 'None' 
                        AND sold_out = 0 AND country = '{self.country}' LIMIT {self.offset}, {self.item_per_page};""",
-            # search in entire database if no results in search_mapping table
-            'query_3': f"""SELECT  website_name, UIC, unique_product_code, title_{self.lang} as item_title, 
-                       brand_{self.lang}, images_url, item_type_{self.lang}, sub_category_{self.lang}, 
+            # search in entire database if no results in search_mapping table by search_key
+            'query_3': f"""SELECT  website_name, UIC, source_identifier_code, title_{self.lang} as item_title, 
+                       brand_{self.lang}, images_url, product_type_{self.lang}, product_category_{self.lang}, 
                        item_upc, product_direct_link_{self.lang} as product_direct_link, 
-                       rating, number_of_reviews, JSON_EXTRACT(JSON_EXTRACT(price_data, '$.egp.*'), 
-                       CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.egp.*'))-1,'].price')) as item_price 
-                       FROM main_schema.products_{self.country} WHERE 
-                       MATCH(title_en, title_{self.lang}) against('+{self.search_value}' IN NATURAL LANGUAGE MODE ) 
-                       AND JSON_EXTRACT(JSON_EXTRACT(price_data, '$.egp.*'), 
-                       CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.egp.*'))-1,'].price')) != 'None' 
+                       rating, number_of_reviews, JSON_EXTRACT(JSON_EXTRACT(price_data, '$.{self.currency}.*'), 
+                       CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.{self.currency}.*'))-1,'].price')) 
+                       as item_price FROM main_schema.products_{self.country} WHERE
+                       MATCH(search_key) against('+{self.search_value}' IN NATURAL LANGUAGE MODE) 
+                       AND JSON_EXTRACT(JSON_EXTRACT(price_data, '$.{self.currency}.*'), 
+                       CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.{self.currency}.*'))-1,'].price')) != 'None' 
                        AND sold_out = 0 AND country = '{self.country}' LIMIT {self.offset}, {self.item_per_page};"""
 
         }
@@ -98,7 +100,7 @@ class DBSearch(object):
     def db_connection(self):
         try:
             conn = mysql.connector.connect(user="admin", password="PTS-0000",
-                                           host="129.159.205.97", port=3306, database="main_schema")
+                                           host="130.162.40.58", port=3306, database="main_schema")
         except mysql.connector.Error as err:
             if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
                 print("Something is wrong with the user name or password")
@@ -110,11 +112,13 @@ class DBSearch(object):
             cursor = conn.cursor()
             cursor.execute(self.pagination_queries('query_0'))  # execute query
             result = cursor.fetchall()
+            print(result)
             if result:
                 self.item_type = result[0][0]
                 query_to_execute = 'query_1'
                 cursor.execute(self.pagination_queries('query_1'))
                 result = cursor.fetchall()
+                print(result)
                 if not result or result[0][0] < 6:
                     query_to_execute = 'query_2'
                     cursor.execute(self.pagination_queries('query_2'))
@@ -128,6 +132,7 @@ class DBSearch(object):
             # print(self.search_query(query_to_execute))
             cursor = conn.cursor(dictionary=True)
             print(self.search_query(query_to_execute))
+            print(query_to_execute)
             cursor.execute(self.search_query(query_to_execute))
             result = cursor.fetchall()
             # print('ttt' + str(result))
@@ -166,5 +171,4 @@ class DBSearch(object):
             self.items_dict_search = json.dumps(result)
             return [self.items_dict_search, self.num_of_pages]
 
-
-# print(DBSearch('apple', 'eg', 'ar', 1).db_connection())
+# print(DBSearch('shirts', 'eg', 'en', 1).db_connection())

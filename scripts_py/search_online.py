@@ -158,11 +158,12 @@ class GetItemsData:
         self.items_data = {}
         self.languages = kwargs
 
-    def website_get_xp(self, url):
+    def website_get_xp(self, url: str):
         websites = supported_search_website_xp.keys()
-        for website in websites:
-            if website in url:
-                return website
+        if url:
+            for website in websites:
+                if website.strip() in url:
+                    return website
 
     def get_product_data(self):
         # print(self.items_object)
@@ -215,13 +216,17 @@ class GetItemsData:
         return self.items_data
 
 
-get_urls_category_page = SearchOnlineForItems('iphone', 'eg', 'en').main()
-
-data = GetItemsData(get_urls_category_page, 'en', 'ar').extract_product_data()
+# get_urls_category_page = SearchOnlineForItems('shorts', 'eg', 'en').main()
 #
-# add_data_db = UploadDB(data).main()
+# data = GetItemsData(get_urls_category_page, 'en', 'ar').extract_product_data()
+# print(data)
 #
-print(data)
+# ex = UploadDB(data).main()
+# print(ex)
+# #
+# # add_data_db = UploadDB(data).main()
+# #
+# print(data)
 
 # def run_crawler(self):
 #     with ThreadPoolExecutor(max_workers=30) as executor:

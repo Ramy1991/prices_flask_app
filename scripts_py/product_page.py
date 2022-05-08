@@ -11,31 +11,32 @@ class ProductPage:
         self.lang = lang
         self.items_results = {}
         self.search_value = search_value
+        self.currency = country_alpha2_currency.get(self.country.upper()).get('currency')
 
     def query(self, query, item_uid, item_type):
+        item_type = item_type.replace("'", "")
         item_query = {
             'query_item':
-                f"SELECT website_name, UIC, unique_product_code, title_{self.lang} as item_title, brand_{self.lang}, "
-                f"images_url, item_type_{self.lang} as item_type, sub_category_{self.lang}, "
+                f"SELECT website_name, UIC, source_identifier_code, title_{self.lang} as item_title, brand_{self.lang}, "
+                f"images_url, product_type_{self.lang} as item_type, product_category_{self.lang}, "
                 f"item_upc, product_direct_link_{self.lang} as product_direct_link "
                 f", rating, number_of_reviews, "
-                f"JSON_EXTRACT(JSON_EXTRACT(price_data, '$.egp.*'), "
-                f"CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.egp.*'))-1,'].price')) as price,"
+                f"JSON_EXTRACT(JSON_EXTRACT(price_data, '$.{self.currency}.*'), "
+                f"CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.{self.currency}.*'))-1,'].price')) as price,"
                 f" item_specs_{self.lang} as item_specs, country "
                 f"FROM main_schema.products_{self.country} WHERE UIC = '{self.search_value}' "
                 f"AND country = '{self.country}';",
             'matching_items_query':
-                f"SELECT website_name, UIC, unique_product_code, title_{self.lang} as item_title, brand_{self.lang}, "
-                f"images_url, item_type_{self.lang} as item_type, sub_category_{self.lang}, "
+                f"SELECT website_name, UIC, source_identifier_code, title_{self.lang} as item_title, brand_{self.lang}, "
+                f"images_url, product_type_{self.lang} as item_type, product_category_{self.lang}, "
                 f"item_upc, product_direct_link_{self.lang} as product_direct_link "
                 f", rating, number_of_reviews, "
-                f"JSON_EXTRACT(JSON_EXTRACT(price_data, '$.egp.*'), "
-                f"CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.egp.*'))-1,'].price')) as price, country "
-                f"FROM main_schema.products_{self.country} WHERE "
+                f"JSON_EXTRACT(JSON_EXTRACT(price_data, '$.{self.currency}.*'), "
+                f"CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.{self.currency}.*'))-1,'].price')) as price, "
+                f"country FROM main_schema.products_{self.country} WHERE "
                 f"MATCH(title_{self.lang}) against('+{self.search_value}' IN NATURAL LANGUAGE MODE ) "
                 f"AND country = '{self.country}' AND UIC != '{item_uid}' AND  "
-                f"item_type_{self.lang} = '{item_type}' LIMIT 4;"
-
+                f"product_type_{self.lang} like '%{item_type}%' LIMIT 4;"
         }
         return item_query.get(query)
 
@@ -47,7 +48,7 @@ class ProductPage:
     def db_connection(self):
         try:
             conn = mysql.connector.connect(user="admin", password="PTS-0000",
-                                           host="129.159.205.97", port=3306, database="main_schema")
+                                           host="130.162.40.58", port=3306, database="main_schema")
         except mysql.connector.Error as err:
             if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
                 print("Something is wrong with the user name or password")
@@ -59,11 +60,15 @@ class ProductPage:
             cursor = conn.cursor(dictionary=True)
             cursor.execute(self.query('query_item', '', ''))  # execute query
             item_result = cursor.fetchone()
+
             if item_result:
                 # reformat price
                 item_result['price'] = '{:,.2f}'.format(float(item_result['price'].replace('"', '')))
                 # reformat json
-                item_result['item_specs'] = json.loads(self.trim_item_specs_json(item_result['item_specs']))
+                try:
+                    item_result['item_specs'] = json.loads(self.trim_item_specs_json(item_result['item_specs']))
+                except Exception:
+                    pass
                 # get main image
                 item_result['images_url'] = item_result['images_url'].split('\n')[0]
                 # add currency
@@ -73,15 +78,19 @@ class ProductPage:
 
                 item_title = re.sub(r"[&\/\\#,+()$~%.'':*?<>{}!@\s\"]", '-', item_result['item_title'])
                 item_title = re.sub(r"[-]+", '-', item_title)
-                item_type = re.sub(r"[&\/\\#,+()$~%.'':*?<>{}!@\s\"]", '-', item_result['item_type'])
-                item_type = re.sub(r"[-]+", '-', item_type)
-                item_result['item_link'] = '{}/{}/{}'.format(item_type, item_title, item_result['UIC']).lower()
+
+                if item_result['item_type']:
+                    item_type = re.sub(r"[&\/\\#,+()$~%.'':*?<>{}!@\s\"]", '-', item_result['item_type'])
+                    item_type = re.sub(r"[-]+", '-', item_type) + '/'
+                else:
+                    item_type = ''
+
+                item_result['item_link'] = f"{item_type.lower()}/{item_title.lower()}/{item_result['UIC'].lower()}"
 
                 self.items_results = item_result
 
                 # get similar items
-                self.search_value = item_result.get('item_title')
-
+                self.search_value = item_result.get('item_title').replace("'", "")
                 cursor.execute(self.query('matching_items_query', item_result.get('UIC'), item_result['item_type']))
                 similar_items = cursor.fetchall()
 

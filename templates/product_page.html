@@ -546,11 +546,13 @@
                     <br>
                     <h5 class="my-3"> Specification:</h5>
                     <ul>
-                        {% for att_name, att_value in data.item_data.item_specs.items() %}
-                            {% if 'class=' not in att_value and att_name not in ['External Product ID', 'Item EAN'] %}
-                                <li>{{ att_name }}: {{ att_value }}</li>
-                            {% endif %}
-                        {% endfor %}
+                        {% if data.item_data.item_specs %}
+                            {% for att_name, att_value in data.item_data.item_specs.items() %}
+                                {% if 'class=' not in att_value and att_name not in ['External Product ID', 'Item EAN'] %}
+                                    <li>{{ att_name }}: {{ att_value }}</li>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
                     </ul>
                 <h4 class="item-price"> <small>Price:</small> <span class="currency" style="font-size: medium; top: -.3em;">{{ data.item_data.currency }} </span>  {{ data.item_data.price }}</h4>
                 <br>

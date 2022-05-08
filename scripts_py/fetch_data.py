@@ -32,8 +32,8 @@ class FETCH:
 
     def category_page(self, url, data):
         dict_items = {
-            url.replace('https://data-pw.000webhostapp.com/?my_data=', ''): {
-                "item_url": url.replace('https://data-pw.000webhostapp.com/?my_data=', ''),
+            url: {
+                "item_url": url,
                 "response_data": data
             }
         }
@@ -44,7 +44,7 @@ class FETCH:
         dict_item = {
             item_object.get('item_uid'): {
                 "item_uid": item_object.get('item_uid'),
-                f"item_url_{lang}": url.replace('https://data-pw.000webhostapp.com/?my_data=', ''),
+                f"item_url_{lang}": url,
                 f"response_data_{lang}": item_html,
                 "item_website": item_object.get('item_website'),
                 "country": item_object.get('country'),
@@ -142,23 +142,26 @@ class FETCH:
             return f"An error ocurred in session: {err}"
 
     def start(self):
-        if asyncio.get_event_loop().is_closed():
+        # if asyncio.get_event_loop().is_closed():
+        try:
+            loop = asyncio.get_event_loop()
+            loop.run_until_complete(self.main(self.items_list))
+        except Exception:
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
-            loop.run_until_complete(self.main(self.items_list))
-        else:
-            loop = asyncio.get_event_loop()
             loop.run_until_complete(self.main(self.items_list))
 
         # check failed requests
         if self.error_requests:
-            if asyncio.get_event_loop().is_closed():
+            try:
+                loop = asyncio.get_event_loop()
+                loop.run_until_complete(self.main(self.error_requests))
+            except Exception:
                 loop = asyncio.new_event_loop()
                 asyncio.set_event_loop(loop)
                 loop.run_until_complete(self.main(self.error_requests))
-            else:
-                loop = asyncio.get_event_loop()
-                loop.run_until_complete(self.main(self.error_requests))
+            # else:
+
                 # print('done requests for errors')
 
         return self.response
