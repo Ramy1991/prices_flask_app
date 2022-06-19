@@ -769,6 +769,21 @@
                 $("#products-articles" ).html('<div class="lds-dual-ring" id="loading_main_page"></div>');
                 $('.pagination').css('display','none')
                 $("#loading_main_page").css('display','');
+                var search_val = $('#search_val').val($('<textarea />').html('{{ search_val }}').text());
+
+                $.ajax({
+                    url: "https://europe-west3-bright-lattice-260000.cloudfunctions.net/search_func",
+                    method: "POST",
+                    headers: {
+                        'search_keyword': search_val,
+                        'country': '{{ country }}',
+                        'lang': '{{ lang }}'
+                    },
+                    crossDomain: true
+                }).done(function(response){
+                    console.log(response);
+                });
+                
             });
             // set search value to input from py script
             $('#search_val').val($('<textarea />').html('{{ search_val }}').text());
@@ -789,15 +804,10 @@
             }
             $(window).on("load resize", mobileViewUpdate);
             // $(window).on("resize", mobileViewUpdate);
-            
-            $.ajax({
-                url: "https://prices-assist.herokuapp.com/search_items_online",
-                method: "POST",
-                data: {search_val: '{{ search_val }}', country: '{{ country }}', lang: '{{ lang }}'},
-                crossDomain: true
-            }).done(function(response){
-                console.log(response);
-            });
+
+            // $.post("https://europe-west3-bright-lattice-260000.cloudfunctions.net/search_func", {'data': 'txt'}, function(result){
+            //     console.log(result);
+            // });
 
             $('.my-account').click(function(e){
                 if(onAuthStateChanged() == undefined){

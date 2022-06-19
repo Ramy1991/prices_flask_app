@@ -8,7 +8,7 @@ from scripts_py.supported_website import supported_website_xp, currency
 import requests
 import re
 import json
-from fake_useragent import UserAgent
+from scripts_py.Fake_User_Agent import UserAgent
 from scripts_py.fetch_data import FETCH
 
 
@@ -25,7 +25,7 @@ def website_check(url):
 
 
 def user_agent():
-    return re.search(r'(.*?)\)', UserAgent().random).group(1) + "MSIE 12;)"
+    return re.search(r'(.*?)\)', UserAgent().random()).group(1) + "MSIE 12;)"
 
 
 def validate_json(json_values):
@@ -218,7 +218,7 @@ def main(url, country):
         "Connection": "keep-alive",
         "Keep-Alive": "300"
     }
-    with ThreadPoolExecutor(max_workers=20) as executor:
+    with ThreadPoolExecutor(max_workers=5) as executor:
         request_1 = executor.submit(lambda: requests.get(url, headers=header))
         html_page = request_1.result().content
         websites_ob = Websites(url, currency(url), country, html_page)
@@ -240,6 +240,10 @@ def check_url(url, country):
 
 # item_data = check_url(urll)
 # print(item_data)
-
-# print(check_url(
-#     'https://www.noon.com/egypt-en/playstation-5-console-extra-dualsense-wireless-controller/N45488091A/p?o=e10fe673323680ab'))
+#
+# print(
+#     check_url(
+#     ['https://www.noon.com/egypt-en/playstation-5-console-extra-dualsense-wireless-controller/N45488091A/p?o=e10fe673323680ab',
+#     'https://www.noon.com/egypt-en/playstation-5-console-extra-dualsense-wireless-controller/N45488091A/p?o=e10fe673323680ab']
+#     )
+# )

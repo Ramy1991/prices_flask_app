@@ -75,7 +75,7 @@ class DBSearch(object):
             'query_2': f"""SELECT  website_name, UIC, source_identifier_code, title_{self.lang} as item_title, 
                        brand_{self.lang}, images_url, product_type_{self.lang}, product_category_{self.lang}, 
                        item_upc, product_direct_link_{self.lang} as product_direct_link, 
-                       rating, number_of_reviews, JSON_EXTRACT(JSON_EXTRACT(price_data, '$.egp.*'), 
+                       rating, number_of_reviews, JSON_EXTRACT(JSON_EXTRACT(price_data, '$.{self.currency}.*'), 
                        CONCAT('$[',JSON_LENGTH(JSON_EXTRACT(price_data, '$.{self.currency}.*'))-1,'].price')) 
                        as item_price FROM main_schema.products_{self.country} WHERE product_type_en = '{self.item_type}' 
                        AND JSON_EXTRACT(JSON_EXTRACT(price_data, '$.{self.currency}.*'), 

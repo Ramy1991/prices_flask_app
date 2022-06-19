@@ -2,21 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d02a3c0c-040f-4e28-a4b9-3436481c1fa1" name="Default Changelist" comment="1.2.3">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/prices_flask_app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/prices_flask_app.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts_py/fetch_data_2.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts_py/test_awardspave.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts_py/test_fetch_2_temp.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gess.py" beforeDir="false" afterPath="$PROJECT_DIR$/gess.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts_py/Fake_User_Agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts_py/Fake_User_Agent.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts_py/db_search.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts_py/db_search.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts_py/extract_item_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts_py/extract_item_data.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts_py/fetch_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts_py/fetch_data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts_py/product_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts_py/product_page.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts_py/search_online.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts_py/search_online.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts_py/supported_website.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts_py/supported_website.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts_py/upload_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts_py/upload_db.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/product_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/product_page.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/search.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/search.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +38,9 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="GithubDefaultAccount">
+    <option name="defaultAccountId" value="01905da7-8780-4426-9225-c814b9b6e8c0" />
+  </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/scripts_py/fetch_data.py" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -59,10 +59,10 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../A_Plus_automation" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager" selected="Python.search_online">
+  <component name="RunManager" selected="Python.app">
     <configuration name="app" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="prices_flask_app" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -84,7 +84,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="db_search" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="fetch_data" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="prices_flask_app" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -96,7 +96,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scripts_py/db_search.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scripts_py/fetch_data.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -105,7 +105,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="product_page" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="fetch_data_2" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="prices_flask_app" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -117,7 +117,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scripts_py/product_page.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scripts_py/fetch_data_2.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -147,7 +147,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="upload_db" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="test_fetch_2_temp" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="prices_flask_app" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -159,7 +159,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scripts_py/upload_db.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scripts_py/test_fetch_2_temp.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -170,11 +170,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.search_online" />
         <item itemvalue="Python.app" />
-        <item itemvalue="Python.product_page" />
-        <item itemvalue="Python.db_search" />
-        <item itemvalue="Python.upload_db" />
+        <item itemvalue="Python.search_online" />
+        <item itemvalue="Python.test_fetch_2_temp" />
+        <item itemvalue="Python.fetch_data_2" />
+        <item itemvalue="Python.fetch_data" />
       </list>
     </recent_temporary>
   </component>
@@ -186,13 +186,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1615332018162</updated>
-    </task>
-    <task id="LOCAL-00128" summary="1.2.3">
-      <created>1644016527042</created>
-      <option name="number" value="00128" />
-      <option name="presentableId" value="LOCAL-00128" />
-      <option name="project" value="LOCAL" />
-      <updated>1644016527043</updated>
     </task>
     <task id="LOCAL-00129" summary="1.2.3">
       <created>1644016606303</created>
@@ -530,7 +523,14 @@
       <option name="project" value="LOCAL" />
       <updated>1645912378993</updated>
     </task>
-    <option name="localTasksCounter" value="177" />
+    <task id="LOCAL-00177" summary="1.2.3">
+      <created>1651993419417</created>
+      <option name="number" value="00177" />
+      <option name="presentableId" value="LOCAL-00177" />
+      <option name="project" value="LOCAL" />
+      <updated>1651993419417</updated>
+    </task>
+    <option name="localTasksCounter" value="178" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

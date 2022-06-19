@@ -4,6 +4,9 @@ import asyncio
 import re
 import firebase_admin
 from firebase_admin import credentials, storage, exceptions
+import requests
+from concurrent import futures
+from functools import partial
 
 
 class FETCH:
@@ -76,9 +79,10 @@ class FETCH:
         item_object['item_image'] = blob.public_url
         self.response.update({item_uid: item_object})
 
-    async def fetch(self, lang, item_obj, session):
+    def fetch(self, lang, item_obj):
         # store main data in variable
         item_object = item_obj
+        url = ''
         if self.scape_type == 'category_page':
             url = ''.join(item_obj.keys())
         elif self.scape_type == 'images':
@@ -86,8 +90,8 @@ class FETCH:
             url = item_obj.get('item_image')
             # print(url)
         elif self.scape_type == 'product_page':
-        #     url = item_obj.get('item_url')
-        # else:
+            #     url = item_obj.get('item_url')
+            # else:
             if lang == 'en':
                 url = item_obj.get('item_url_en')
             elif lang == 'ar':
@@ -99,29 +103,29 @@ class FETCH:
         #     url = url
 
         try:
-            response = await session.request(method='GET', url=url, headers=self.header())
-            response.raise_for_status()
+            # response = session.request(method='GET', url=url, headers=self.header())
+            response = requests.get(url, headers=self.header())
+            # response.status_code
             # print(f"Response status {lang} ({url}): {response.status}")
-
 
             # fix json text adding quotes that replace in 000webhost "replace('noon_url', '"url"')"
 
             # parse data to json based on scrape type
             if self.scape_type == 'category_page':
 
-                item_html = await response.text()
-                item_html = item_html.replace('noon_url', '"url"')
+                item_html = response.content
+                # item_html = item_html.replace('noon_url', '"url"')
                 self.category_page(url, item_html)
 
             elif self.scape_type == 'product_page' or self.scape_type == 'firebase':
 
-                item_html = await response.text()
-                item_html = item_html.replace('noon_url', '"url"')
+                item_html = response.content
+                # item_html = item_html.replace('noon_url', '"url"')
                 self.product_page(item_object, url, lang, item_html)
 
             elif self.scape_type == 'images':
 
-                image_data = await response.content.read()
+                image_data = response.content
                 self.upload_image_to_cloud(item_object, image_data)
                 # return self.response
             else:
@@ -132,37 +136,42 @@ class FETCH:
             self.error_requests.append(item_object)
             return f"An error ocurred in session: {err}"
 
-    async def main(self, list_items):
-        try:
-            async with ClientSession() as session:
-                # print(self.languages[0])
-                for lang in self.languages[0]:
-                    await asyncio.gather(*[self.fetch(lang, item_obj, session) for item_obj in list_items])
-        except Exception as err:
-            return f"An error ocurred in session: {err}"
+    def main(self, list_items):
+        # try:
+        #     async with ClientSession() as session:
+        #         # print(self.languages[0])
+        #         for lang in self.languages[0]:
+        #             await asyncio.gather(*[self.fetch(lang, item_obj, session) for item_obj in list_items])
+        # except Exception as err:
+        #     return f"An error ocurred in session: {err}"
+
+        with futures.ThreadPoolExecutor(max_workers=65) as executor:
+            for lang in self.languages[0]:
+                res = executor.map(partial(self.fetch, lang), list_items)
 
     def start(self):
         # if asyncio.get_event_loop().is_closed():
-        try:
-            loop = asyncio.get_event_loop()
-            loop.run_until_complete(self.main(self.items_list))
-        except Exception:
-            loop = asyncio.new_event_loop()
-            asyncio.set_event_loop(loop)
-            loop.run_until_complete(self.main(self.items_list))
-
-        # check failed requests
-        if self.error_requests:
-            try:
-                loop = asyncio.get_event_loop()
-                loop.run_until_complete(self.main(self.error_requests))
-            except Exception:
-                loop = asyncio.new_event_loop()
-                asyncio.set_event_loop(loop)
-                loop.run_until_complete(self.main(self.error_requests))
-            # else:
-
-                # print('done requests for errors')
+        self.main(self.items_list)
+        # try:
+        #     loop = asyncio.get_event_loop()
+        #     loop.run_until_complete(self.main(self.items_list))
+        # except Exception:
+        #     loop = asyncio.new_event_loop()
+        #     asyncio.set_event_loop(loop)
+        #     loop.run_until_complete(self.main(self.items_list))
+        #
+        # # check failed requests
+        # if self.error_requests:
+        #     try:
+        #         loop = asyncio.get_event_loop()
+        #         loop.run_until_complete(self.main(self.error_requests))
+        #     except Exception:
+        #         loop = asyncio.new_event_loop()
+        #         asyncio.set_event_loop(loop)
+        #         loop.run_until_complete(self.main(self.error_requests))
+        #     # else:
+        #
+        #     # print('done requests for errors')
 
         return self.response
         # return f"total input: {len(self.dict_urls)} - total output: {len(self.response)} - " \
@@ -170,13 +179,13 @@ class FETCH:
 
 
 da = [{
-      "item_url_en":"https://www.jumia.com.eg/iphone-12-pro-max-with-facetime-256gb-pacific-blue-apple-mpg757129.html",
-      "item_url_ar":"https://www.jumia.com.eg/ar/iphone-12-pro-max-with-facetime-256gb-pacific-blue-apple-mpg757129.html",
-      "item_uid":"AP848MP0HFYPQNAFAMZ",
-      "item_website":"jumia.com",
-      "country":"eg",
-      "search_value":"iphone"
-   }]
+    "item_url_en": "https://www.jumia.com.eg/iphone-12-pro-max-with-facetime-256gb-pacific-blue-apple-mpg757129.html",
+    "item_uid": "AP848MP0HFYPQNAFAMZ",
+    "item_website": "jumia.com",
+    "country": "eg",
+    "search_value": "iphone"
+}]
 #
+
 # data = FETCH(da, 'product_page', ['en', 'ar']).start()
 # print(data)
