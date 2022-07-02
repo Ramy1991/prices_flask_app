@@ -787,8 +787,12 @@
                     },
                     crossDomain: true
                 }).done(function(response){
-                    
-                    console.log(response);
+                    if (response.includes(": True")){
+                        console.log('');
+                    }else{
+                        console.log('error');
+                    }
+                  
                 });
             }else{
                 document.cookie = "s_button=" + "not_clicked";
