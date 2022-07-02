@@ -766,25 +766,34 @@
             // search for new products
             
             $(".search_btn, .page-link").on("click", function(e){
+                // document.cookie = "s_button=" + "clicked";
+                $.cookie('s_button', 'clicked', { path: '/{{ country }}-{{ lang }}/search/'+ encodeURI($('#search_val').val()) });
                 $("#products-articles" ).html('<div class="lds-dual-ring" id="loading_main_page"></div>');
                 $('.pagination').css('display','none')
                 $("#loading_main_page").css('display','');
-                var search_val = $('#search_val').val($('<textarea />').html('{{ search_val }}').text());
+            });
 
+            
+            s_button = $.cookie("s_button");
+            if (s_button == 'clicked'){
+                document.cookie = "s_button=" + "not_clicked";
                 $.ajax({
                     url: "https://europe-west3-bright-lattice-260000.cloudfunctions.net/search_func",
                     method: "POST",
                     headers: {
-                        'search_keyword': search_val,
+                        'search_keyword': '{{ search_val }}',
                         'country': '{{ country }}',
                         'lang': '{{ lang }}'
                     },
                     crossDomain: true
                 }).done(function(response){
+                    
                     console.log(response);
                 });
-                
-            });
+            }else{
+                document.cookie = "s_button=" + "not_clicked";
+            }
+           
             // set search value to input from py script
             $('#search_val').val($('<textarea />').html('{{ search_val }}').text());
             // redireect from search page
@@ -805,9 +814,6 @@
             $(window).on("load resize", mobileViewUpdate);
             // $(window).on("resize", mobileViewUpdate);
 
-            // $.post("https://europe-west3-bright-lattice-260000.cloudfunctions.net/search_func", {'data': 'txt'}, function(result){
-            //     console.log(result);
-            // });
 
             $('.my-account').click(function(e){
                 if(onAuthStateChanged() == undefined){

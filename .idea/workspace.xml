@@ -2,15 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d02a3c0c-040f-4e28-a4b9-3436481c1fa1" name="Default Changelist" comment="1.2.3">
-      <change afterPath="$PROJECT_DIR$/scripts_py/fetch_data_2.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts_py/test_awardspave.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts_py/test_fetch_2_temp.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts_py/Fake_User_Agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts_py/Fake_User_Agent.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts_py/db_search.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts_py/db_search.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts_py/extract_item_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts_py/extract_item_data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts_py/fetch_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts_py/fetch_data.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts_py/search_online.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts_py/search_online.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts_py/upload_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts_py/upload_db.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/search.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/search.html" afterDir="false" />
@@ -59,7 +52,7 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../A_Plus_automation" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Zshoe_Price_Prediction_Amazon" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunManager" selected="Python.app">
@@ -84,27 +77,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="fetch_data" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="prices_flask_app" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/scripts_py" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scripts_py/fetch_data.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="fetch_data_2" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="prices_flask_app" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -118,6 +90,27 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scripts_py/fetch_data_2.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="prices_flask_app" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -171,10 +164,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.app" />
+        <item itemvalue="Python.main" />
         <item itemvalue="Python.search_online" />
         <item itemvalue="Python.test_fetch_2_temp" />
         <item itemvalue="Python.fetch_data_2" />
-        <item itemvalue="Python.fetch_data" />
       </list>
     </recent_temporary>
   </component>
@@ -186,13 +179,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1615332018162</updated>
-    </task>
-    <task id="LOCAL-00129" summary="1.2.3">
-      <created>1644016606303</created>
-      <option name="number" value="00129" />
-      <option name="presentableId" value="LOCAL-00129" />
-      <option name="project" value="LOCAL" />
-      <updated>1644016606303</updated>
     </task>
     <task id="LOCAL-00130" summary="1.2.3">
       <created>1644016718261</created>
@@ -530,7 +516,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651993419417</updated>
     </task>
-    <option name="localTasksCounter" value="178" />
+    <task id="LOCAL-00178" summary="1.2.3">
+      <created>1655654386773</created>
+      <option name="number" value="00178" />
+      <option name="presentableId" value="LOCAL-00178" />
+      <option name="project" value="LOCAL" />
+      <updated>1655654386773</updated>
+    </task>
+    <option name="localTasksCounter" value="179" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

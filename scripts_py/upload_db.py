@@ -78,8 +78,8 @@ class UploadDB:
 
         connection = self.db_connection(self.db_infos('oracle'))
         cursor = connection.cursor(dictionary=True)
-        if SIC_list:
-            cursor.execute(check_query)
+
+        cursor.execute(check_query)
 
         self.existed_products = {item.get('source_identifier_code'): item for item in cursor.fetchall()}
         # print(self.existed_products)

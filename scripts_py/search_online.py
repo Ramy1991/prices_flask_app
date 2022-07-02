@@ -221,13 +221,13 @@ class GetItemsData:
 # startTime = time.time()
 # # your code here
 #
-# get_urls_category_page = SearchOnlineForItems('shower gel', 'eg', 'en').main()
-# #
-# data = GetItemsData(get_urls_category_page, 'en', 'ar').extract_product_data()
+get_urls_category_page = SearchOnlineForItems('shoes', 'eg', 'en').main()
+#
+data = GetItemsData(get_urls_category_page, 'en', 'ar').extract_product_data()
 # print(data)
-# #
-# ex = UploadDB(data, 'eg', 'shower gel').main()
-# # print(ex)
+#
+ex = UploadDB(data, 'eg', 'shoes').main()
+print(ex)
 # # #
 # endTime = time.time() - startTime
 # print(endTime)
